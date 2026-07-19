@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
 import { useEstadoDemo } from '../EstadoContext';
@@ -11,6 +11,7 @@ const ETIQUETAS_CATEGORIA: Record<string, string> = {
 };
 
 export function Flota() {
+  const navigate = useNavigate();
   const { estado } = useEstadoDemo();
   const evaluaciones = useEvaluaciones();
 
@@ -40,9 +41,9 @@ export function Flota() {
                 const armador = estado.armadores.find((a) => a.id === nave.armadorId);
                 const resultado = evaluaciones[nave.id];
                 return (
-                  <tr key={nave.id} className="clickable">
+                  <tr key={nave.id} className="clickable" onClick={() => navigate(`/flota/${nave.id}`)}>
                     <td>
-                      <Link to={`/flota/${nave.id}`}>
+                      <Link to={`/flota/${nave.id}`} onClick={(e) => e.stopPropagation()}>
                         <strong>{nave.nombre}</strong>
                       </Link>
                     </td>
