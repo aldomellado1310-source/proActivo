@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card, StatTile, EmptyState } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
 import { useEstadoDemo } from '../EstadoContext';
@@ -9,6 +9,7 @@ import { TODOS_LOS_PERFILES } from '../../data/store';
 const LIMITE_REGLAS_PENDIENTES = 5;
 
 export function Dashboard() {
+  const navigate = useNavigate();
   const { estado, reglas } = useEstadoDemo();
   const evaluaciones = useEvaluaciones();
   const [verTodasPendientes, setVerTodasPendientes] = useState(false);
@@ -98,9 +99,15 @@ export function Dashboard() {
                 </thead>
                 <tbody>
                   {colaVencimientos.map(({ nave, doc }) => (
-                    <tr key={`${nave.id}-${doc.reglaId}`} className="clickable">
+                    <tr
+                      key={`${nave.id}-${doc.reglaId}`}
+                      className="clickable"
+                      onClick={() => navigate(`/flota/${nave.id}?tab=certificados`)}
+                    >
                       <td>
-                        <Link to={`/flota/${nave.id}?tab=certificados`}>{nave.nombre}</Link>
+                        <Link to={`/flota/${nave.id}?tab=certificados`} onClick={(e) => e.stopPropagation()}>
+                          {nave.nombre}
+                        </Link>
                       </td>
                       <td>{doc.documentoExigido}</td>
                       <td className="pa-mono">{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
@@ -131,9 +138,15 @@ export function Dashboard() {
                 </thead>
                 <tbody>
                   {insumosConAlerta.map(({ nave, insumo }) => (
-                    <tr key={`${nave.id}-${insumo.insumoId}`} className="clickable">
+                    <tr
+                      key={`${nave.id}-${insumo.insumoId}`}
+                      className="clickable"
+                      onClick={() => navigate(`/flota/${nave.id}?tab=insumos`)}
+                    >
                       <td>
-                        <Link to={`/flota/${nave.id}?tab=insumos`}>{nave.nombre}</Link>
+                        <Link to={`/flota/${nave.id}?tab=insumos`} onClick={(e) => e.stopPropagation()}>
+                          {nave.nombre}
+                        </Link>
                       </td>
                       <td>{insumo.descripcion}</td>
                       <td className="pa-mono">
@@ -217,9 +230,11 @@ export function Dashboard() {
             </thead>
             <tbody>
               {resultados.map(({ nave, resultado }) => (
-                <tr key={nave.id} className="clickable">
+                <tr key={nave.id} className="clickable" onClick={() => navigate(`/flota/${nave.id}`)}>
                   <td>
-                    <Link to={`/flota/${nave.id}`}>{nave.nombre}</Link>
+                    <Link to={`/flota/${nave.id}`} onClick={(e) => e.stopPropagation()}>
+                      {nave.nombre}
+                    </Link>
                   </td>
                   <td>{nave.categoria.replace('_', ' ')}</td>
                   <td>
