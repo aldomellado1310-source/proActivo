@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IconoNavix } from '../components/iconos';
 import { useEstadoDemo } from '../EstadoContext';
 import { PERFILES_DEMO } from '../../data/store';
 
@@ -13,7 +12,7 @@ export function Header() {
     <header className="pa-header">
       <div className="pa-header__izq">
         <Link to={perfil ? '/dashboard' : '/'} className="pa-header__marca">
-          <IconoNavix />
+          <img src="/navix-icono.png" alt="" className="pa-header__icono" />
           <span className="pa-logotipo">Navix</span>
         </Link>
         <span className="pa-badge-demo">DEMO INTERACTIVA</span>

@@ -129,8 +129,11 @@ button {
   color: #ffffff;
 }
 
-.pa-header__marca svg {
+.pa-header__icono {
   flex-shrink: 0;
+  height: 28px;
+  width: auto;
+  display: block;
 }
 
 .pa-badge-demo {
@@ -501,10 +504,10 @@ button {
 }
 
 /* Al cambiar un filtro (acción ocasional, no una navegación frecuente) el
-   contenido de la tabla se remonta con este fade corto para señalar "esto es
-   un conjunto nuevo de filas", no una carga de página. Respeta
+   contenido remontado se anima con este fade corto para señalar "esto es un
+   conjunto nuevo de resultados", no una carga de página. Respeta
    prefers-reduced-motion vía la regla global de arriba. */
-.pa-table-wrap--actualiza {
+.pa-fade-remonta {
   animation: pa-entrada 0.2s ease-out both;
 }
 
@@ -547,15 +550,91 @@ button {
   transition: background-color 0.15s ease;
 }
 
-/* Quiebre visual por grupo (p. ej. nave) en listas largas y planas: un tinte
-   muy sutil basta para que el ojo detecte dónde cambia el grupo sin añadir
-   bordes ni reestructurar la tabla. */
-.pa-table tbody tr.pa-table__grupo-par {
-  background-color: rgba(22, 59, 92, 0.08);
+/* ── Ventanas agrupadas (Certificados, Insumos) ───────────── */
+/* Cada nave es su propia ventana plegable en vez de una fila más de una
+   tabla plana de ~100 filas: evita el menú/listado interminable, y abrir
+   una nave a la vez mantiene la vista corta. */
+
+.pa-grupos-nave {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pa-espacio-3);
 }
 
-.pa-table tbody tr.pa-table__grupo-par:hover {
+.pa-grupo-nave {
+  background-color: var(--pa-superficie);
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
+  border: 1px solid var(--pa-borde);
+  border-radius: var(--pa-radio-card);
+  box-shadow: var(--pa-sombra-sm);
+  overflow: hidden;
+}
+
+.pa-grupo-nave__resumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pa-espacio-3);
+  padding: var(--pa-espacio-4) var(--pa-espacio-5);
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  color: var(--pa-navy);
+  transition: background-color 0.15s ease;
+}
+
+.pa-grupo-nave__resumen::-webkit-details-marker {
+  display: none;
+}
+
+.pa-grupo-nave__resumen:hover {
   background: var(--pa-fondo-de);
+}
+
+/* Chevron dibujado con bordes, no un ícono aparte: gira al abrir la ventana,
+   la única señal de estado que necesita este control. */
+.pa-grupo-nave__resumen::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--pa-texto-suave);
+  border-bottom: 2px solid var(--pa-texto-suave);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.pa-grupo-nave[open] > .pa-grupo-nave__resumen::after {
+  transform: rotate(-135deg);
+}
+
+.pa-grupo-nave__meta {
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--pa-texto-suave);
+  white-space: nowrap;
+}
+
+.pa-grupo-nave__alerta {
+  color: var(--pa-vencido);
+  font-weight: 600;
+}
+
+.pa-grupo-nave__acciones {
+  padding: 0 var(--pa-espacio-5);
+  margin-top: -4px;
+  margin-bottom: var(--pa-espacio-2);
+  font-size: 0.82rem;
+}
+
+.pa-grupo-nave .pa-table-wrap {
+  border-top: 1px solid var(--pa-borde);
+}
+
+.pa-grupo-nave .pa-table {
+  font-size: 0.88rem;
 }
 
 /* ── Botones / formularios ────────────────────────────────── */
@@ -718,30 +797,28 @@ button {
 }
 
 .pa-login__marca {
-  display: flex;
-  align-items: center;
-  gap: var(--pa-espacio-3);
+  margin: 0 0 var(--pa-espacio-2);
   opacity: 0;
   animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+/* El logo es el elemento con más peso de la portada, pero esto sigue siendo
+   la pantalla de acceso a una herramienta operativa, no un landing de
+   marketing — se mantiene contenido en vez de ocupar el máximo posible. */
+.pa-login__logo {
+  display: block;
+  height: 118px;
+  width: auto;
+}
+
+.pa-login__subtitulo {
+  font-size: 0.92rem;
+  margin-top: -4px;
 }
 
 .pa-login__intro {
   opacity: 0;
   animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
-}
-
-/* El nombre del producto es el elemento con más peso de la portada, pero esto
-   sigue siendo la pantalla de acceso a una herramienta operativa, no un
-   landing de marketing — se mantiene contenido en vez de ocupar el máximo
-   posible, y el resto del bloque desciende en tamaño según su relevancia. */
-.pa-login__marca-texto h1 {
-  font-size: 1.85rem;
-  margin-bottom: 2px;
-}
-
-.pa-login__marca-texto p {
-  color: var(--pa-texto-suave);
-  font-size: 0.92rem;
 }
 
 .pa-login__features {

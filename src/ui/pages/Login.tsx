@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../layout/Header';
-import { IconoNavix, IconoAncla, IconoWifi, IconoCamara, IconoTrazabilidad } from '../components/iconos';
+import { IconoAncla, IconoWifi, IconoCamara, IconoTrazabilidad } from '../components/iconos';
 import { useEstadoDemo } from '../EstadoContext';
 import { PERFILES_DEMO, type PerfilId } from '../../data/store';
 
@@ -25,13 +25,10 @@ export function Login() {
       <Header />
       <div className="pa-login">
         <div>
-          <div className="pa-login__marca">
-            <IconoNavix size={44} />
-            <div className="pa-login__marca-texto">
-              <h1 className="pa-logotipo">Navix</h1>
-              <p>Software de gestión marítima — DIRECTEMAR · Aysén</p>
-            </div>
-          </div>
+          <h1 className="pa-login__marca">
+            <img src="/navix-logo.png" alt="Navix — software de gestión marítima" className="pa-login__logo" />
+          </h1>
+          <p className="pa-texto-suave pa-login__subtitulo">DIRECTEMAR · Región de Aysén</p>
           <p className="pa-texto-suave pa-login__intro">
             Conectamos datos, personas y territorio para navegar con inteligencia en los fiordos
             de Aysén: registro de flota, certificados, insumos y preparación de revista de cargo

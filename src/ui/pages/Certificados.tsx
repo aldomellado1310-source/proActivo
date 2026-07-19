@@ -1,12 +1,14 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Card, EmptyState } from '../components/Card';
+import { EmptyState } from '../components/Card';
 import { EstadoBadge, CriticidadBadge } from '../components/Badge';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
 import type { EstadoCumplimiento } from '../../types/schema';
 
 type Filtro = 'todos' | EstadoCumplimiento;
+
+const ESTADOS_ALERTA = ['vencido', 'por_vencer', 'faltante'];
 
 export function Certificados() {
   const { estado } = useEstadoDemo();
@@ -23,6 +25,20 @@ export function Certificados() {
 
   const filtradas = filtro === 'todos' ? filas : filas.filter((f) => f.doc.estado === filtro);
 
+  // Ventanas agrupadas por nave: dentro de cada una, los documentos siguen
+  // ordenados por fecha de vencimiento (más urgente primero) porque el orden
+  // de `filas` ya es global por fecha y se preserva al agrupar. La cola
+  // urgente cruzando toda la flota, sin importar la nave, vive en el Panel
+  // ("Próximos vencimientos"); esta vista es el detalle completo por nave.
+  const gruposPorNave = useMemo(() => {
+    const mapa = new Map<string, { nave: (typeof filtradas)[number]['nave']; filas: typeof filtradas }>();
+    for (const fila of filtradas) {
+      if (!mapa.has(fila.nave.id)) mapa.set(fila.nave.id, { nave: fila.nave, filas: [] });
+      mapa.get(fila.nave.id)!.filas.push(fila);
+    }
+    return [...mapa.values()];
+  }, [filtradas]);
+
   const opciones: { valor: Filtro; etiqueta: string }[] = [
     { valor: 'todos', etiqueta: 'Todos' },
     { valor: 'vencido', etiqueta: 'Vencidos' },
@@ -37,8 +53,9 @@ export function Certificados() {
       <div>
         <h1>Certificados</h1>
         <p className="pa-texto-suave">
-          Cola de vencimientos de toda la flota, ordenada por fecha. Las reglas no verificadas se
-          muestran en gris y nunca cuentan como alerta automática.
+          Certificados de la flota agrupados por nave; dentro de cada una, ordenados por fecha de
+          vencimiento. Las reglas no verificadas se muestran en gris y nunca cuentan como alerta
+          automática.
         </p>
       </div>
 
@@ -55,42 +72,59 @@ export function Certificados() {
         ))}
       </div>
 
-      <Card>
-        {filtradas.length === 0 ? (
+      {gruposPorNave.length === 0 ? (
+        <div className="pa-card">
           <EmptyState>No hay certificados en esta categoría.</EmptyState>
-        ) : (
-          <div className="pa-table-wrap pa-table-wrap--actualiza" key={filtro}>
-            <table className="pa-table">
-              <thead>
-                <tr>
-                  <th>Nave</th>
-                  <th>Documento</th>
-                  <th>Criticidad</th>
-                  <th>Vence en</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtradas.map(({ nave, doc }) => (
-                  <tr key={`${nave.id}-${doc.reglaId}`} className="clickable">
-                    <td>
-                      <Link to={`/flota/${nave.id}?tab=certificados`}>{nave.nombre}</Link>
-                    </td>
-                    <td>{doc.documentoExigido}</td>
-                    <td>
-                      <CriticidadBadge criticidad={doc.criticidad} />
-                    </td>
-                    <td className="pa-mono">{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
-                    <td>
-                      <EstadoBadge estado={doc.estado} requiereConfirmacionManual={doc.requiereConfirmacionManual} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Card>
+        </div>
+      ) : (
+        <div className="pa-grupos-nave pa-fade-remonta" key={filtro}>
+          {gruposPorNave.map(({ nave, filas: filasNave }) => {
+            const alertas = filasNave.filter((f) => ESTADOS_ALERTA.includes(f.doc.estado)).length;
+            return (
+              <details key={nave.id} className="pa-grupo-nave" open={filtro !== 'todos' || gruposPorNave.length === 1}>
+                <summary className="pa-grupo-nave__resumen">
+                  <span className="pa-grupo-nave__nombre">{nave.nombre}</span>
+                  <span className="pa-grupo-nave__meta">
+                    {filasNave.length} {filasNave.length === 1 ? 'documento' : 'documentos'}
+                    {alertas > 0 && <span className="pa-grupo-nave__alerta"> · {alertas} con alerta</span>}
+                  </span>
+                </summary>
+                <div className="pa-grupo-nave__acciones">
+                  <Link to={`/flota/${nave.id}?tab=certificados`}>Ver ficha de la nave →</Link>
+                </div>
+                <div className="pa-table-wrap">
+                  <table className="pa-table">
+                    <thead>
+                      <tr>
+                        <th>Documento</th>
+                        <th>Criticidad</th>
+                        <th>Vence en</th>
+                        <th>Estado</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filasNave.map(({ doc }) => (
+                        <tr key={doc.reglaId}>
+                          <td>{doc.documentoExigido}</td>
+                          <td>
+                            <CriticidadBadge criticidad={doc.criticidad} />
+                          </td>
+                          <td className="pa-mono">
+                            {doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}
+                          </td>
+                          <td>
+                            <EstadoBadge estado={doc.estado} requiereConfirmacionManual={doc.requiereConfirmacionManual} />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </details>
+            );
+          })}
+        </div>
+      )}
     </>
   );
 }

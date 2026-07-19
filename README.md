@@ -65,10 +65,10 @@ Tipografía con dos roles, tal como define el manual:
 - **DM Mono** (extensión propia del producto, fuera del manual de marca) — datos tabulares:
   matrícula, TRG/AB, folios, fechas, días para vencer. Clase utilitaria `.pa-mono`.
 
-El isologo (`IconoNavix` en `src/ui/components/iconos.tsx`) son dos picos superpuestos —
-Azul Naval detrás, Turquesa Austral delante— que dejan un canal navegable entre ambos, con
-una ola de Ámbar Energía en la base: la geografía de fiordos vista desde arriba, siguiendo
-el concepto del manual de marca.
+El logo es el asset real del manual de marca (`public/navix-icono.png` — solo el isologo,
+usado en el header— y `public/navix-logo.png` — isologo + wordmark + tagline, usado en la
+portada), recortado con fondo transparente a partir del archivo entregado por el equipo de
+marca. No hay una reconstrucción en SVG: se inserta el logo directamente.
 
 El fondo lleva una textura muy sutil de líneas de sonda náutica y las tarjetas un grano fino
 (ambos en SVG inline, opacidad ≤0.06); el header y los botones primarios usan degradados de
@@ -93,9 +93,16 @@ comprimen su sombra al presionar (además del `translateY` existente) para que e
 click se lea también como un cambio de profundidad. El fondo del modal de evidencia usa
 `backdrop-filter: blur()` en vez de un scrim opaco, con fallback sólido bajo
 `prefers-reduced-transparency`. Cambiar un filtro en Certificados o Insumos (acción
-ocasional, no una navegación frecuente) remonta la tabla con un fade corto de 200ms para
-señalar "conjunto de filas nuevo" sin competir con la regla de "sin animación de entrada"
-de la navegación entre vistas.
+ocasional, no una navegación frecuente) remonta el listado con un fade corto de 200ms
+(`.pa-fade-remonta`) para señalar "conjunto de resultados nuevo" sin competir con la regla
+de "sin animación de entrada" de la navegación entre vistas.
+
+Certificados e Insumos agrupan sus filas por nave en ventanas plegables (`<details>`,
+clase `.pa-grupo-nave`) en vez de una tabla plana de ~100–120 filas: cada nave se abre por
+separado, así el panel no obliga a un scroll interminable para encontrar un documento o
+insumo puntual. La cola de vencimientos cruzando toda la flota sin importar la nave sigue
+viviendo en el Panel ("Próximos vencimientos"); estas dos vistas son el detalle completo
+organizado por nave.
 
 ### Skills de diseño instaladas
 

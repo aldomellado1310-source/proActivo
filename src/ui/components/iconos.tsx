@@ -1,27 +1,7 @@
 /** Iconos SVG inline, minimalistas, en el trazo de la marca. */
-
-/**
- * Isologo de Navix: dos picos superpuestos (Azul Naval detrás, Turquesa
- * Austral delante) que dejan un canal navegable entre ambos, con una ola de
- * Ámbar Energía en la base. Siempre en los tres colores de marca — a
- * diferencia de los íconos utilitarios de abajo, no hereda currentColor,
- * igual que exige el manual ("no cambiar colores").
- */
-export function IconoNavix({ size = 26 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 36 32" fill="none" aria-hidden="true">
-      <path d="M2 27 7.5 9Q9 5.5 10.5 9L16 27Z" fill="#163b5c" />
-      <path d="M11 27 19.5 12Q21.5 8.5 23.5 12L32 27Z" fill="#278c8c" />
-      <path
-        d="M1.5 29.3Q9.5 25.8 18 29.3T34.5 29.3"
-        stroke="#e29a45"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-        fill="none"
-      />
-    </svg>
-  );
-}
+/* El isologo de Navix vive como asset real en public/navix-icono.png y
+   public/navix-logo.png (recortados del logo oficial), no como ícono SVG
+   propio — ver Header.tsx y Login.tsx. */
 
 export function IconoAncla({ size = 22 }: { size?: number }) {
   return (
