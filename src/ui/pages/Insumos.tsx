@@ -78,7 +78,7 @@ export function Insumos() {
         {filtradas.length === 0 ? (
           <EmptyState>No hay insumos que coincidan con el filtro.</EmptyState>
         ) : (
-          <div className="pa-table-wrap">
+          <div className="pa-table-wrap pa-table-wrap--actualiza" key={`${categoria}-${soloAlertas}`}>
             <table className="pa-table">
               <thead>
                 <tr>

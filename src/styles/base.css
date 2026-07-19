@@ -290,7 +290,19 @@ button {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--pa-espacio-5);
+  /* Separación generosa por defecto entre secciones: cada una es una categoría
+     de contenido distinta (KPIs, colas de riesgo, tabla de flota…). */
+  gap: var(--pa-espacio-6);
+}
+
+/* Agrupación ajustada para secciones que son la misma categoría conceptual
+   (p. ej. las dos colas de riesgo activo del panel): el espacio tight entre
+   ellas y el generoso de .pa-main alrededor son lo que comunica que van
+   juntas sin necesitar un contenedor adicional. */
+.pa-grupo-ajustado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pa-espacio-4);
 }
 
 @keyframes pa-entrada {
@@ -481,6 +493,14 @@ button {
   overflow-x: auto;
 }
 
+/* Al cambiar un filtro (acción ocasional, no una navegación frecuente) el
+   contenido de la tabla se remonta con este fade corto para señalar "esto es
+   un conjunto nuevo de filas", no una carga de página. Respeta
+   prefers-reduced-motion vía la regla global de arriba. */
+.pa-table-wrap--actualiza {
+  animation: pa-entrada 0.2s ease-out both;
+}
+
 .pa-table {
   width: 100%;
   border-collapse: collapse;
@@ -544,7 +564,7 @@ button {
   font-size: 0.9rem;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 0.05s ease, filter 0.15s ease, box-shadow 0.18s ease, background-color 0.15s ease;
+  transition: transform 0.1s ease-out, filter 0.15s ease, box-shadow 0.12s ease-out, background-color 0.15s ease;
 }
 
 .pa-btn:active {
@@ -560,6 +580,13 @@ button {
 .pa-btn--primario:hover {
   filter: brightness(1.06);
   box-shadow: 0 8px 20px rgba(46, 155, 214, 0.42);
+}
+
+/* El botón "se hunde" en su propia elevación al presionar: la sombra se
+   comprime en el mismo instante que el translateY de .pa-btn:active, para
+   que el gesto de presión se lea también como un cambio de profundidad. */
+.pa-btn--primario:active {
+  box-shadow: 0 2px 6px rgba(46, 155, 214, 0.32);
 }
 
 .pa-btn--secundario {
@@ -891,7 +918,16 @@ button {
 }
 
 .pa-modal-fondo {
+  background: rgba(15, 27, 44, 0.5);
+  backdrop-filter: blur(6px);
   animation: pa-modal-fondo 0.18s ease both;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .pa-modal-fondo {
+    background: rgba(15, 27, 44, 0.82);
+    backdrop-filter: none;
+  }
 }
 
 .pa-modal-caja {

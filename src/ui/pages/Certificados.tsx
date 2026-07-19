@@ -59,7 +59,7 @@ export function Certificados() {
         {filtradas.length === 0 ? (
           <EmptyState>No hay certificados en esta categoría.</EmptyState>
         ) : (
-          <div className="pa-table-wrap">
+          <div className="pa-table-wrap pa-table-wrap--actualiza" key={filtro}>
             <table className="pa-table">
               <thead>
                 <tr>

@@ -68,6 +68,18 @@ Los desplazamientos de hover puramente decorativos (nav lateral, accesos rápido
 están detrás de `@media (hover: hover) and (pointer: fine)`: en touch, tocar dispara `:hover`
 sin que haya un puntero fino detrás, así que sin ese filtro el efecto queda "pegado" tras el tap.
 
+El panel agrupa sus dos colas de riesgo activo ("Próximos vencimientos" e "Insumos con
+alerta") con espacio ajustado (`.pa-grupo-ajustado`) porque son la misma categoría
+conceptual; el resto de secciones usa la separación generosa por defecto de `.pa-main` —
+ritmo de espaciado como señal de agrupación, no solo relleno. Los botones primarios
+comprimen su sombra al presionar (además del `translateY` existente) para que el gesto de
+click se lea también como un cambio de profundidad. El fondo del modal de evidencia usa
+`backdrop-filter: blur()` en vez de un scrim opaco, con fallback sólido bajo
+`prefers-reduced-transparency`. Cambiar un filtro en Certificados o Insumos (acción
+ocasional, no una navegación frecuente) remonta la tabla con un fade corto de 200ms para
+señalar "conjunto de filas nuevo" sin competir con la regla de "sin animación de entrada"
+de la navegación entre vistas.
+
 ### Skills de diseño instaladas
 
 El repo trae skills de agente instaladas con [`skills`](https://github.com/vercel-labs/skills)

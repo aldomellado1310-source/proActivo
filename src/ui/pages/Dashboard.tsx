@@ -77,77 +77,83 @@ export function Dashboard() {
         <StatTile valor={noAptas} etiqueta="No aptas para inspección" variante="ambar" />
       </div>
 
-      <Card titulo="Próximos vencimientos (reglas verificadas)">
-        {colaVencimientos.length === 0 ? (
-          <EmptyState>No hay certificados de reglas verificadas próximos a vencer.</EmptyState>
-        ) : (
-          <div className="pa-table-wrap">
-            <table className="pa-table">
-              <thead>
-                <tr>
-                  <th>Nave</th>
-                  <th>Documento</th>
-                  <th>Vence en</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {colaVencimientos.map(({ nave, doc }) => (
-                  <tr key={`${nave.id}-${doc.reglaId}`} className="clickable">
-                    <td>
-                      <Link to={`/flota/${nave.id}?tab=certificados`}>{nave.nombre}</Link>
-                    </td>
-                    <td>{doc.documentoExigido}</td>
-                    <td className="pa-mono">{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
-                    <td>
-                      <EstadoBadge estado={doc.estado} />
-                    </td>
+      {/* Las dos colas de riesgo activo (certificados e insumos por vencer) son la misma
+          categoría conceptual, así que se agrupan con espacio ajustado; el resto de
+          secciones del panel son distintas entre sí y usan la separación generosa
+          por defecto de .pa-main. */}
+      <div className="pa-grupo-ajustado">
+        <Card titulo="Próximos vencimientos (reglas verificadas)">
+          {colaVencimientos.length === 0 ? (
+            <EmptyState>No hay certificados de reglas verificadas próximos a vencer.</EmptyState>
+          ) : (
+            <div className="pa-table-wrap">
+              <table className="pa-table">
+                <thead>
+                  <tr>
+                    <th>Nave</th>
+                    <th>Documento</th>
+                    <th>Vence en</th>
+                    <th>Estado</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Card>
+                </thead>
+                <tbody>
+                  {colaVencimientos.map(({ nave, doc }) => (
+                    <tr key={`${nave.id}-${doc.reglaId}`} className="clickable">
+                      <td>
+                        <Link to={`/flota/${nave.id}?tab=certificados`}>{nave.nombre}</Link>
+                      </td>
+                      <td>{doc.documentoExigido}</td>
+                      <td className="pa-mono">{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
+                      <td>
+                        <EstadoBadge estado={doc.estado} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Card>
 
-      <Card titulo="Insumos con alerta">
-        {insumosConAlerta.length === 0 ? (
-          <EmptyState>Ningún insumo en alerta.</EmptyState>
-        ) : (
-          <div className="pa-table-wrap">
-            <table className="pa-table">
-              <thead>
-                <tr>
-                  <th>Nave</th>
-                  <th>Insumo</th>
-                  <th>Detalle</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                {insumosConAlerta.map(({ nave, insumo }) => (
-                  <tr key={`${nave.id}-${insumo.insumoId}`} className="clickable">
-                    <td>
-                      <Link to={`/flota/${nave.id}?tab=insumos`}>{nave.nombre}</Link>
-                    </td>
-                    <td>{insumo.descripcion}</td>
-                    <td className="pa-mono">
-                      {insumo.diasParaVencer !== undefined
-                        ? `${insumo.diasParaVencer} días`
-                        : insumo.deficitCantidad !== undefined
-                          ? `Déficit: ${insumo.deficitCantidad}`
-                          : '—'}
-                    </td>
-                    <td>
-                      <EstadoBadge estado={insumo.estado} />
-                    </td>
+        <Card titulo="Insumos con alerta">
+          {insumosConAlerta.length === 0 ? (
+            <EmptyState>Ningún insumo en alerta.</EmptyState>
+          ) : (
+            <div className="pa-table-wrap">
+              <table className="pa-table">
+                <thead>
+                  <tr>
+                    <th>Nave</th>
+                    <th>Insumo</th>
+                    <th>Detalle</th>
+                    <th>Estado</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </Card>
+                </thead>
+                <tbody>
+                  {insumosConAlerta.map(({ nave, insumo }) => (
+                    <tr key={`${nave.id}-${insumo.insumoId}`} className="clickable">
+                      <td>
+                        <Link to={`/flota/${nave.id}?tab=insumos`}>{nave.nombre}</Link>
+                      </td>
+                      <td>{insumo.descripcion}</td>
+                      <td className="pa-mono">
+                        {insumo.diasParaVencer !== undefined
+                          ? `${insumo.diasParaVencer} días`
+                          : insumo.deficitCantidad !== undefined
+                            ? `Déficit: ${insumo.deficitCantidad}`
+                            : '—'}
+                      </td>
+                      <td>
+                        <EstadoBadge estado={insumo.estado} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Card>
+      </div>
 
       <Card titulo="Requieren confirmación manual">
         <div className="pa-aviso pa-aviso--gris" style={{ marginBottom: 16 }}>
