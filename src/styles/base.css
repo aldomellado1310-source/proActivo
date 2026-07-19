@@ -1178,6 +1178,12 @@ button {
   }
   .pa-shell {
     flex-direction: column;
+    /* .pa-shell usa align-items: flex-start en desktop (para que el nav no se
+       estire a la altura del contenido). En columna eso pasa a ser el eje
+       horizontal: sin stretch, .pa-main se dimensiona al contenido más ancho
+       que tenga (una tabla sin agrupar) en vez de al ancho del viewport, y
+       el scroll interno de .pa-table-wrap nunca llega a activarse — D-01. */
+    align-items: stretch;
   }
   .pa-nav {
     width: 100%;
