@@ -1,23 +1,24 @@
 /** Iconos SVG inline, minimalistas, en el trazo de la marca. */
 
-export function IconoNave({ size = 26 }: { size?: number }) {
+/**
+ * Isologo de Navix: dos picos superpuestos (Azul Naval detrás, Turquesa
+ * Austral delante) que dejan un canal navegable entre ambos, con una ola de
+ * Ámbar Energía en la base. Siempre en los tres colores de marca — a
+ * diferencia de los íconos utilitarios de abajo, no hereda currentColor,
+ * igual que exige el manual ("no cambiar colores").
+ */
+export function IconoNavix({ size = 26 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+    <svg width={size} height={size} viewBox="0 0 36 32" fill="none" aria-hidden="true">
+      <path d="M2 27 7.5 9Q9 5.5 10.5 9L16 27Z" fill="#163b5c" />
+      <path d="M11 27 19.5 12Q21.5 8.5 23.5 12L32 27Z" fill="#278c8c" />
       <path
-        d="M4 15.5 3 11h18l-1 4.5M6 11V6h5l3 5"
-        stroke="currentColor"
-        strokeWidth="1.6"
+        d="M1.5 29.3Q9.5 25.8 18 29.3T34.5 29.3"
+        stroke="#e29a45"
+        strokeWidth="2.6"
         strokeLinecap="round"
-        strokeLinejoin="round"
+        fill="none"
       />
-      <path
-        d="M2.5 15.5c1 1.6 2.3 2.5 3.8 2.5s2.8-.9 3.8-2c1 1.1 2.3 2 3.8 2s2.8-.9 3.8-2c1 1.1 2.3 2 3.8 2"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M9 6V3.5h3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

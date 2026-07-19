@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../layout/Header';
-import { IconoNave, IconoAncla, IconoWifi, IconoCamara, IconoTrazabilidad } from '../components/iconos';
+import { IconoNavix, IconoAncla, IconoWifi, IconoCamara, IconoTrazabilidad } from '../components/iconos';
 import { useEstadoDemo } from '../EstadoContext';
 import { PERFILES_DEMO, type PerfilId } from '../../data/store';
 
@@ -26,17 +26,17 @@ export function Login() {
       <div className="pa-login">
         <div>
           <div className="pa-login__marca">
-            <span style={{ color: 'var(--pa-navy)' }}>
-              <IconoNave size={44} />
-            </span>
+            <IconoNavix size={44} />
             <div className="pa-login__marca-texto">
-              <h1>ProActivo</h1>
-              <p>Auditoría de cumplimiento marítimo — DIRECTEMAR · Aysén</p>
+              <h1 className="pa-logotipo">Navix</h1>
+              <p>Software de gestión marítima — DIRECTEMAR · Aysén</p>
             </div>
           </div>
           <p className="pa-texto-suave pa-login__intro">
-            Registro de flota, certificados, insumos y preparación de revista de cargo en un solo
-            lugar, con el motor de reglas normativas como dato editable — no como código.
+            Conectamos datos, personas y territorio para navegar con inteligencia en los fiordos
+            de Aysén: registro de flota, certificados, insumos y preparación de revista de cargo
+            en un solo lugar, con el motor de reglas normativas como dato editable — no como
+            código.
           </p>
           <div className="pa-login__features">
             {FEATURES.map((f) => (
@@ -51,7 +51,7 @@ export function Login() {
 
         <div className="pa-login__card">
           <h2 style={{ marginBottom: 4 }}>Bienvenido de vuelta</h2>
-          <p className="pa-texto-suave">Ingresa a la demo de ProActivo</p>
+          <p className="pa-texto-suave">Ingresa a la demo de Navix</p>
 
           <p className="pa-login__accesos-titulo">ACCESOS RÁPIDOS PARA LA DEMO</p>
           {PERFILES_DEMO.map((perfil) => (

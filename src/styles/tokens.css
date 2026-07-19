@@ -1,46 +1,54 @@
 :root {
   /* Fondo / superficie */
-  --pa-fondo-de: #eaf4fb;
-  --pa-fondo-a: #f7fbfe;
+  --pa-fondo-de: #e3f2f1;
+  --pa-fondo-a: #f6fbfb;
   --pa-superficie: #ffffff;
-  --pa-borde: #dce9f2;
-  --pa-sombra: 0 8px 24px rgba(27, 58, 107, 0.08);
-  --pa-sombra-sm: 0 2px 8px rgba(27, 58, 107, 0.06);
-  --pa-sombra-lg: 0 20px 48px rgba(27, 58, 107, 0.16);
+  --pa-borde: #dbe9e8;
+  --pa-sombra: 0 8px 24px rgba(22, 59, 92, 0.08);
+  --pa-sombra-sm: 0 2px 8px rgba(22, 59, 92, 0.06);
+  --pa-sombra-lg: 0 20px 48px rgba(22, 59, 92, 0.16);
 
-  /* Header / marca */
-  --pa-header-de: #2e9bd6;
-  --pa-header-a: #2380b8;
-  --pa-degradado-header: linear-gradient(115deg, #1b3a6b 0%, #2380b8 45%, #2e9bd6 100%);
-  --pa-navy: #1b3a6b;
-  --pa-accion: #2e9bd6;
-  --pa-accion-suave: #6fbbe8;
+  /* Header / marca — paleta oficial Navix (manual de marca) */
+  --pa-header-a: #1f7070;
+  --pa-degradado-header: linear-gradient(115deg, #163b5c 0%, #1f6f74 55%, #278c8c 100%);
+  --pa-navy: #163b5c;
+  /* Azul Naval */
+  --pa-turquesa: #278c8c;
+  /* Turquesa Austral */
+  --pa-accion: #278c8c;
+  --pa-accion-suave: #73b4b4;
   /* Enlace: más oscuro que --pa-accion para cumplir 4.5:1 en texto (AA) sobre
      fondo blanco/claro. --pa-accion se mantiene para elementos grandes
      (íconos, botones, degradados) donde el contraste ya es suficiente. */
-  --pa-enlace: #186a94;
+  --pa-enlace: #217777;
   --pa-texto: #33475b;
   --pa-texto-suave: #587189;
 
-  /* Acento de marca — ámbar del documento normativo de origen. Uso exclusivo en
-     elementos estructurales/de marca (regla del header, borde de tarjetas de
-     acceso, indicador de navegación activa); nunca como color de estado. */
-  --pa-acento-marca: #c2793f;
-  --pa-degradado-acento: linear-gradient(90deg, #c2793f, #dba05f);
+  /* Ámbar Energía — acento de marca. Uso exclusivo en elementos
+     estructurales/de marca (regla del header, borde de tarjetas de acceso,
+     indicador de navegación activa); nunca como color de estado. */
+  --pa-acento-marca: #e29a45;
+  /* Degradado oficial de marca: Azul Naval → Turquesa Austral → Ámbar
+     Energía. Se reserva para momentos puntuales (portada), no para uso
+     repetido en toda la interfaz. */
+  --pa-degradado-acento: linear-gradient(90deg, #163b5c, #278c8c, #e29a45);
 
   /* Degradado de superficie para tarjetas — sutil, no plano */
-  --pa-degradado-card: linear-gradient(165deg, #ffffff 0%, #f7fbfd 100%);
+  --pa-degradado-card: linear-gradient(165deg, #ffffff 0%, #f6fbfb 100%);
 
   /* Texturas: líneas de sonda náutica (fondo) y grano fino (tarjetas) */
-  --pa-textura-contorno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'%3E%3Cg fill='none' stroke='%231b3a6b' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M-10 20 Q 65 -8 140 20 T 310 20'/%3E%3Cpath d='M-10 62 Q 65 34 140 62 T 310 62'/%3E%3Cpath d='M-10 104 Q 65 76 140 104 T 310 104'/%3E%3Cpath d='M-10 146 Q 65 118 140 146 T 310 146'/%3E%3C/g%3E%3C/svg%3E");
-  --pa-textura-grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.106 0 0 0 0 0.227 0 0 0 0 0.42 0 0 0 0.028 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --pa-textura-contorno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'%3E%3Cg fill='none' stroke='%23163b5c' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M-10 20 Q 65 -8 140 20 T 310 20'/%3E%3Cpath d='M-10 62 Q 65 34 140 62 T 310 62'/%3E%3Cpath d='M-10 104 Q 65 76 140 104 T 310 104'/%3E%3Cpath d='M-10 146 Q 65 118 140 146 T 310 146'/%3E%3C/g%3E%3C/svg%3E");
+  --pa-textura-grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.086 0 0 0 0 0.231 0 0 0 0 0.361 0 0 0 0.028 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* Estados de cumplimiento — colores de texto ajustados para 4.5:1 mínimo
-     (AA) sobre su propio fondo de badge; ver .pa-badge en base.css. */
+     (AA) sobre su propio fondo de badge; ver .pa-badge en base.css.
+     "Por vencer" y "faltante" usan la familia de Ámbar Energía; conforme y
+     vencido son semáforo funcional (verde/rojo), no forman parte de la
+     paleta de marca porque el manual no define colores de estado. */
   --pa-conforme: #35775e;
   --pa-conforme-bg: #e4f3ec;
-  --pa-por-vencer: #965b31;
-  --pa-por-vencer-bg: #fbead9;
+  --pa-por-vencer: #93642d;
+  --pa-por-vencer-bg: #fbf1e5;
   --pa-vencido: #ad3e38;
   --pa-vencido-bg: #fbe4e2;
   --pa-indeterminado: #616a72;
@@ -61,15 +69,17 @@
   --pa-espacio-7: 48px;
 
   --pa-fuente: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --pa-fuente-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  /* Sora SemiBold es la tipografía del logotipo Navix — reservada al
+     wordmark (.pa-logotipo), no a títulos de página. Ver base.css. */
+  --pa-fuente-logo: 'Sora', 'DM Sans', system-ui, sans-serif;
   --pa-fuente-mono: 'DM Mono', 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
 }
 
 :root[data-tema='oscuro'] {
-  --pa-fondo-de: #0f1b2c;
-  --pa-fondo-a: #142338;
-  --pa-superficie: #16263c;
-  --pa-borde: #223349;
+  --pa-fondo-de: #0f1e28;
+  --pa-fondo-a: #142834;
+  --pa-superficie: #16303c;
+  --pa-borde: #1f3f49;
   --pa-texto: #cdd9e4;
   --pa-texto-suave: #8fa2b6;
 }

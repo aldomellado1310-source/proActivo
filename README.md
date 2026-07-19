@@ -1,8 +1,10 @@
-# ProActivo
+# Navix
 
-Demo interactiva de auditoría de cumplimiento marítimo para DIRECTEMAR — Región de Aysén.
-Registro de flota, clasificación de naves por TRG/AB, certificados con alertas de
-vencimiento, control de insumos y preparación de revista de cargo.
+Software de gestión marítima: demo interactiva de auditoría de cumplimiento para
+DIRECTEMAR — Región de Aysén. Registro de flota, clasificación de naves por TRG/AB,
+certificados con alertas de vencimiento, control de insumos y preparación de revista de
+cargo. Conecta datos, personas y territorio para navegar con inteligencia en los fiordos
+de Aysén.
 
 Es una demo **con datos mock** (sin backend): el motor de evaluación de reglas normativas
 sí es real y corre en el navegador sobre datos de ejemplo, con persistencia local en
@@ -37,21 +39,36 @@ real de verificación del catálogo, no un error.
 - CSS plano con custom properties (sin Tailwind) — ver `src/styles/`.
 - Vitest para los tests del motor de evaluación.
 - Persistencia demo: datos semilla en TypeScript (`src/data/seed.ts`, con fechas relativas
-  a `new Date()`) + overlay en `localStorage` bajo la clave `proactivo-demo-v1`. El botón
+  a `new Date()`) + overlay en `localStorage` bajo la clave `navix-demo-v1`. El botón
   "Restablecer demo" del menú lateral borra el overlay y vuelve a los datos semilla.
 
 ## Diseño visual
 
-Tipografía con tres roles, no una sola fuente para todo:
+Sigue el manual de marca de Navix. Paleta oficial (tokens en `src/styles/tokens.css`):
 
-- **Playfair Display** — reservada a la portada (login) y al título de cada página (`h1`/`h2`).
-  Es la misma familia que usa `docs/matriz-normativa-aysen.html`, el documento normativo de
-  origen: liga visualmente la app con su fuente.
-- **DM Sans** — cuerpo de texto y títulos de tarjeta (`h3`). Los títulos de tarjeta se repiten
-  varias veces por vista (Panel, Flota, Reglas…), así que usan la fuente de cuerpo en vez de
-  competir entre sí con un display serif.
-- **DM Mono** — datos tabulares: matrícula, TRG/AB, folios, fechas, días para vencer. Clase
-  utilitaria `.pa-mono` en `src/styles/base.css`.
+| Token | Hex | Uso |
+| --- | --- | --- |
+| Azul Naval (`--pa-navy`) | `#163B5C` | Header, texto de marca, superficies estructurales |
+| Turquesa Austral (`--pa-accion`/`--pa-turquesa`) | `#278C8C` | Acciones, enlaces, estados activos |
+| Ámbar Energía (`--pa-acento-marca`) | `#E29A45` | Acento de marca — nunca como color de estado |
+
+El degradado oficial (Azul Naval → Turquesa Austral → Ámbar Energía, `--pa-degradado-acento`)
+se reserva a momentos puntuales — la barra superior de la tarjeta de login — en vez de
+repetirse por toda la interfaz.
+
+Tipografía con dos roles, tal como define el manual:
+
+- **Sora SemiBold** — exclusiva del logotipo/wordmark "Navix" (clase `.pa-logotipo` en
+  `src/styles/base.css`). No se usa en ningún otro texto de la interfaz.
+- **DM Sans** — todo lo demás: títulos de página, cuerpo, títulos de tarjeta. El manual la
+  define como "tipografía corporativa complementaria" para títulos y textos de interfaz.
+- **DM Mono** (extensión propia del producto, fuera del manual de marca) — datos tabulares:
+  matrícula, TRG/AB, folios, fechas, días para vencer. Clase utilitaria `.pa-mono`.
+
+El isologo (`IconoNavix` en `src/ui/components/iconos.tsx`) son dos picos superpuestos —
+Azul Naval detrás, Turquesa Austral delante— que dejan un canal navegable entre ambos, con
+una ola de Ámbar Energía en la base: la geografía de fiordos vista desde arriba, siguiendo
+el concepto del manual de marca.
 
 El fondo lleva una textura muy sutil de líneas de sonda náutica y las tarjetas un grano fino
 (ambos en SVG inline, opacidad ≤0.06); el header y los botones primarios usan degradados de

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 *,
 *::before,
@@ -34,20 +34,27 @@ h4 {
   font-weight: 700;
 }
 
-/* Playfair queda reservado a los momentos de portada y al título de página
-   (h1/h2): un solo acento editorial por vista. Los títulos de tarjeta (h3) se
-   repiten varias veces por pantalla en las vistas de datos, así que usan la
-   fuente de cuerpo para no competir entre sí ni saturar la jerarquía. */
+/* El manual de marca reserva Sora al logotipo (.pa-logotipo, más abajo);
+   los títulos de página usan DM Sans como el resto de la interfaz, con
+   tracking negativo por tamaño (apple-design: cuanto más grande el texto,
+   más se cierra el letter-spacing). */
 h1,
 h2 {
-  font-family: var(--pa-fuente-display);
   text-wrap: balance;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 h3 {
   font-size: 1.05rem;
   letter-spacing: -0.005em;
+}
+
+/* Wordmark "Navix": único lugar de la interfaz que usa Sora SemiBold, tal
+   como define el manual de marca — el resto de títulos y texto usa DM Sans. */
+.pa-logotipo {
+  font-family: var(--pa-fuente-logo);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .pa-mono {
@@ -386,7 +393,7 @@ button {
 }
 
 .pa-stat-tile--ambar::before {
-  background: linear-gradient(90deg, #a15b28, var(--pa-por-vencer));
+  background: linear-gradient(90deg, #7c5526, var(--pa-por-vencer));
 }
 
 .pa-stat-tile--gris::before {
@@ -475,8 +482,8 @@ button {
   color: #a3332d;
 }
 .pa-badge--criticidad-alta {
-  background: #fbead9;
-  color: #965525;
+  background: var(--pa-por-vencer-bg);
+  color: var(--pa-por-vencer);
 }
 .pa-badge--criticidad-media {
   background: #eaf1fb;
@@ -544,7 +551,7 @@ button {
    muy sutil basta para que el ojo detecte dónde cambia el grupo sin añadir
    bordes ni reestructurar la tabla. */
 .pa-table tbody tr.pa-table__grupo-par {
-  background-color: rgba(27, 58, 107, 0.08);
+  background-color: rgba(22, 59, 92, 0.08);
 }
 
 .pa-table tbody tr.pa-table__grupo-par:hover {
@@ -574,19 +581,19 @@ button {
 .pa-btn--primario {
   background: linear-gradient(100deg, var(--pa-navy), var(--pa-accion) 70%, var(--pa-accion-suave));
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(46, 155, 214, 0.35);
+  box-shadow: 0 6px 16px rgba(39, 140, 140, 0.35);
 }
 
 .pa-btn--primario:hover {
   filter: brightness(1.06);
-  box-shadow: 0 8px 20px rgba(46, 155, 214, 0.42);
+  box-shadow: 0 8px 20px rgba(39, 140, 140, 0.42);
 }
 
 /* El botón "se hunde" en su propia elevación al presionar: la sombra se
    comprime en el mismo instante que el translateY de .pa-btn:active, para
    que el gesto de presión se lea también como un cambio de profundidad. */
 .pa-btn--primario:active {
-  box-shadow: 0 2px 6px rgba(46, 155, 214, 0.32);
+  box-shadow: 0 2px 6px rgba(39, 140, 140, 0.32);
 }
 
 .pa-btn--secundario {

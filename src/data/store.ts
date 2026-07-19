@@ -3,7 +3,7 @@
  *
  * No hay backend. Todo cambio (registrar certificado, cargar evidencia,
  * ajustar stock de un insumo) se guarda en `localStorage` bajo la clave
- * `proactivo-demo-v1`. El botón "Restablecer demo" borra el overlay y
+ * `navix-demo-v1`. El botón "Restablecer demo" borra el overlay y
  * vuelve a los datos semilla.
  */
 import type { Armador, Certificado, Insumo, ReglaNormativa } from '../types/schema';
@@ -16,7 +16,7 @@ import {
 } from './seed';
 import catalogoRaw from './catalogo-reglas.json';
 
-export const CLAVE_STORAGE = 'proactivo-demo-v1';
+export const CLAVE_STORAGE = 'navix-demo-v1';
 
 const catalogo = catalogoRaw as unknown as {
   _meta: { descripcion: string; version: string; fechaGeneracion: string; advertencia: string };
