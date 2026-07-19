@@ -1,8 +1,13 @@
-# ProActivo
+# Navix
 
-Demo interactiva de auditoría de cumplimiento marítimo para DIRECTEMAR — Región de Aysén.
-Registro de flota, clasificación de naves por TRG/AB, certificados con alertas de
-vencimiento, control de insumos y preparación de revista de cargo.
+Software de gestión marítima: demo interactiva de auditoría de cumplimiento para
+DIRECTEMAR — Región de Aysén. Responde una sola pregunta con certeza: ¿puede esta nave
+zarpar hoy sin exponerse a una observación, una multa o una detención? No es una
+herramienta de monitoreo operativo de la nave — es una herramienta de conformidad:
+documental, de gestión y física. Registro de flota, clasificación de naves por TRG/AB,
+certificados con alertas de vencimiento, control de insumos y preparación de revista de
+cargo. Ver [`/acerca-de`](src/ui/pages/Acerca.tsx) en la app para el detalle de producto
+completo.
 
 Es una demo **con datos mock** (sin backend): el motor de evaluación de reglas normativas
 sí es real y corre en el navegador sobre datos de ejemplo, con persistencia local en
@@ -37,21 +42,36 @@ real de verificación del catálogo, no un error.
 - CSS plano con custom properties (sin Tailwind) — ver `src/styles/`.
 - Vitest para los tests del motor de evaluación.
 - Persistencia demo: datos semilla en TypeScript (`src/data/seed.ts`, con fechas relativas
-  a `new Date()`) + overlay en `localStorage` bajo la clave `proactivo-demo-v1`. El botón
+  a `new Date()`) + overlay en `localStorage` bajo la clave `navix-demo-v1`. El botón
   "Restablecer demo" del menú lateral borra el overlay y vuelve a los datos semilla.
 
 ## Diseño visual
 
-Tipografía con tres roles, no una sola fuente para todo:
+Sigue el manual de marca de Navix. Paleta oficial (tokens en `src/styles/tokens.css`):
 
-- **Playfair Display** — reservada a la portada (login) y al título de cada página (`h1`/`h2`).
-  Es la misma familia que usa `docs/matriz-normativa-aysen.html`, el documento normativo de
-  origen: liga visualmente la app con su fuente.
-- **DM Sans** — cuerpo de texto y títulos de tarjeta (`h3`). Los títulos de tarjeta se repiten
-  varias veces por vista (Panel, Flota, Reglas…), así que usan la fuente de cuerpo en vez de
-  competir entre sí con un display serif.
-- **DM Mono** — datos tabulares: matrícula, TRG/AB, folios, fechas, días para vencer. Clase
-  utilitaria `.pa-mono` en `src/styles/base.css`.
+| Token | Hex | Uso |
+| --- | --- | --- |
+| Azul Naval (`--pa-navy`) | `#163B5C` | Header, texto de marca, superficies estructurales |
+| Turquesa Austral (`--pa-accion`/`--pa-turquesa`) | `#278C8C` | Acciones, enlaces, estados activos |
+| Ámbar Energía (`--pa-acento-marca`) | `#E29A45` | Acento de marca — nunca como color de estado |
+
+El degradado oficial (Azul Naval → Turquesa Austral → Ámbar Energía, `--pa-degradado-acento`)
+se reserva a momentos puntuales — la barra superior de la tarjeta de login — en vez de
+repetirse por toda la interfaz.
+
+Tipografía con dos roles, tal como define el manual:
+
+- **Sora SemiBold** — exclusiva del logotipo/wordmark "Navix" (clase `.pa-logotipo` en
+  `src/styles/base.css`). No se usa en ningún otro texto de la interfaz.
+- **DM Sans** — todo lo demás: títulos de página, cuerpo, títulos de tarjeta. El manual la
+  define como "tipografía corporativa complementaria" para títulos y textos de interfaz.
+- **DM Mono** (extensión propia del producto, fuera del manual de marca) — datos tabulares:
+  matrícula, TRG/AB, folios, fechas, días para vencer. Clase utilitaria `.pa-mono`.
+
+El logo es el asset real del manual de marca (`public/navix-icono.png` — solo el isologo,
+usado en el header— y `public/navix-logo.png` — isologo + wordmark + tagline, usado en la
+portada), recortado con fondo transparente a partir del archivo entregado por el equipo de
+marca. No hay una reconstrucción en SVG: se inserta el logo directamente.
 
 El fondo lleva una textura muy sutil de líneas de sonda náutica y las tarjetas un grano fino
 (ambos en SVG inline, opacidad ≤0.06); el header y los botones primarios usan degradados de
@@ -63,6 +83,40 @@ y nunca las acciones frecuentes. Por eso navegar entre vistas no tiene animació
 los stat-tiles / tarjetas de features del login (no clickeables) no tienen hover decorativo. La
 entrada escalonada del login y el fade del modal de evidencia sí se mantienen, por ser momentos
 puntuales. Todo respeta `prefers-reduced-motion`.
+
+Los desplazamientos de hover puramente decorativos (nav lateral, accesos rápidos del login)
+están detrás de `@media (hover: hover) and (pointer: fine)`: en touch, tocar dispara `:hover`
+sin que haya un puntero fino detrás, así que sin ese filtro el efecto queda "pegado" tras el tap.
+
+El panel agrupa sus dos colas de riesgo activo ("Próximos vencimientos" e "Insumos con
+alerta") con espacio ajustado (`.pa-grupo-ajustado`) porque son la misma categoría
+conceptual; el resto de secciones usa la separación generosa por defecto de `.pa-main` —
+ritmo de espaciado como señal de agrupación, no solo relleno. Los botones primarios
+comprimen su sombra al presionar (además del `translateY` existente) para que el gesto de
+click se lea también como un cambio de profundidad. El fondo del modal de evidencia usa
+`backdrop-filter: blur()` en vez de un scrim opaco, con fallback sólido bajo
+`prefers-reduced-transparency`. Cambiar un filtro en Certificados o Insumos (acción
+ocasional, no una navegación frecuente) remonta el listado con un fade corto de 200ms
+(`.pa-fade-remonta`) para señalar "conjunto de resultados nuevo" sin competir con la regla
+de "sin animación de entrada" de la navegación entre vistas.
+
+Certificados e Insumos agrupan sus filas por nave en ventanas plegables (`<details>`,
+clase `.pa-grupo-nave`) en vez de una tabla plana de ~100–120 filas: cada nave se abre por
+separado, así el panel no obliga a un scroll interminable para encontrar un documento o
+insumo puntual. La cola de vencimientos cruzando toda la flota sin importar la nave sigue
+viviendo en el Panel ("Próximos vencimientos"); estas dos vistas son el detalle completo
+organizado por nave.
+
+### Skills de diseño instaladas
+
+El repo trae skills de agente instaladas con [`skills`](https://github.com/vercel-labs/skills)
+(`.agents/skills/`, symlink en `.claude/skills/`) y [`taste-skill`](https://github.com/taste-skill/taste-skill)
+(`skills/taste/`, symlinked bajo los nombres `taste-*`): `emil-design-eng`, `apple-design`,
+`animation-vocabulary`, `improve-animations`, `review-animations`, `find-animation-opportunities`,
+`impeccable`, `taste-default`, `taste-soft-calm`, `taste-redesign` y el resto del set de
+`taste-skill`. Se usaron para la auditoría de contraste y de motion de esta vuelta de pulido
+(colores de estado, badges de criticidad y el enlace `<a>` global no cumplían 4.5:1 AA sobre su
+fondo — ver `--pa-enlace` y los tokens de estado en `src/styles/tokens.css`).
 
 ## Cómo correr
 
@@ -91,6 +145,30 @@ npm run build    # build de producción (tsc -b && vite build)
 npm run preview  # sirve el build de producción localmente
 ```
 
+## Despliegue (GitHub Pages)
+
+`.github/workflows/deploy-pages.yml` construye y publica en GitHub Pages en cada push a
+`claude/new-session-yfbrzq` (o manualmente desde la pestaña Actions → "Deploy to GitHub
+Pages" → Run workflow). Queda en
+`https://aldomellado1310-source.github.io/proActivo/`.
+
+**Paso manual único**: en Settings → Pages de este repo, poné "Source" en **GitHub
+Actions** (no puedo hacerlo por API). Sin ese paso el workflow corre pero el deploy falla.
+
+Detalles de la implementación, por si tocás rutas o assets:
+
+- `vite.config.ts` sirve desde `/proActivo/` solo cuando el build corre con
+  `GITHUB_PAGES=true` (así lo hace el workflow); `npm run dev` y un `npm run build` local
+  normal siguen en la raíz.
+- `<BrowserRouter basename={import.meta.env.BASE_URL}>` en `App.tsx` hace que las rutas
+  coincidan con ese prefijo.
+- Cualquier asset de `public/` referenciado desde un componente (no desde `index.html`,
+  que Vite reescribe solo) necesita el prefijo a mano:
+  `` `${import.meta.env.BASE_URL}archivo.png` `` — ver `Header.tsx` y `Login.tsx`.
+- `postbuild` copia `dist/index.html` a `dist/404.html`: GitHub Pages no tiene rewrites de
+  servidor, así que una ruta profunda (`/proActivo/flota`) sin ese archivo devolvería un
+  404 real en vez de dejar que el router del lado del cliente la resuelva.
+
 ## Estructura
 
 ```
@@ -108,7 +186,7 @@ src/
 └── ui/
     ├── layout/             # Header, Nav, Layout
     ├── components/         # Card, Badge, ModalFoto, FormularioCertificado, iconos
-    └── pages/              # Login, Dashboard, Flota, NaveDetalle, Certificados, Insumos, Reglas
+    └── pages/              # Login, Dashboard, Flota, NaveDetalle, Certificados, Insumos, Reglas, Acerca
 ```
 
 ## Documento de referencia

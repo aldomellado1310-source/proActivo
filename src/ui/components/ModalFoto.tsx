@@ -27,7 +27,6 @@ export function ModalFoto({ titulo, onCerrar, onGuardar }: ModalFotoProps) {
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(27, 58, 107, 0.35)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

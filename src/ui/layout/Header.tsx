@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IconoNave } from '../components/iconos';
 import { useEstadoDemo } from '../EstadoContext';
 import { PERFILES_DEMO } from '../../data/store';
 
@@ -13,8 +12,8 @@ export function Header() {
     <header className="pa-header">
       <div className="pa-header__izq">
         <Link to={perfil ? '/dashboard' : '/'} className="pa-header__marca">
-          <IconoNave />
-          ProActivo
+          <img src={`${import.meta.env.BASE_URL}navix-icono.png`} alt="" className="pa-header__icono" />
+          <span className="pa-logotipo">Navix</span>
         </Link>
         <span className="pa-badge-demo">DEMO INTERACTIVA</span>
         <span className="pa-header__subtitulo">DIRECTEMAR · Región de Aysén</span>

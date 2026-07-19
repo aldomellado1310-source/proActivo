@@ -8,11 +8,12 @@ import { NaveDetalle } from './pages/NaveDetalle';
 import { Certificados } from './pages/Certificados';
 import { Insumos } from './pages/Insumos';
 import { Reglas } from './pages/Reglas';
+import { Acerca } from './pages/Acerca';
 
 export function App() {
   return (
     <EstadoProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route element={<Layout />}>
@@ -22,6 +23,7 @@ export function App() {
             <Route path="/certificados" element={<Certificados />} />
             <Route path="/insumos" element={<Insumos />} />
             <Route path="/reglas" element={<Reglas />} />
+            <Route path="/acerca-de" element={<Acerca />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

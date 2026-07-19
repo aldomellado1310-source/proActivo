@@ -1,26 +1,7 @@
 /** Iconos SVG inline, minimalistas, en el trazo de la marca. */
-
-export function IconoNave({ size = 26 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M4 15.5 3 11h18l-1 4.5M6 11V6h5l3 5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2.5 15.5c1 1.6 2.3 2.5 3.8 2.5s2.8-.9 3.8-2c1 1.1 2.3 2 3.8 2s2.8-.9 3.8-2c1 1.1 2.3 2 3.8 2"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M9 6V3.5h3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+/* El isologo de Navix vive como asset real en public/navix-icono.png y
+   public/navix-logo.png (recortados del logo oficial), no como ícono SVG
+   propio — ver Header.tsx y Login.tsx. */
 
 export function IconoAncla({ size = 22 }: { size?: number }) {
   return (
@@ -144,17 +125,25 @@ export function IconoReglas({ size = 18 }: { size?: number }) {
   );
 }
 
-export function IconoTrazabilidad({ size = 22 }: { size?: number }) {
+/** Capas apiladas: historial/versionado normativo (una regla conserva cada
+ * versión bajo la que fue evaluada). Deliberadamente no es un ícono de ruta
+ * o trayecto, para no aludir a posicionamiento de la nave. */
+export function IconoHistorial({ size = 22 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M5 5h11a3 3 0 0 1 0 6H8a3 3 0 0 0 0 6h11"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-      />
-      <circle cx="5" cy="5" r="1.6" fill="currentColor" />
-      <circle cx="19" cy="17" r="1.6" fill="currentColor" />
+      <path d="M12 3.5 20.5 8 12 12.5 3.5 8Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+      <path d="M3.5 12 12 16.5 20.5 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M3.5 16 12 20.5 20.5 16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function IconoInfo({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M12 11v5.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="12" cy="7.8" r="1" fill="currentColor" />
     </svg>
   );
 }

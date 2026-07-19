@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
 
 *,
 *::before,
@@ -34,20 +34,27 @@ h4 {
   font-weight: 700;
 }
 
-/* Playfair queda reservado a los momentos de portada y al título de página
-   (h1/h2): un solo acento editorial por vista. Los títulos de tarjeta (h3) se
-   repiten varias veces por pantalla en las vistas de datos, así que usan la
-   fuente de cuerpo para no competir entre sí ni saturar la jerarquía. */
+/* El manual de marca reserva Sora al logotipo (.pa-logotipo, más abajo);
+   los títulos de página usan DM Sans como el resto de la interfaz, con
+   tracking negativo por tamaño (apple-design: cuanto más grande el texto,
+   más se cierra el letter-spacing). */
 h1,
 h2 {
-  font-family: var(--pa-fuente-display);
   text-wrap: balance;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 h3 {
   font-size: 1.05rem;
   letter-spacing: -0.005em;
+}
+
+/* Wordmark "Navix": único lugar de la interfaz que usa Sora SemiBold, tal
+   como define el manual de marca — el resto de títulos y texto usa DM Sans. */
+.pa-logotipo {
+  font-family: var(--pa-fuente-logo);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .pa-mono {
@@ -73,7 +80,7 @@ p {
 }
 
 a {
-  color: var(--pa-accion);
+  color: var(--pa-enlace);
 }
 
 button {
@@ -122,8 +129,11 @@ button {
   color: #ffffff;
 }
 
-.pa-header__marca svg {
+.pa-header__icono {
   flex-shrink: 0;
+  height: 28px;
+  width: auto;
+  display: block;
 }
 
 .pa-badge-demo {
@@ -255,11 +265,18 @@ button {
 
 .pa-nav a:hover {
   background: var(--pa-conforme-bg);
-  transform: translateX(2px);
 }
 
 .pa-nav a:hover svg {
   opacity: 1;
+}
+
+/* El desplazamiento lateral es decorativo; se aísla del tap táctil (que
+   dispara :hover sin puntero fino) para que no quede "pegado" tras un toque. */
+@media (hover: hover) and (pointer: fine) {
+  .pa-nav a:hover {
+    transform: translateX(2px);
+  }
 }
 
 .pa-nav a.activo {
@@ -270,6 +287,19 @@ button {
 
 .pa-nav a.activo svg {
   opacity: 1;
+}
+
+/* Enlace informativo, no operativo: separado de las vistas de datos por su
+   propio borde, con tipografía más liviana para que no compita con ellas. */
+.pa-nav .pa-nav__secundario {
+  margin-top: var(--pa-espacio-2);
+  border-top: 1px solid var(--pa-borde);
+  padding-top: var(--pa-espacio-2);
+}
+
+.pa-nav .pa-nav__secundario a {
+  font-size: 0.85rem;
+  color: var(--pa-texto-suave);
 }
 
 .pa-nav .pa-nav__reset {
@@ -283,7 +313,19 @@ button {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--pa-espacio-5);
+  /* Separación generosa por defecto entre secciones: cada una es una categoría
+     de contenido distinta (KPIs, colas de riesgo, tabla de flota…). */
+  gap: var(--pa-espacio-6);
+}
+
+/* Agrupación ajustada para secciones que son la misma categoría conceptual
+   (p. ej. las dos colas de riesgo activo del panel): el espacio tight entre
+   ellas y el generoso de .pa-main alrededor son lo que comunica que van
+   juntas sin necesitar un contenedor adicional. */
+.pa-grupo-ajustado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pa-espacio-4);
 }
 
 @keyframes pa-entrada {
@@ -367,7 +409,7 @@ button {
 }
 
 .pa-stat-tile--ambar::before {
-  background: linear-gradient(90deg, #a15b28, var(--pa-por-vencer));
+  background: linear-gradient(90deg, #7c5526, var(--pa-por-vencer));
 }
 
 .pa-stat-tile--gris::before {
@@ -456,8 +498,8 @@ button {
   color: #a3332d;
 }
 .pa-badge--criticidad-alta {
-  background: #fbead9;
-  color: #a15b28;
+  background: var(--pa-por-vencer-bg);
+  color: var(--pa-por-vencer);
 }
 .pa-badge--criticidad-media {
   background: #eaf1fb;
@@ -472,6 +514,14 @@ button {
 
 .pa-table-wrap {
   overflow-x: auto;
+}
+
+/* Al cambiar un filtro (acción ocasional, no una navegación frecuente) el
+   contenido remontado se anima con este fade corto para señalar "esto es un
+   conjunto nuevo de resultados", no una carga de página. Respeta
+   prefers-reduced-motion vía la regla global de arriba. */
+.pa-fade-remonta {
+  animation: pa-entrada 0.2s ease-out both;
 }
 
 .pa-table {
@@ -513,6 +563,93 @@ button {
   transition: background-color 0.15s ease;
 }
 
+/* ── Ventanas agrupadas (Certificados, Insumos) ───────────── */
+/* Cada nave es su propia ventana plegable en vez de una fila más de una
+   tabla plana de ~100 filas: evita el menú/listado interminable, y abrir
+   una nave a la vez mantiene la vista corta. */
+
+.pa-grupos-nave {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pa-espacio-3);
+}
+
+.pa-grupo-nave {
+  background-color: var(--pa-superficie);
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
+  border: 1px solid var(--pa-borde);
+  border-radius: var(--pa-radio-card);
+  box-shadow: var(--pa-sombra-sm);
+  overflow: hidden;
+}
+
+.pa-grupo-nave__resumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pa-espacio-3);
+  padding: var(--pa-espacio-4) var(--pa-espacio-5);
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  color: var(--pa-navy);
+  transition: background-color 0.15s ease;
+}
+
+.pa-grupo-nave__resumen::-webkit-details-marker {
+  display: none;
+}
+
+.pa-grupo-nave__resumen:hover {
+  background: var(--pa-fondo-de);
+}
+
+/* Chevron dibujado con bordes, no un ícono aparte: gira al abrir la ventana,
+   la única señal de estado que necesita este control. */
+.pa-grupo-nave__resumen::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid var(--pa-texto-suave);
+  border-bottom: 2px solid var(--pa-texto-suave);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.pa-grupo-nave[open] > .pa-grupo-nave__resumen::after {
+  transform: rotate(-135deg);
+}
+
+.pa-grupo-nave__meta {
+  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--pa-texto-suave);
+  white-space: nowrap;
+}
+
+.pa-grupo-nave__alerta {
+  color: var(--pa-vencido);
+  font-weight: 600;
+}
+
+.pa-grupo-nave__acciones {
+  padding: 0 var(--pa-espacio-5);
+  margin-top: -4px;
+  margin-bottom: var(--pa-espacio-2);
+  font-size: 0.82rem;
+}
+
+.pa-grupo-nave .pa-table-wrap {
+  border-top: 1px solid var(--pa-borde);
+}
+
+.pa-grupo-nave .pa-table {
+  font-size: 0.88rem;
+}
+
 /* ── Botones / formularios ────────────────────────────────── */
 
 .pa-btn {
@@ -526,7 +663,7 @@ button {
   font-size: 0.9rem;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 0.05s ease, filter 0.15s ease, box-shadow 0.18s ease, background-color 0.15s ease;
+  transition: transform 0.1s ease-out, filter 0.15s ease, box-shadow 0.12s ease-out, background-color 0.15s ease;
 }
 
 .pa-btn:active {
@@ -536,12 +673,19 @@ button {
 .pa-btn--primario {
   background: linear-gradient(100deg, var(--pa-navy), var(--pa-accion) 70%, var(--pa-accion-suave));
   color: #ffffff;
-  box-shadow: 0 6px 16px rgba(46, 155, 214, 0.35);
+  box-shadow: 0 6px 16px rgba(39, 140, 140, 0.35);
 }
 
 .pa-btn--primario:hover {
   filter: brightness(1.06);
-  box-shadow: 0 8px 20px rgba(46, 155, 214, 0.42);
+  box-shadow: 0 8px 20px rgba(39, 140, 140, 0.42);
+}
+
+/* El botón "se hunde" en su propia elevación al presionar: la sombra se
+   comprime en el mismo instante que el translateY de .pa-btn:active, para
+   que el gesto de presión se lea también como un cambio de profundidad. */
+.pa-btn--primario:active {
+  box-shadow: 0 2px 6px rgba(39, 140, 140, 0.32);
 }
 
 .pa-btn--secundario {
@@ -666,30 +810,28 @@ button {
 }
 
 .pa-login__marca {
-  display: flex;
-  align-items: center;
-  gap: var(--pa-espacio-3);
+  margin: 0 0 var(--pa-espacio-2);
   opacity: 0;
   animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+/* El logo es el elemento con más peso de la portada, pero esto sigue siendo
+   la pantalla de acceso a una herramienta operativa, no un landing de
+   marketing — se mantiene contenido en vez de ocupar el máximo posible. */
+.pa-login__logo {
+  display: block;
+  height: 118px;
+  width: auto;
+}
+
+.pa-login__subtitulo {
+  font-size: 0.92rem;
+  margin-top: -4px;
 }
 
 .pa-login__intro {
   opacity: 0;
   animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
-}
-
-/* El nombre del producto es el elemento con más peso de la portada, pero esto
-   sigue siendo la pantalla de acceso a una herramienta operativa, no un
-   landing de marketing — se mantiene contenido en vez de ocupar el máximo
-   posible, y el resto del bloque desciende en tamaño según su relevancia. */
-.pa-login__marca-texto h1 {
-  font-size: 1.85rem;
-  margin-bottom: 2px;
-}
-
-.pa-login__marca-texto p {
-  color: var(--pa-texto-suave);
-  font-size: 0.92rem;
 }
 
 .pa-login__features {
@@ -792,8 +934,13 @@ button {
 .pa-acceso-rapido:hover {
   border-color: var(--pa-accion-suave);
   background: var(--pa-fondo-de);
-  transform: translateX(3px);
   box-shadow: var(--pa-sombra-sm);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pa-acceso-rapido:hover {
+    transform: translateX(3px);
+  }
 }
 
 .pa-acceso-rapido__avatar {
@@ -868,7 +1015,16 @@ button {
 }
 
 .pa-modal-fondo {
+  background: rgba(15, 27, 44, 0.5);
+  backdrop-filter: blur(6px);
   animation: pa-modal-fondo 0.18s ease both;
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .pa-modal-fondo {
+    background: rgba(15, 27, 44, 0.82);
+    backdrop-filter: none;
+  }
 }
 
 .pa-modal-caja {
