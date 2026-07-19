@@ -34,12 +34,20 @@ h4 {
   font-weight: 700;
 }
 
+/* Playfair queda reservado a los momentos de portada y al título de página
+   (h1/h2): un solo acento editorial por vista. Los títulos de tarjeta (h3) se
+   repiten varias veces por pantalla en las vistas de datos, así que usan la
+   fuente de cuerpo para no competir entre sí ni saturar la jerarquía. */
 h1,
-h2,
-h3 {
+h2 {
   font-family: var(--pa-fuente-display);
   text-wrap: balance;
   letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: 1.05rem;
+  letter-spacing: -0.005em;
 }
 
 .pa-mono {
@@ -289,11 +297,12 @@ button {
   }
 }
 
+/* Navegar entre vistas es una acción frecuente: sin animación de entrada por
+   ruta, para que la interfaz se sienta inmediata en vez de decorativa. */
 .pa-route-transition {
   display: flex;
   flex-direction: column;
-  gap: var(--pa-espacio-5);
-  animation: pa-entrada 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+  gap: var(--pa-espacio-6);
 }
 
 /* ── Tarjetas ──────────────────────────────────────────────── */
@@ -341,7 +350,6 @@ button {
   border-radius: var(--pa-radio-card);
   padding: var(--pa-espacio-4) var(--pa-espacio-5);
   box-shadow: var(--pa-sombra-sm);
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .pa-stat-tile::before {
@@ -364,11 +372,6 @@ button {
 
 .pa-stat-tile--gris::before {
   background: linear-gradient(90deg, #5c6b78, var(--pa-indeterminado));
-}
-
-.pa-stat-tile:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--pa-sombra);
 }
 
 .pa-stat-tile__valor {
@@ -675,14 +678,18 @@ button {
   animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
 }
 
+/* El nombre del producto es el elemento con más peso de la portada, pero esto
+   sigue siendo la pantalla de acceso a una herramienta operativa, no un
+   landing de marketing — se mantiene contenido en vez de ocupar el máximo
+   posible, y el resto del bloque desciende en tamaño según su relevancia. */
 .pa-login__marca-texto h1 {
-  font-size: 2.3rem;
+  font-size: 1.85rem;
   margin-bottom: 2px;
 }
 
 .pa-login__marca-texto p {
   color: var(--pa-texto-suave);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
 }
 
 .pa-login__features {
@@ -703,13 +710,6 @@ button {
   text-align: center;
   opacity: 0;
   animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-}
-
-.pa-feature-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--pa-sombra-sm);
-  border-color: var(--pa-accion-suave);
 }
 
 .pa-login__features .pa-feature-card:nth-child(1) {

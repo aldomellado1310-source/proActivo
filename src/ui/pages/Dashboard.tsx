@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, StatTile, EmptyState } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
@@ -5,9 +6,12 @@ import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
 import { PERFILES_DEMO } from '../../data/store';
 
+const LIMITE_REGLAS_PENDIENTES = 5;
+
 export function Dashboard() {
   const { estado, reglas } = useEstadoDemo();
   const evaluaciones = useEvaluaciones();
+  const [verTodasPendientes, setVerTodasPendientes] = useState(false);
   const perfil = PERFILES_DEMO.find((p) => p.id === estado.perfilActivoId);
 
   const naves = estado.naves;
@@ -154,28 +158,43 @@ export function Dashboard() {
         {reglasPendientes.length === 0 ? (
           <EmptyState>No hay reglas pendientes de confirmación.</EmptyState>
         ) : (
-          <div className="pa-table-wrap">
-            <table className="pa-table">
-              <thead>
-                <tr>
-                  <th>Documento exigido</th>
-                  <th>Criticidad</th>
-                  <th>Naves afectadas</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reglasPendientes.map(({ regla, cantidadNaves }) => (
-                  <tr key={regla!.id}>
-                    <td>
-                      <EstadoBadge estado="indeterminado" /> <span style={{ marginLeft: 8 }}>{regla!.documentoExigido}</span>
-                    </td>
-                    <td>{regla!.criticidad}</td>
-                    <td>{cantidadNaves}</td>
+          <>
+            <div className="pa-table-wrap">
+              <table className="pa-table">
+                <thead>
+                  <tr>
+                    <th>Documento exigido</th>
+                    <th>Criticidad</th>
+                    <th>Naves afectadas</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {(verTodasPendientes ? reglasPendientes : reglasPendientes.slice(0, LIMITE_REGLAS_PENDIENTES)).map(
+                    ({ regla, cantidadNaves }) => (
+                      <tr key={regla!.id}>
+                        <td>
+                          <EstadoBadge estado="indeterminado" /> <span style={{ marginLeft: 8 }}>{regla!.documentoExigido}</span>
+                        </td>
+                        <td>{regla!.criticidad}</td>
+                        <td>{cantidadNaves}</td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
+            {reglasPendientes.length > LIMITE_REGLAS_PENDIENTES && (
+              <button
+                className="pa-btn pa-btn--secundario"
+                style={{ marginTop: 12, fontSize: '0.8rem', padding: '7px 14px' }}
+                onClick={() => setVerTodasPendientes((v) => !v)}
+              >
+                {verTodasPendientes
+                  ? 'Mostrar menos'
+                  : `Mostrar ${reglasPendientes.length - LIMITE_REGLAS_PENDIENTES} más`}
+              </button>
+            )}
+          </>
         )}
       </Card>
 

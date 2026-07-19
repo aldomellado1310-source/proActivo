@@ -27,7 +27,7 @@ export function Login() {
         <div>
           <div className="pa-login__marca">
             <span style={{ color: 'var(--pa-navy)' }}>
-              <IconoNave size={56} />
+              <IconoNave size={44} />
             </span>
             <div className="pa-login__marca-texto">
               <h1>ProActivo</h1>
