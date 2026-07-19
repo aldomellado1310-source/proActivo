@@ -26,7 +26,11 @@ export function Login() {
       <div className="pa-login">
         <div>
           <h1 className="pa-login__marca">
-            <img src="/navix-logo.png" alt="Navix — software de gestión marítima" className="pa-login__logo" />
+            <img
+              src={`${import.meta.env.BASE_URL}navix-logo.png`}
+              alt="Navix — software de gestión marítima"
+              className="pa-login__logo"
+            />
           </h1>
           <p className="pa-texto-suave pa-login__subtitulo">DIRECTEMAR · Región de Aysén</p>
           <p className="pa-texto-suave pa-login__intro">

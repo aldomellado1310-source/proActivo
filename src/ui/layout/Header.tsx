@@ -12,7 +12,7 @@ export function Header() {
     <header className="pa-header">
       <div className="pa-header__izq">
         <Link to={perfil ? '/dashboard' : '/'} className="pa-header__marca">
-          <img src="/navix-icono.png" alt="" className="pa-header__icono" />
+          <img src={`${import.meta.env.BASE_URL}navix-icono.png`} alt="" className="pa-header__icono" />
           <span className="pa-logotipo">Navix</span>
         </Link>
         <span className="pa-badge-demo">DEMO INTERACTIVA</span>

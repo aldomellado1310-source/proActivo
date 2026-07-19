@@ -13,7 +13,7 @@ import { Acerca } from './pages/Acerca';
 export function App() {
   return (
     <EstadoProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.BASE_URL}>
         <Routes>
           <Route path="/" element={<Login />} />
           <Route element={<Layout />}>

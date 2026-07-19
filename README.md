@@ -145,6 +145,30 @@ npm run build    # build de producción (tsc -b && vite build)
 npm run preview  # sirve el build de producción localmente
 ```
 
+## Despliegue (GitHub Pages)
+
+`.github/workflows/deploy-pages.yml` construye y publica en GitHub Pages en cada push a
+`claude/new-session-yfbrzq` (o manualmente desde la pestaña Actions → "Deploy to GitHub
+Pages" → Run workflow). Queda en
+`https://aldomellado1310-source.github.io/proActivo/`.
+
+**Paso manual único**: en Settings → Pages de este repo, poné "Source" en **GitHub
+Actions** (no puedo hacerlo por API). Sin ese paso el workflow corre pero el deploy falla.
+
+Detalles de la implementación, por si tocás rutas o assets:
+
+- `vite.config.ts` sirve desde `/proActivo/` solo cuando el build corre con
+  `GITHUB_PAGES=true` (así lo hace el workflow); `npm run dev` y un `npm run build` local
+  normal siguen en la raíz.
+- `<BrowserRouter basename={import.meta.env.BASE_URL}>` en `App.tsx` hace que las rutas
+  coincidan con ese prefijo.
+- Cualquier asset de `public/` referenciado desde un componente (no desde `index.html`,
+  que Vite reescribe solo) necesita el prefijo a mano:
+  `` `${import.meta.env.BASE_URL}archivo.png` `` — ver `Header.tsx` y `Login.tsx`.
+- `postbuild` copia `dist/index.html` a `dist/404.html`: GitHub Pages no tiene rewrites de
+  servidor, así que una ruta profunda (`/proActivo/flota`) sin ese archivo devolvería un
+  404 real en vez de dejar que el router del lado del cliente la resuelva.
+
 ## Estructura
 
 ```
