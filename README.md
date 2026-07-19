@@ -40,6 +40,30 @@ real de verificación del catálogo, no un error.
   a `new Date()`) + overlay en `localStorage` bajo la clave `proactivo-demo-v1`. El botón
   "Restablecer demo" del menú lateral borra el overlay y vuelve a los datos semilla.
 
+## Diseño visual
+
+Tipografía con tres roles, no una sola fuente para todo:
+
+- **Playfair Display** — reservada a la portada (login) y al título de cada página (`h1`/`h2`).
+  Es la misma familia que usa `docs/matriz-normativa-aysen.html`, el documento normativo de
+  origen: liga visualmente la app con su fuente.
+- **DM Sans** — cuerpo de texto y títulos de tarjeta (`h3`). Los títulos de tarjeta se repiten
+  varias veces por vista (Panel, Flota, Reglas…), así que usan la fuente de cuerpo en vez de
+  competir entre sí con un display serif.
+- **DM Mono** — datos tabulares: matrícula, TRG/AB, folios, fechas, días para vencer. Clase
+  utilitaria `.pa-mono` en `src/styles/base.css`.
+
+El fondo lleva una textura muy sutil de líneas de sonda náutica y las tarjetas un grano fino
+(ambos en SVG inline, opacidad ≤0.06); el header y los botones primarios usan degradados de
+varias paradas. Tokens en `src/styles/tokens.css`.
+
+El motion sigue el criterio de Emil Kowalski (skill `emil-design-eng`,
+[emilkowalski/skills](https://github.com/emilkowalski/skills)): solo anima lo que comunica algo
+y nunca las acciones frecuentes. Por eso navegar entre vistas no tiene animación de entrada, y
+los stat-tiles / tarjetas de features del login (no clickeables) no tienen hover decorativo. La
+entrada escalonada del login y el fade del modal de evidencia sí se mantienen, por ser momentos
+puntuales. Todo respeta `prefers-reduced-motion`.
+
 ## Cómo correr
 
 ```bash
