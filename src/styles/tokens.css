@@ -1,0 +1,53 @@
+:root {
+  /* Fondo / superficie */
+  --pa-fondo-de: #eaf4fb;
+  --pa-fondo-a: #f7fbfe;
+  --pa-superficie: #ffffff;
+  --pa-borde: #dce9f2;
+  --pa-sombra: 0 8px 24px rgba(27, 58, 107, 0.08);
+  --pa-sombra-sm: 0 2px 8px rgba(27, 58, 107, 0.06);
+
+  /* Header / marca */
+  --pa-header-de: #2e9bd6;
+  --pa-header-a: #2380b8;
+  --pa-navy: #1b3a6b;
+  --pa-accion: #2e9bd6;
+  --pa-accion-suave: #6fbbe8;
+  --pa-texto: #33475b;
+  --pa-texto-suave: #6b8098;
+
+  /* Estados de cumplimiento */
+  --pa-conforme: #3e8c6e;
+  --pa-conforme-bg: #e4f3ec;
+  --pa-por-vencer: #c87941;
+  --pa-por-vencer-bg: #fbead9;
+  --pa-vencido: #c0453e;
+  --pa-vencido-bg: #fbe4e2;
+  --pa-indeterminado: #8a97a3;
+  --pa-indeterminado-bg: #eceff1;
+  --pa-faltante: #c0453e;
+  --pa-faltante-bg: #fbe4e2;
+
+  /* Radios / espaciado */
+  --pa-radio-card: 16px;
+  --pa-radio-pill: 999px;
+  --pa-radio-input: 10px;
+  --pa-espacio-1: 4px;
+  --pa-espacio-2: 8px;
+  --pa-espacio-3: 12px;
+  --pa-espacio-4: 16px;
+  --pa-espacio-5: 24px;
+  --pa-espacio-6: 32px;
+  --pa-espacio-7: 48px;
+
+  --pa-fuente: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root[data-tema='oscuro'] {
+  --pa-fondo-de: #0f1b2c;
+  --pa-fondo-a: #142338;
+  --pa-superficie: #16263c;
+  --pa-borde: #223349;
+  --pa-texto: #cdd9e4;
+  --pa-texto-suave: #8fa2b6;
+}

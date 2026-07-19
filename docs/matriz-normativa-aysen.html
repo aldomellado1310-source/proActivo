@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Matriz Normativa DIRECTEMAR por TRG — Región de Aysén</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
+
+  :root{
+    --azul-lago:#2D6A8F;
+    --verde-bosque:#3E8C6E;
+    --ambar:#C87941;
+    --bg-light:#F5F3EF;
+    --bg-dark:#1C2B35;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:0 0 60px 0;
+    background:var(--bg-light);
+    font-family:'DM Sans', sans-serif;
+    color:var(--bg-dark);
+  }
+  header{
+    background:var(--bg-dark);
+    color:var(--bg-light);
+    padding:40px 6vw 32px 6vw;
+    border-bottom:6px solid var(--ambar);
+  }
+  header h1{
+    font-family:'Playfair Display', serif;
+    font-size:2rem;
+    margin:0 0 8px 0;
+    color:#fff;
+  }
+  header p{
+    margin:4px 0; font-size:0.95rem; color:#c9d3d8;
+  }
+  header .badge{
+    display:inline-block; margin-top:14px; padding:5px 12px;
+    background:var(--verde-bosque); color:#fff; border-radius:20px;
+    font-family:'DM Mono', monospace; font-size:0.75rem; letter-spacing:.03em;
+  }
+  main{ padding:0 6vw; max-width:1400px; margin:0 auto; }
+  section{ margin-top:48px; }
+  h2{
+    font-family:'Playfair Display', serif;
+    color:var(--azul-lago);
+    border-bottom:2px solid var(--azul-lago);
+    padding-bottom:8px;
+    font-size:1.4rem;
+  }
+  h3{
+    color:var(--verde-bosque);
+    font-family:'DM Sans', sans-serif;
+    font-size:1.05rem;
+    margin-top:28px;
+  }
+  p.note{
+    font-size:0.9rem; color:#4a5a63; background:#fff; border-left:4px solid var(--ambar);
+    padding:10px 16px; border-radius:0 6px 6px 0;
+  }
+  .table-wrap{ overflow-x:auto; margin-top:14px; border-radius:10px; box-shadow:0 1px 4px rgba(0,0,0,.08);}
+  table{
+    border-collapse:collapse; width:100%; background:#fff; font-size:0.87rem;
+  }
+  thead th{
+    background:var(--azul-lago); color:#fff; text-align:left; padding:10px 12px;
+    font-weight:500; position:sticky; top:0;
+  }
+  tbody td{
+    padding:10px 12px; border-bottom:1px solid #e5e1d8; vertical-align:top;
+  }
+  tbody tr:nth-child(even){ background:#faf9f6; }
+  tbody tr:hover{ background:#eef4f0; }
+  td.doc, th.doc{ font-weight:700; color:var(--bg-dark); min-width:160px;}
+  td.mono{ font-family:'DM Mono', monospace; font-size:0.8rem; color:var(--azul-lago); white-space:nowrap;}
+  .tag{
+    display:inline-block; padding:2px 8px; border-radius:12px; font-size:0.72rem;
+    font-family:'DM Mono', monospace; color:#fff; white-space:nowrap;
+  }
+  .tag-menor{ background:var(--verde-bosque); }
+  .tag-mayor{ background:var(--azul-lago); }
+  .tag-todas{ background:var(--ambar); }
+  .tag-artefacto{ background:#6b6259; }
+  footer{
+    margin-top:60px; padding:24px 6vw; color:#6b6259; font-size:0.8rem;
+    border-top:1px solid #ddd8cc;
+  }
+  .disclaimer{
+    background:#fff8ee; border:1px solid var(--ambar); border-radius:8px;
+    padding:16px 20px; margin-top:40px; font-size:0.87rem; line-height:1.5;
+  }
+  .disclaimer strong{ color:var(--ambar); }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Matriz Normativa DIRECTEMAR por TRG — Región de Aysén</h1>
+  <p>Referencia de control normativo para embarcaciones y artefactos navales según Tonelaje de Registro Grueso (TRG) / Arqueo Bruto (AB), aplicable en la jurisdicción de la Gobernación Marítima de Aysén.</p>
+  <p>Uso previsto: insumo estructurado para sistema de auditoría de cumplimiento marítimo.</p>
+  <span class="badge">DIRECTEMAR · Armada de Chile · Rev. Jul-2026</span>
+</header>
+
+<main>
+
+<section>
+  <h2>1. Clasificación base de naves según TRG</h2>
+  <p class="note">La Ley de Navegación (D.L. 2.222/1978) clasifica las naves en <strong>mayores</strong> y <strong>menores</strong> usando TRG como unidad legal, mientras que el Reglamento de Arqueo de Naves vigente mide en Arqueo Bruto (AB). DIRECTEMAR aplica la equivalencia funcional TRG≈AB para efectos administrativos, ya que las TRG dejaron de calcularse técnicamente tras la actualización del reglamento de arqueo. Verificar equivalencia vigente por tipo de nave antes de auditar.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Categoría</th><th>Umbral</th><th>Norma que la define</th><th>Relevancia típica en Aysén</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Nave Menor</td>
+        <td>50 o menos TRG / AB</td>
+        <td class="mono">D.L. 2.222/1978, Art. 51 · Reglamento del Registro de Naves y Artefactos Navales, Art. 51</td>
+        <td>Mayoría de lanchas de servicio, barcazas menores, pontones y embarcaciones de apoyo a centros de cultivo salmonicultor</td>
+      </tr>
+      <tr>
+        <td class="doc">Nave Mayor</td>
+        <td>Más de 50 TRG / AB</td>
+        <td class="mono">D.L. 2.222/1978, Art. 26</td>
+        <td>Barcazas de transporte de smolt/cosecha, wellboats, naves madre de centros de cultivo, remolcadores</td>
+      </tr>
+      <tr>
+        <td class="doc">Nave Menor de 24 m eslora</td>
+        <td>Hasta 24 m eslora (independiente de TRG, criterio OMI)</td>
+        <td class="mono">Convenio SOLAS 1974 · DS 22/1983</td>
+        <td>Criterio adicional usado para eximir de convenios internacionales a naves de navegación nacional</td>
+      </tr>
+      <tr>
+        <td class="doc">Artefacto Naval</td>
+        <td>No navega por medios propios (balsas-jaula, pontones fijos, plataformas)</td>
+        <td class="mono">Reglamento del Registro de Naves y Artefactos Navales</td>
+        <td>Balsas jaula y pontones de centros de cultivo — régimen documental distinto al de "nave"</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>2. Documentos habilitantes de la nave (registro y matriculación)</h2>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="doc">Documento</th>
+        <th>Aplica a</th>
+        <th>Norma base</th>
+        <th>Qué controla</th>
+        <th>Duración / Vigencia</th>
+        <th>Organismo emisor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Certificado de Matrícula</td>
+        <td><span class="tag tag-todas">Todas</span></td>
+        <td class="mono">Reglamento del Registro de Naves y Artefactos Navales</td>
+        <td>Identidad legal de la nave: nombre, número de matrícula, propietario, puerto de matrícula</td>
+        <td>Permanente — se actualiza ante cambios de propiedad o características</td>
+        <td>Capitanía de Puerto jurisdiccional (Aysén: Puerto Aysén, Puerto Chacabuco, Puerto Cisnes, Melinka, Puerto Aguirre)</td>
+      </tr>
+      <tr>
+        <td class="doc">Certificado de Arqueo</td>
+        <td><span class="tag tag-todas">Todas</span></td>
+        <td class="mono">Reglamento de Arqueo de Naves</td>
+        <td>Volumen/tonelaje que determina la categoría legal (menor/mayor) y exigencias asociadas</td>
+        <td>Permanente — se re-emite si hay modificación estructural</td>
+        <td>DIRECTEMAR / Ingeniero de Arqueo autorizado</td>
+      </tr>
+      <tr>
+        <td class="doc">Registro de Hipotecas, Gravámenes y Prohibiciones</td>
+        <td><span class="tag tag-mayor">&gt;50 TRG</span></td>
+        <td class="mono">Reglamento del Registro de Naves, Art. 5</td>
+        <td>Situación de dominio, gravámenes e hipotecas navales — relevante para due diligence de flota</td>
+        <td>Vigente mientras subsista el gravamen</td>
+        <td>Registro de Naves DIRECTEMAR</td>
+      </tr>
+      <tr>
+        <td class="doc">Distintivo de Llamada / N° ISMM</td>
+        <td><span class="tag tag-todas">Todas (equipadas con radio)</span></td>
+        <td class="mono">Reglamento de Telecomunicaciones Marítimas</td>
+        <td>Identificación radioeléctrica obligatoria para operar equipos de comunicación (VHF, SMSSM)</td>
+        <td>Permanente, asociado a la nave</td>
+        <td>DIRECTEMAR — Autoridad Marítima</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>3. Certificados de seguridad y operación</h2>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="doc">Documento</th>
+        <th>Aplica a</th>
+        <th>Norma base</th>
+        <th>Qué controla</th>
+        <th>Duración / Vigencia</th>
+        <th>Organismo emisor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Certificado / Revista de Cargo</td>
+        <td><span class="tag tag-menor">≤50 TRG</span></td>
+        <td class="mono">Circular O-71/010 (Equipamiento cargos de cubierta, máquinas y telecomunicaciones)</td>
+        <td>Inventario y estado de equipos de seguridad, salvavidas, contra incendio y náuticos según tipo/segmento de nave</td>
+        <td>Periódica (típicamente anual, según Capitanía de Puerto) — verificar calendario vigente en Aysén</td>
+        <td>Capitanía de Puerto — Inspector de Naves</td>
+      </tr>
+      <tr>
+        <td class="doc">Certificado General de Seguridad para Naves de Pasaje (Modelo PU)</td>
+        <td><span class="tag tag-mayor">&gt;50 TRG con pasaje</span></td>
+        <td class="mono">Convenio SOLAS 1974 enmendado</td>
+        <td>Condiciones de seguridad para transporte de pasajeros/tripulantes en tránsito</td>
+        <td>Sujeto a inspección de renovación periódica vía Sistema de Inspección de Naves</td>
+        <td>DIRECTEMAR — Sistema de Inspección de Naves (SIN)</td>
+      </tr>
+      <tr>
+        <td class="doc">Certificado de Navegabilidad</td>
+        <td><span class="tag tag-todas">Naves deportivas inscritas (bahía/costera/alta mar)</span></td>
+        <td class="mono">Circular A-41/014</td>
+        <td>Estado de seguridad para la navegación y equipamiento mínimo exigido según zona de navegación</td>
+        <td>Hasta 6 años, salvo cambio estructural o reparación mayor que obligue a renovación anticipada</td>
+        <td>Capitanía de Puerto jurisdiccional</td>
+      </tr>
+      <tr>
+        <td class="doc">Certificado de Dotación Mínima de Seguridad</td>
+        <td><span class="tag tag-mayor">Naves mayores</span></td>
+        <td class="mono">DS (M) N° 31 · Convenio STCW (DS N° 662/1987)</td>
+        <td>Número y calificación mínima de tripulantes exigidos para operar con seguridad</td>
+        <td>Permanente, mientras no cambien las condiciones bajo las que se otorgó</td>
+        <td>Gobernación Marítima / Capitanía de Puerto</td>
+      </tr>
+      <tr>
+        <td class="doc">Prueba y Certificado de Bollard Pull</td>
+        <td><span class="tag tag-mayor">Remolcadores / naves de maniobra</span></td>
+        <td class="mono">Sistema de Inspección de Naves — DIRECTEMAR</td>
+        <td>Capacidad de tiro certificada, relevante para naves de apoyo a fondeo de balsas-jaula y remolque</td>
+        <td>Vigencia según condición técnica probada; se re-certifica ante modificación de propulsión</td>
+        <td>DIRECTEMAR — Sistema de Inspección de Naves</td>
+      </tr>
+      <tr>
+        <td class="doc">Aprobación de dispositivos de salvamento</td>
+        <td><span class="tag tag-todas">Todas</span></td>
+        <td class="mono">Trámites Seguridad Marítima DIRECTEMAR</td>
+        <td>Homologación de chalecos, aros y balsas salvavidas embarcadas</td>
+        <td>Vigencia del equipo homologado (fecha de vencimiento propia del dispositivo)</td>
+        <td>DIRECTEMAR</td>
+      </tr>
+      <tr>
+        <td class="doc">Aprobación de planos SMSSM</td>
+        <td><span class="tag tag-mayor">Naves con equipo de comunicaciones GMDSS</span></td>
+        <td class="mono">Convenio SOLAS — Servicio Mundial de Socorro y Seguridad Marítimos</td>
+        <td>Instalación conforme de equipos de socorro y seguridad radioeléctrica</td>
+        <td>Válida mientras no se modifique la instalación aprobada</td>
+        <td>DIRECTEMAR</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>4. Personal embarcado</h2>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="doc">Documento</th>
+        <th>Aplica a</th>
+        <th>Norma base</th>
+        <th>Qué controla</th>
+        <th>Duración / Vigencia</th>
+        <th>Organismo emisor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Matrícula de Personal de Naves Menores (Mercante/Pesca)</td>
+        <td><span class="tag tag-menor">Personal de naves ≤50 TRG</span></td>
+        <td class="mono">Reglamento de Matrículas de Personal Embarcado</td>
+        <td>Habilita a la persona a trabajar a bordo en naves menores mercantes o pesqueras</td>
+        <td>Renovable — certificado médico exigido con vigencia de 5 años; certificado de antecedentes ≤60 días para el trámite</td>
+        <td>Capitanía de Puerto</td>
+      </tr>
+      <tr>
+        <td class="doc">Título/Licencia STCW (naves mayores)</td>
+        <td><span class="tag tag-mayor">Oficiales y tripulación de naves mayores</span></td>
+        <td class="mono">Convenio STCW · DS (M) N° 319/2001</td>
+        <td>Formación, titulación y guardia mínima exigida internacionalmente</td>
+        <td>Según nivel de título — sujeto a revalidación periódica STCW</td>
+        <td>DIRECTEMAR</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>5. Operación, medioambiente y trazabilidad de zarpe</h2>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th class="doc">Documento / Trámite</th>
+        <th>Aplica a</th>
+        <th>Norma base</th>
+        <th>Qué controla</th>
+        <th>Duración / Vigencia</th>
+        <th>Organismo emisor</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Zarpe y Recalada</td>
+        <td><span class="tag tag-todas">Todas</span></td>
+        <td class="mono">Reglamento General de Orden, Seguridad y Disciplina en las Naves y Litoral de la República</td>
+        <td>Autorización y registro de cada salida/llegada a puerto — trazabilidad operacional diaria</td>
+        <td>Por zarpe (no es un documento de vigencia continua)</td>
+        <td>Capitanía de Puerto / Servicio de Zarpe en Línea</td>
+      </tr>
+      <tr>
+        <td class="doc">Autorización de retiro de residuos MARPOL</td>
+        <td><span class="tag tag-todas">Empresas que operan naves/barcazas</span></td>
+        <td class="mono">Convenio MARPOL 73/78</td>
+        <td>Gestión y disposición de residuos oleosos y sólidos generados a bordo</td>
+        <td>Autorización por empresa/servicio — renovable según condiciones DIRECTEMAR</td>
+        <td>DIRECTEMAR</td>
+      </tr>
+      <tr>
+        <td class="doc">Permiso de Uso de Bienes Nacionales de Uso Público / Fiscales</td>
+        <td><span class="tag tag-artefacto">Artefactos navales / infraestructura</span></td>
+        <td class="mono">Resolución de concesión marítima</td>
+        <td>Uso particular de playas, terrenos de playa fiscales o cauces para instalaciones de apoyo</td>
+        <td>No excede de 1 año (permiso); las concesiones marítimas tienen plazos propios más extensos</td>
+        <td>Gobernación Marítima de Aysén</td>
+      </tr>
+      <tr>
+        <td class="doc">Revisión de proyecto de nave menor con cubierta / artefacto de apoyo a acuicultura</td>
+        <td><span class="tag tag-artefacto">Artefactos y naves de apoyo a centros de cultivo</span></td>
+        <td class="mono">Plataforma de Revisión de Proyectos — DIRECTEMAR</td>
+        <td>Aprobación de diseño/construcción antes de habilitar la unidad para servicio en la industria acuícola</td>
+        <td>Aprobación por proyecto — previa a la matriculación</td>
+        <td>DIRECTEMAR</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>6. Particularidades jurisdiccionales — Región de Aysén</h2>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Aspecto</th><th>Detalle</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Autoridad marítima regional</td>
+        <td>Gobernación Marítima de Aysén, con sede administrativa asociada a Puerto Chacabuco/Puerto Aysén</td>
+      </tr>
+      <tr>
+        <td class="doc">Capitanías de Puerto dependientes</td>
+        <td>Puerto Aysén, Puerto Chacabuco, Puerto Cisnes, Melinka, Puerto Aguirre, Puerto Raúl Marín Balmaceda (verificar listado vigente y alcaldías de mar activas)</td>
+      </tr>
+      <tr>
+        <td class="doc">Perfil de flota dominante</td>
+        <td>Alta concentración de naves menores y artefactos navales de apoyo a la salmonicultura (barcazas de alimento, pontones, balsas-jaula, lanchas de transporte de personal) — la mayoría cae bajo el régimen de "nave menor" (≤50 TRG)</td>
+      </tr>
+      <tr>
+        <td class="doc">Condiciones de navegación</td>
+        <td>Canales interiores y fiordos con navegación restringida/estacional — puede exigir certificaciones adicionales de zona de navegación no cubiertas en esta matriz genérica</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>7. Módulo de Control de Insumos Varios</h2>
+  <p class="note">Cierra la brecha entre "documento vigente" y "equipo físico realmente a bordo y en condiciones". La Circular O-71/010 ya exige inventario de equipos por cargo (cubierta, máquinas, telecomunicaciones); este módulo lo convierte de verificación puntual en revista de cargo a control continuo.</p>
+
+  <h3>7.1 Categorías de insumo</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Categoría</th><th>Ejemplos</th><th>Tipo de vencimiento</th><th>Vínculo normativo</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Salvamento</td>
+        <td>Chalecos, aros salvavidas, balsas inflables, trajes de inmersión, señales pirotécnicas</td>
+        <td>Fecha de caducidad propia del dispositivo + fecha de servicio/recarga</td>
+        <td class="mono">Aprobación de dispositivos de salvamento · Circular O-71/010</td>
+      </tr>
+      <tr>
+        <td class="doc">Contra incendio</td>
+        <td>Extintores, mangueras, boquillas, detectores</td>
+        <td>Fecha de recarga y de prueba hidrostática</td>
+        <td class="mono">Reglamento de equipamiento de cargos de cubierta</td>
+      </tr>
+      <tr>
+        <td class="doc">Náutico y comunicaciones</td>
+        <td>Equipos VHF, EPIRB, radar, cartas náuticas, compás</td>
+        <td>Vencimiento de batería (EPIRB), corrección de cartas, homologación</td>
+        <td class="mono">SMSSM / GMDSS · Reglamento de Telecomunicaciones Marítimas</td>
+      </tr>
+      <tr>
+        <td class="doc">Sanitario</td>
+        <td>Botiquín de a bordo, medicamentos, oxígeno</td>
+        <td>Caducidad por ítem</td>
+        <td class="mono">Exigencia de dotación y seguridad de la nave</td>
+      </tr>
+      <tr>
+        <td class="doc">Operacional / consumibles</td>
+        <td>Combustible, lubricantes, agua potable, repuestos críticos</td>
+        <td>Nivel de stock (no vencimiento)</td>
+        <td class="mono">No normado directamente — control de gestión interna</td>
+      </tr>
+      <tr>
+        <td class="doc">Faena y amarre</td>
+        <td>Cabos, grilletes, defensas, redes, elementos de izaje</td>
+        <td>Inspección periódica por desgaste, no fecha fija</td>
+        <td class="mono">Buenas prácticas + exigencias específicas de faena</td>
+      </tr>
+      <tr>
+        <td class="doc">MARPOL</td>
+        <td>Contenedores de residuos, bandejas de contención, material absorbente</td>
+        <td>Stock mínimo + registro de retiro</td>
+        <td class="mono">Convenio MARPOL 73/78</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>7.2 Reglas funcionales del módulo</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Regla</th><th>Comportamiento esperado</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="doc">Inventario por nave</td><td>Cada unidad de la flota mantiene su propio inventario; no existe stock genérico de empresa a nivel de cumplimiento</td></tr>
+      <tr><td class="doc">Enlace insumo ↔ certificado</td><td>Cada ítem de seguridad queda vinculado al certificado que lo exige; el vencimiento del insumo es independiente del vencimiento del certificado</td></tr>
+      <tr><td class="doc">Mínimo reglamentario</td><td>La cantidad mínima exigida se deriva del tipo de nave, TRG/AB y dotación autorizada — no se ingresa manualmente</td></tr>
+      <tr><td class="doc">Estado compuesto de la nave</td><td>Una nave con todos los certificados vigentes pero con insumos vencidos se marca como "no conforme para inspección", no como conforme</td></tr>
+      <tr><td class="doc">Evidencia fotográfica</td><td>Cada verificación de insumo admite foto con fecha y, cuando aplique, geolocalización</td></tr>
+      <tr><td class="doc">Preparación de revista de cargo</td><td>Genera el listado esperado por la Capitanía antes de la inspección, con los faltantes destacados</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>8. Plan de aseguramiento — integridad, lógica y viabilidad</h2>
+  <p class="note">Estas actividades son requisitos previos o paralelos al desarrollo, no tareas posteriores. Las reglas normativas sin verificación externa no deben disparar alertas automáticas en producción.</p>
+
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Análisis</th><th>Qué asegura</th><th>Método</th><th>Momento</th><th>Prioridad</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="doc">Auditoría de fuentes normativas</td>
+        <td>Integridad</td>
+        <td>Cada regla registra norma, número de circular, fecha de consulta y URL. Sin fuente trazable → estado "no verificada", sin alerta automática</td>
+        <td>Continuo, desde el inicio</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Validación con experto de dominio</td>
+        <td>Integridad</td>
+        <td>Revisión de la matriz completa por inspector de naves retirado o gestor de flota con experiencia en Aysén</td>
+        <td>Antes de codificar el motor de reglas</td>
+        <td>Crítica</td>
+      </tr>
+      <tr>
+        <td class="doc">Prueba contra casos reales</td>
+        <td>Integridad + lógica</td>
+        <td>5 a 10 embarcaciones reales con documentación conocida; contrastar clasificación y vencimientos calculados</td>
+        <td>Tras el primer motor funcional</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Modelado formal de reglas</td>
+        <td>Lógica</td>
+        <td>Tabla de decisión: TRG/AB + tipo de nave + zona de navegación → set de documentos exigidos. Detecta contradicciones y huecos antes del código</td>
+        <td>Fase de diseño</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Análisis de casos borde</td>
+        <td>Lógica</td>
+        <td>Nave exactamente en 50 TRG · menor de 24 m pero &gt;50 AB · artefacto reclasificado como nave · cambio de uso pesca → apoyo acuícola · nave en tránsito entre jurisdicciones</td>
+        <td>Diseño y QA</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Análisis de modos de falla (FMEA)</td>
+        <td>Lógica</td>
+        <td>Clasificar el impacto de cada regla errónea. El falso negativo (sistema declara conforme una nave que no lo está) es el modo crítico y exige redundancia o confirmación manual</td>
+        <td>Diseño</td>
+        <td>Crítica</td>
+      </tr>
+      <tr>
+        <td class="doc">Versionado normativo</td>
+        <td>Integridad histórica</td>
+        <td>Cada certificado histórico conserva la versión de norma bajo la que fue evaluado, no solo la vigente</td>
+        <td>Modelo de datos, desde el inicio</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Entrevistas de descubrimiento</td>
+        <td>Viabilidad</td>
+        <td>5 a 8 armadores o gestores de flota: validar dolor real y disposición a pagar antes de construir</td>
+        <td>Antes del desarrollo</td>
+        <td>Crítica</td>
+      </tr>
+      <tr>
+        <td class="doc">Unit economics del mantenimiento normativo</td>
+        <td>Viabilidad</td>
+        <td>Costo de mantener el motor actualizado ante cambios de circular vs. ticket por nave o por flota. Es el costo oculto que suele hundir estos productos</td>
+        <td>Antes de fijar precio</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Análisis de sustitutos</td>
+        <td>Viabilidad</td>
+        <td>Mapear qué cubre ya el Sistema de Inspección de Naves (SIN) de DIRECTEMAR y la planilla Excel del armador — el sustituto gratuito es el competidor real</td>
+        <td>Antes del desarrollo</td>
+        <td>Alta</td>
+      </tr>
+      <tr>
+        <td class="doc">Piloto acotado</td>
+        <td>Viabilidad</td>
+        <td>Una flota real, un trimestre. Métrica: vencimientos detectados por el sistema vs. no detectados</td>
+        <td>Tras el MVP</td>
+        <td>Media</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section>
+  <h2>9. Especificaciones para el desarrollo</h2>
+
+  <h3>9.1 Entidades del modelo de datos</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Entidad</th><th>Campos clave</th><th>Relaciones</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="doc">Armador / Empresa</td><td>RUT, razón social, contacto, jurisdicción principal</td><td>1 → N Naves</td></tr>
+      <tr><td class="doc">Nave / Artefacto Naval</td><td>Matrícula, nombre, TRG, AB, eslora, tipo, uso, capitanía de matrícula, zona de navegación autorizada</td><td>N ← Armador · 1 → N Certificados · 1 → N Insumos</td></tr>
+      <tr><td class="doc">Certificado</td><td>Tipo, folio, fecha de emisión, fecha de vencimiento, estado, versión de norma aplicada, archivo adjunto</td><td>N ← Nave · N ← ReglaNormativa</td></tr>
+      <tr><td class="doc">ReglaNormativa</td><td>Documento exigido, condición de aplicación (TRG, tipo, uso, zona), plazo de vigencia, tipo de plazo (fijo/condicional), fuente, estado de verificación</td><td>Motor de evaluación</td></tr>
+      <tr><td class="doc">Insumo</td><td>Categoría, descripción, cantidad, mínimo exigido, fecha de vencimiento o de servicio, homologación, evidencia</td><td>N ← Nave · N ← Certificado que lo exige</td></tr>
+      <tr><td class="doc">Inspección / Auditoría</td><td>Fecha, tipo, inspector, resultado, observaciones, hallazgos</td><td>N ← Nave</td></tr>
+      <tr><td class="doc">FuenteNormativa</td><td>Norma, número de circular, fecha de publicación, fecha de consulta, URL, vigente sí/no</td><td>1 → N ReglaNormativa</td></tr>
+      <tr><td class="doc">Jurisdicción</td><td>Gobernación, capitanía, criterios locales aplicables</td><td>1 → N Naves · modifica ReglaNormativa</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>9.2 Principios de arquitectura</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Principio</th><th>Justificación</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="doc">Motor de reglas desacoplado del dominio acuícola</td><td>Permite abrir a pesca artesanal, turismo náutico y cabotaje sin reescribir el núcleo</td></tr>
+      <tr><td class="doc">Reglas como datos, no como código</td><td>Un cambio de circular debe resolverse editando una regla, no desplegando una nueva versión</td></tr>
+      <tr><td class="doc">Diseño offline-first</td><td>Uso en terreno en fiordos y centros aislados de Aysén sin conectividad garantizada</td></tr>
+      <tr><td class="doc">Capa de jurisdicción parametrizable</td><td>Cada capitanía puede aplicar criterios locales distintos dentro de la misma región</td></tr>
+      <tr><td class="doc">Evidencia inmutable</td><td>Documentos y fotos con fecha, no reemplazables — soporte ante fiscalización o litigio</td></tr>
+      <tr><td class="doc">Estado de verificación explícito por regla</td><td>El sistema debe poder decir "no sé" en lugar de afirmar conformidad sobre una regla no validada</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>9.3 Alcance sugerido del MVP</h3>
+  <div class="table-wrap">
+  <table>
+    <thead>
+      <tr><th class="doc">Incluir en MVP</th><th>Dejar para fase 2</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Registro de flota y clasificación por TRG/AB</td><td>Módulo de personal embarcado y titulaciones STCW</td></tr>
+      <tr><td>Certificados con fechas y alertas de vencimiento</td><td>Integración directa con el SIN de DIRECTEMAR</td></tr>
+      <tr><td>Módulo de insumos con vencimientos y mínimos</td><td>—</td></tr>
+      <tr><td>Preparación de revista de cargo (listado esperado)</td><td>Multi-región (Los Lagos, Magallanes)</td></tr>
+      <tr><td>Carga de evidencia documental y fotográfica</td><td>Portal para aseguradoras o terceros verificadores</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<div class="disclaimer">
+  <strong>Nota de verificación para uso en sistema de auditoría:</strong> esta matriz consolida información pública de DIRECTEMAR, ChileAtiende y circulares citadas (O-71/010, A-41/014, entre otras) a julio de 2026. Los plazos de vigencia de revistas de cargo e inspecciones periódicas pueden variar por tipo de nave, segmento de actividad y Capitanía de Puerto específica. Antes de usar estos campos como reglas de vencimiento automatizadas, se recomienda confirmar cada plazo y cada circular directamente en <span class="mono" style="font-family:'DM Mono',monospace;">directemar.cl</span> o en la Gobernación Marítima de Aysén, y registrar el número de circular exacto vigente para cada tipo de embarcación de la flota auditada.
+</div>
+
+</main>
+
+<footer>
+  Matriz de referencia normativa — DIRECTEMAR / Región de Aysén · Preparado para integración con sistema de auditoría marítima.
+</footer>
+
+</body>
+</html>

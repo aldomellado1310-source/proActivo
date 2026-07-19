@@ -1,0 +1,436 @@
+{
+  "_meta": {
+    "descripcion": "Catálogo de reglas normativas DIRECTEMAR por TRG — Región de Aysén. Semilla inicial para el motor de evaluación.",
+    "version": "0.1.0",
+    "fechaGeneracion": "2026-07-18",
+    "advertencia": "Todas las reglas nacen con estadoVerificacion='no_verificada'. NO deben disparar alertas automáticas en producción hasta ser confirmadas con la Capitanía de Puerto o un experto de dominio. Los campos vigenciaMeses marcados con 'requiereConfirmacion': true son estimaciones, no valores confirmados en fuente oficial."
+  },
+
+  "fuentes_normativas": [
+    {
+      "id": "fn_ley_navegacion",
+      "norma": "D.L. 2.222/1978 — Ley de Navegación",
+      "organismo": "DIRECTEMAR",
+      "descripcion": "Clasifica naves en mayores y menores según TRG. Art. 26 y Art. 51.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_regl_registro_naves",
+      "norma": "Reglamento del Registro de Naves y Artefactos Navales",
+      "organismo": "DIRECTEMAR",
+      "descripcion": "Matrícula, hipotecas y gravámenes. Art. 5, 26, 51.",
+      "url": "https://www.directemar.cl/directemar/site/docs/20220526/20220526083454/c_11_reglamento_del_registro_de_naves_y_artefactos_navales.pdf",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_circular_o71_010",
+      "norma": "Circular O-71/010",
+      "organismo": "DIRECTEMAR",
+      "descripcion": "Equipamiento e inventario de cargos de cubierta, máquinas y telecomunicaciones para naves menores.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true,
+      "notasVerificacion": "Confirmar versión vigente y periodicidad de revista de cargo con la Capitanía de Puerto correspondiente."
+    },
+    {
+      "id": "fn_circular_a41_014",
+      "norma": "Circular A-41/014",
+      "organismo": "DIRECTEMAR",
+      "descripcion": "Certificado de Navegabilidad para naves deportivas inscritas (bahía, costera, alta mar).",
+      "url": "https://www.directemar.cl/directemar/site/docs/20170328/20170328153044/circular_a_41_014_publicada.pdf",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_solas_74",
+      "norma": "Convenio SOLAS 1974 enmendado",
+      "organismo": "OMI",
+      "descripcion": "Seguridad de la vida humana en el mar. Aplicable vía D.S. (M) N° 319/2001.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_stcw",
+      "norma": "Convenio STCW — D.S. N° 662/1987",
+      "organismo": "OMI",
+      "descripcion": "Formación, titulación y guardia para la gente de mar.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_ds_31_dotaciones",
+      "norma": "D.S. (M) N° 31 — Reglamento de dotaciones mínimas de seguridad",
+      "organismo": "DIRECTEMAR",
+      "descripcion": "Fija dotaciones mínimas de seguridad de las naves.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_marpol",
+      "norma": "Convenio MARPOL 73/78",
+      "organismo": "OMI",
+      "descripcion": "Prevención de la contaminación por buques.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true
+    },
+    {
+      "id": "fn_regl_arqueo",
+      "norma": "Reglamento de Arqueo de Naves",
+      "organismo": "DIRECTEMAR",
+      "descripcion": "Medición en Arqueo Bruto (AB), reemplazó el cálculo técnico de TRG.",
+      "fechaConsulta": "2026-07-18",
+      "vigente": true,
+      "notasVerificacion": "Punto crítico: la Ley de Navegación clasifica en TRG y este reglamento mide en AB. Confirmar equivalencia aplicable por tipo de nave antes de automatizar la clasificación."
+    }
+  ],
+
+  "reglas_normativas": [
+    {
+      "id": "rn_matricula",
+      "documentoExigido": "Certificado de Matrícula",
+      "categoriaDocumento": "registro",
+      "descripcionControl": "Identidad legal de la nave: nombre, número de matrícula, propietario y puerto de matrícula.",
+      "condicion": {
+        "categorias": ["nave_menor", "nave_mayor", "artefacto_naval"]
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["cambio_propiedad", "cambio_caracteristicas", "cambio_nombre"],
+      "organismoEmisor": "Capitanía de Puerto jurisdiccional",
+      "fuenteId": "fn_regl_registro_naves",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_arqueo",
+      "documentoExigido": "Certificado de Arqueo",
+      "categoriaDocumento": "registro",
+      "descripcionControl": "Volumen/tonelaje que determina la categoría legal de la nave y las exigencias asociadas.",
+      "condicion": {
+        "categorias": ["nave_menor", "nave_mayor", "artefacto_naval"]
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["modificacion_estructural"],
+      "organismoEmisor": "DIRECTEMAR / Ingeniero de Arqueo autorizado",
+      "fuenteId": "fn_regl_arqueo",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_hipotecas",
+      "documentoExigido": "Inscripción en Registro de Hipotecas, Gravámenes y Prohibiciones",
+      "categoriaDocumento": "registro",
+      "descripcionControl": "Situación de dominio y gravámenes de la nave. Relevante para due diligence de flota.",
+      "condicion": {
+        "categorias": ["nave_mayor"],
+        "trgMin": 50.01
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["constitucion_gravamen", "alzamiento"],
+      "organismoEmisor": "Registro de Naves DIRECTEMAR",
+      "fuenteId": "fn_regl_registro_naves",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "media",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_distintivo_llamada",
+      "documentoExigido": "Distintivo de Llamada / N° ISMM",
+      "categoriaDocumento": "registro",
+      "descripcionControl": "Identificación radioeléctrica obligatoria para operar equipos de comunicación (VHF, SMSSM).",
+      "condicion": {
+        "categorias": ["nave_menor", "nave_mayor"],
+        "tieneRadiocomunicaciones": true
+      },
+      "tipoPlazo": "permanente",
+      "organismoEmisor": "DIRECTEMAR",
+      "fuenteId": "fn_regl_registro_naves",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_revista_cargo",
+      "documentoExigido": "Revista de Cargo",
+      "categoriaDocumento": "seguridad",
+      "descripcionControl": "Inventario y estado de equipos de seguridad, salvavidas, contra incendio y náuticos según tipo y segmento de nave.",
+      "condicion": {
+        "categorias": ["nave_menor"],
+        "trgMax": 50
+      },
+      "tipoPlazo": "fijo",
+      "vigenciaMeses": 12,
+      "requiereConfirmacion": true,
+      "organismoEmisor": "Capitanía de Puerto — Inspector de Naves",
+      "fuenteId": "fn_circular_o71_010",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "La periodicidad de 12 meses es una estimación operacional habitual, NO confirmada en fuente oficial. Verificar con la Capitanía de Puerto antes de activar alertas."
+    },
+    {
+      "id": "rn_cert_seguridad_pasaje",
+      "documentoExigido": "Certificado General de Seguridad para Naves de Pasaje (Modelo PU)",
+      "categoriaDocumento": "seguridad",
+      "descripcionControl": "Condiciones de seguridad para el transporte de pasajeros y tripulantes en tránsito.",
+      "condicion": {
+        "categorias": ["nave_mayor"],
+        "transportaPasajeros": true
+      },
+      "tipoPlazo": "fijo",
+      "vigenciaMeses": 12,
+      "requiereConfirmacion": true,
+      "organismoEmisor": "DIRECTEMAR — Sistema de Inspección de Naves",
+      "fuenteId": "fn_solas_74",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "Sujeto a inspección de renovación periódica vía SIN. Confirmar plazo exacto."
+    },
+    {
+      "id": "rn_navegabilidad_deportiva",
+      "documentoExigido": "Certificado de Navegabilidad",
+      "categoriaDocumento": "seguridad",
+      "descripcionControl": "Estado de seguridad para la navegación y equipamiento mínimo según zona de navegación.",
+      "condicion": {
+        "usos": ["deportiva_recreativa"],
+        "zonas": ["bahia", "costera", "alta_mar"]
+      },
+      "tipoPlazo": "fijo",
+      "vigenciaMeses": 72,
+      "eventosRenovacion": ["cambio_estructural", "reparacion_mayor"],
+      "organismoEmisor": "Capitanía de Puerto jurisdiccional",
+      "fuenteId": "fn_circular_a41_014",
+      "estadoVerificacion": "verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "Vigencia de hasta 6 años confirmada en fuente DIRECTEMAR, con renovación anticipada ante cambio estructural o reparación mayor."
+    },
+    {
+      "id": "rn_dotacion_minima",
+      "documentoExigido": "Certificado de Dotación Mínima de Seguridad",
+      "categoriaDocumento": "personal",
+      "descripcionControl": "Número y calificación mínima de tripulantes exigidos para operar con seguridad.",
+      "condicion": {
+        "categorias": ["nave_mayor"]
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["cambio_area_navegacion", "cambio_caracteristicas_nave", "cambio_tipo_servicio"],
+      "organismoEmisor": "Gobernación Marítima / Capitanía de Puerto",
+      "fuenteId": "fn_ds_31_dotaciones",
+      "estadoVerificacion": "verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "Permanente mientras no se modifiquen las condiciones bajo las que fue otorgado (confirmado en ChileAtiende)."
+    },
+    {
+      "id": "rn_matricula_personal_menor",
+      "documentoExigido": "Matrícula de Personal de Naves Menores",
+      "categoriaDocumento": "personal",
+      "descripcionControl": "Habilita a la persona a desempeñarse a bordo en naves menores mercantes o pesqueras.",
+      "condicion": {
+        "categorias": ["nave_menor"],
+        "usos": ["pesca_artesanal", "pesca_industrial", "carga_cabotaje", "apoyo_acuicultura"]
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["vencimiento_certificado_medico"],
+      "organismoEmisor": "Capitanía de Puerto",
+      "fuenteId": "fn_stcw",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "Certificado médico asociado con vigencia de 5 años; certificado de antecedentes ≤60 días para el trámite."
+    },
+    {
+      "id": "rn_titulo_stcw",
+      "documentoExigido": "Título / Licencia STCW",
+      "categoriaDocumento": "personal",
+      "descripcionControl": "Formación, titulación y guardia mínima exigida internacionalmente para oficiales y tripulación.",
+      "condicion": {
+        "categorias": ["nave_mayor"]
+      },
+      "tipoPlazo": "fijo",
+      "vigenciaMeses": 60,
+      "requiereConfirmacion": true,
+      "organismoEmisor": "DIRECTEMAR",
+      "fuenteId": "fn_stcw",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "Revalidación STCW típicamente quinquenal. Verificar por nivel de título."
+    },
+    {
+      "id": "rn_zarpe",
+      "documentoExigido": "Zarpe y Recalada",
+      "categoriaDocumento": "operacion",
+      "descripcionControl": "Autorización y registro de cada salida y llegada a puerto — trazabilidad operacional.",
+      "condicion": {
+        "categorias": ["nave_menor", "nave_mayor"]
+      },
+      "tipoPlazo": "por_evento",
+      "organismoEmisor": "Capitanía de Puerto / Servicio de Zarpe en Línea",
+      "fuenteId": "fn_regl_registro_naves",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_marpol_residuos",
+      "documentoExigido": "Autorización de retiro de residuos MARPOL",
+      "categoriaDocumento": "ambiental",
+      "descripcionControl": "Gestión y disposición de residuos oleosos y sólidos generados a bordo.",
+      "condicion": {
+        "categorias": ["nave_menor", "nave_mayor", "artefacto_naval"]
+      },
+      "tipoPlazo": "fijo",
+      "vigenciaMeses": 12,
+      "requiereConfirmacion": true,
+      "organismoEmisor": "DIRECTEMAR",
+      "fuenteId": "fn_marpol",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_permiso_bnup",
+      "documentoExigido": "Permiso de uso de bienes nacionales de uso público / fiscales",
+      "categoriaDocumento": "operacion",
+      "descripcionControl": "Uso particular de playas, terrenos de playa o cauces para instalaciones de apoyo.",
+      "condicion": {
+        "categorias": ["artefacto_naval"]
+      },
+      "tipoPlazo": "fijo",
+      "vigenciaMeses": 12,
+      "organismoEmisor": "Gobernación Marítima de Aysén",
+      "fuenteId": "fn_regl_registro_naves",
+      "estadoVerificacion": "verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "El permiso no excede de 1 año. Las concesiones marítimas tienen plazos propios más extensos y se modelan aparte."
+    },
+    {
+      "id": "rn_revision_proyecto_acuicola",
+      "documentoExigido": "Revisión de proyecto de nave menor con cubierta / artefacto de apoyo a acuicultura",
+      "categoriaDocumento": "seguridad",
+      "descripcionControl": "Aprobación de diseño y construcción previa a habilitar la unidad para servicio en la industria acuícola.",
+      "condicion": {
+        "usos": ["apoyo_acuicultura"],
+        "categorias": ["nave_menor", "artefacto_naval"]
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["modificacion_proyecto"],
+      "organismoEmisor": "DIRECTEMAR",
+      "fuenteId": "fn_regl_registro_naves",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "alta",
+      "version": 1,
+      "vigenteDesde": "2026-07-18"
+    },
+    {
+      "id": "rn_dispositivos_salvamento",
+      "documentoExigido": "Aprobación de dispositivos de salvamento",
+      "categoriaDocumento": "seguridad",
+      "descripcionControl": "Homologación de chalecos, aros y balsas salvavidas embarcadas.",
+      "condicion": {
+        "categorias": ["nave_menor", "nave_mayor"]
+      },
+      "tipoPlazo": "condicional",
+      "eventosRenovacion": ["vencimiento_dispositivo", "cambio_equipo"],
+      "organismoEmisor": "DIRECTEMAR",
+      "fuenteId": "fn_circular_o71_010",
+      "estadoVerificacion": "no_verificada",
+      "criticidad": "critica",
+      "version": 1,
+      "vigenteDesde": "2026-07-18",
+      "_nota": "El vencimiento efectivo lo aporta cada dispositivo en la colección de insumos, no este certificado."
+    }
+  ],
+
+  "plantillas_insumos": [
+    {
+      "categoria": "salvamento",
+      "items": [
+        { "descripcion": "Chaleco salvavidas", "tipoControl": "vencimiento", "reglaId": "rn_dispositivos_salvamento", "minimoFormula": "dotacionAutorizada + 10%" },
+        { "descripcion": "Aro salvavidas con rabiza", "tipoControl": "inspeccion", "reglaId": "rn_dispositivos_salvamento", "minimoFormula": "segun_eslora" },
+        { "descripcion": "Balsa salvavidas inflable", "tipoControl": "servicio", "intervaloServicioMeses": 12, "reglaId": "rn_dispositivos_salvamento" },
+        { "descripcion": "Señales pirotécnicas", "tipoControl": "vencimiento", "reglaId": "rn_revista_cargo" },
+        { "descripcion": "Traje de inmersión", "tipoControl": "inspeccion", "reglaId": "rn_dispositivos_salvamento" }
+      ]
+    },
+    {
+      "categoria": "contra_incendio",
+      "items": [
+        { "descripcion": "Extintor portátil", "tipoControl": "servicio", "intervaloServicioMeses": 12, "reglaId": "rn_revista_cargo" },
+        { "descripcion": "Manguera y boquilla contra incendio", "tipoControl": "inspeccion", "reglaId": "rn_revista_cargo" },
+        { "descripcion": "Detector de humo / alarma", "tipoControl": "inspeccion", "reglaId": "rn_revista_cargo" }
+      ]
+    },
+    {
+      "categoria": "nautico_comunicaciones",
+      "items": [
+        { "descripcion": "Equipo VHF", "tipoControl": "inspeccion", "reglaId": "rn_distintivo_llamada" },
+        { "descripcion": "EPIRB — batería", "tipoControl": "vencimiento", "reglaId": "rn_revista_cargo" },
+        { "descripcion": "Cartas náuticas del área", "tipoControl": "vencimiento", "reglaId": "rn_revista_cargo" },
+        { "descripcion": "Compás magnético", "tipoControl": "inspeccion", "reglaId": "rn_revista_cargo" }
+      ]
+    },
+    {
+      "categoria": "sanitario",
+      "items": [
+        { "descripcion": "Botiquín de a bordo", "tipoControl": "vencimiento", "reglaId": "rn_revista_cargo" },
+        { "descripcion": "Oxígeno de emergencia", "tipoControl": "servicio", "intervaloServicioMeses": 12 }
+      ]
+    },
+    {
+      "categoria": "marpol",
+      "items": [
+        { "descripcion": "Contenedor de residuos segregados", "tipoControl": "stock", "reglaId": "rn_marpol_residuos" },
+        { "descripcion": "Material absorbente para derrames", "tipoControl": "stock", "reglaId": "rn_marpol_residuos" },
+        { "descripcion": "Bandeja de contención", "tipoControl": "inspeccion", "reglaId": "rn_marpol_residuos" }
+      ]
+    },
+    {
+      "categoria": "faena_amarre",
+      "items": [
+        { "descripcion": "Cabos de amarre", "tipoControl": "inspeccion" },
+        { "descripcion": "Grilletes y elementos de izaje", "tipoControl": "inspeccion" },
+        { "descripcion": "Defensas", "tipoControl": "inspeccion" }
+      ]
+    },
+    {
+      "categoria": "operacional",
+      "items": [
+        { "descripcion": "Combustible", "tipoControl": "stock", "unidad": "litros" },
+        { "descripcion": "Aceite lubricante", "tipoControl": "stock", "unidad": "litros" },
+        { "descripcion": "Agua potable", "tipoControl": "stock", "unidad": "litros" },
+        { "descripcion": "Repuestos críticos de propulsión", "tipoControl": "stock" }
+      ]
+    }
+  ],
+
+  "casos_borde_test": [
+    { "id": "cb_01", "descripcion": "Nave exactamente en 50.0 TRG", "esperado": "clasificada como nave_menor (el umbral es '50 o menos')" },
+    { "id": "cb_02", "descripcion": "Nave de 22 m eslora con 62 AB", "esperado": "nave_mayor por AB, pero exenta de convenios internacionales por eslora <24 m — debe generar advertencia, no clasificación automática" },
+    { "id": "cb_03", "descripcion": "Artefacto naval que incorpora propulsión propia", "esperado": "reclasificación a nave; recalcular set completo de reglas y marcar certificados previos como no aplicables" },
+    { "id": "cb_04", "descripcion": "Nave que cambia de uso pesca_artesanal → apoyo_acuicultura", "esperado": "nuevo set de reglas aplicables; certificados anteriores conservan su reglaVersion original" },
+    { "id": "cb_05", "descripcion": "Nave matriculada en Puerto Aysén operando bajo jurisdicción de Melinka", "esperado": "aplicar criterios locales de la jurisdicción de operación, no solo la de matrícula" },
+    { "id": "cb_06", "descripcion": "Certificado vigente pero insumo exigido por ese certificado vencido", "esperado": "estado del certificado = conforme; aptaParaInspeccion = false" },
+    { "id": "cb_07", "descripcion": "Regla con estadoVerificacion='no_verificada' y certificado vencido", "esperado": "estado = indeterminado, requiereConfirmacionManual = true, sin alerta automática" },
+    { "id": "cb_08", "descripcion": "Nave sin dato de TRG, solo AB", "esperado": "clasificar por AB y registrar el supuesto de equivalencia aplicado" }
+  ]
+}

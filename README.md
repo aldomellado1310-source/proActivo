@@ -1,0 +1,99 @@
+# ProActivo
+
+Demo interactiva de auditoría de cumplimiento marítimo para DIRECTEMAR — Región de Aysén.
+Registro de flota, clasificación de naves por TRG/AB, certificados con alertas de
+vencimiento, control de insumos y preparación de revista de cargo.
+
+Es una demo **con datos mock** (sin backend): el motor de evaluación de reglas normativas
+sí es real y corre en el navegador sobre datos de ejemplo, con persistencia local en
+`localStorage`.
+
+## Principio rector
+
+Las reglas normativas son **datos**, no código. El catálogo en
+[`src/data/catalogo-reglas.json`](src/data/catalogo-reglas.json) alimenta el motor de
+evaluación ([`src/motor/`](src/motor)); cambiar una circular es editar ese documento, no
+desplegar una versión nueva del sistema.
+
+## Advertencia sobre reglas no verificadas
+
+> Todas las reglas nacen con `estadoVerificacion='no_verificada'`. NO deben disparar
+> alertas automáticas en producción hasta ser confirmadas con la Capitanía de Puerto o un
+> experto de dominio. Los campos `vigenciaMeses` marcados con `'requiereConfirmacion': true`
+> son estimaciones, no valores confirmados en fuente oficial.
+
+(Texto tomado de `_meta.advertencia` en `catalogo-reglas.json`.)
+
+En la práctica esto significa que una regla `no_verificada` **nunca** aparece en rojo o
+ámbar: su estado siempre es `indeterminado` ("requiere confirmación"), sin importar la
+fecha del certificado asociado. Solo 3 de las 15 reglas semilla están `verificada`, así que
+la mayor parte de la flota muestra documentos en gris — es intencional: refleja el estado
+real de verificación del catálogo, no un error.
+
+## Stack
+
+- Vite + React 18 + TypeScript, sin backend.
+- `react-router-dom` para la navegación.
+- CSS plano con custom properties (sin Tailwind) — ver `src/styles/`.
+- Vitest para los tests del motor de evaluación.
+- Persistencia demo: datos semilla en TypeScript (`src/data/seed.ts`, con fechas relativas
+  a `new Date()`) + overlay en `localStorage` bajo la clave `proactivo-demo-v1`. El botón
+  "Restablecer demo" del menú lateral borra el overlay y vuelve a los datos semilla.
+
+## Cómo correr
+
+```bash
+npm install
+npm run dev
+```
+
+Abre la URL que imprime Vite (por defecto `http://localhost:5173`). En el login, usa
+cualquiera de los dos "Accesos rápidos para la demo" — no hay autenticación real.
+
+## Tests
+
+```bash
+npm test        # equivalente a: npx vitest run
+```
+
+Cubre los 8 casos borde del catálogo (`cb_01`…`cb_08`, definidos en
+`catalogo-reglas.json → casos_borde_test`) más los tests de `estados.ts` y del cómputo de
+`estadoGlobal`. Ver `src/motor/__tests__/casos-borde.test.ts`.
+
+Otros comandos:
+
+```bash
+npm run build    # build de producción (tsc -b && vite build)
+npm run preview  # sirve el build de producción localmente
+```
+
+## Estructura
+
+```
+src/
+├── types/schema.ts        # esquema de dominio (Nave, Certificado, Insumo, ReglaNormativa…)
+├── data/
+│   ├── catalogo-reglas.json  # catálogo semilla: fuentes, reglas, plantillas de insumos
+│   ├── seed.ts                # flota demo (6 naves, 2 armadores) con fechas relativas a hoy
+│   └── store.ts                # seed + overlay localStorage, reset
+├── motor/
+│   ├── clasificacion.ts   # categoría de la nave por TRG/AB + advertencias
+│   ├── evaluacion.ts      # reglas aplicables → ResultadoEvaluacion
+│   ├── estados.ts         # estado por fecha/cantidad, umbrales
+│   └── __tests__/         # casos borde + tests de estados
+└── ui/
+    ├── layout/             # Header, Nav, Layout
+    ├── components/         # Card, Badge, ModalFoto, FormularioCertificado, iconos
+    └── pages/              # Login, Dashboard, Flota, NaveDetalle, Certificados, Insumos, Reglas
+```
+
+## Documento de referencia
+
+[`docs/matriz-normativa-aysen.html`](docs/matriz-normativa-aysen.html) — matriz normativa
+DIRECTEMAR por TRG para la Región de Aysén que originó el catálogo de reglas. Se conserva
+como documento de referencia, no se consume programáticamente.
+
+## Fuera de alcance (fase 2)
+
+Personal embarcado y titulaciones STCW, integración directa con el SIN de DIRECTEMAR,
+multi-región, backend real (Firebase u otro) y portal para terceros verificadores.
