@@ -133,6 +133,22 @@ permite algo de delight en el fondo sin contradecir el resto de la app (que evit
 en lo que se usa seguido). Solo anima `transform`; respeta `prefers-reduced-motion` por
 la regla global del principio del archivo.
 
+### Logo que se desvanece al bajar en el login
+
+El header es `position: sticky` en toda la app, pero solo en el login recibe la prop
+`colapsaAlDesplazar` (`Header.tsx`): un listener de `scroll` pasivo marca `.pa-header--compacto`
+al pasar 32px de scroll vertical, y esa clase desvanece el ícono y el wordmark (opacidad +
+transform sutil, `cubic-bezier(0.16,1,0.3,1)`) dejando la barra vacía y liviana mientras se
+lee el marketing largo, para que reaparezcan al volver a subir. En las vistas de trabajo
+(dashboard, flota, etc.) el header nunca recibe la prop, así que el logo se queda quieto — es
+un ancla de "dónde estoy" que ahí sí compite por atención si se mueve. También hay un guiño de
+hover (`scale(1.08) rotate(-4deg)` en el ícono, solo con `hover: hover` para no afectar touch).
+
+Hacer el header sticky obligó a corregir el offset del nav (`.pa-nav`), que también es sticky:
+antes usaba `top: var(--pa-espacio-5)` asumiendo que no había nada fijo arriba; ahora usa
+`calc(60px + var(--pa-espacio-5))`, 60px siendo la altura real medida del header en desktop,
+para que no se solape con él.
+
 ### Skills de diseño instaladas
 
 El repo trae skills de agente instaladas con [`skills`](https://github.com/vercel-labs/skills)

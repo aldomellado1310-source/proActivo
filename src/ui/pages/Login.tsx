@@ -46,7 +46,7 @@ export function Login() {
         <span />
         <span />
       </div>
-      <Header />
+      <Header colapsaAlDesplazar />
       <div className="pa-login">
         <div>
           <h1 className="pa-login__marca">
