@@ -26,7 +26,7 @@ const catalogo = catalogoRaw as unknown as {
 export const reglasCatalogo: ReglaNormativa[] = catalogo.reglas_normativas;
 export const advertenciaReglasNoVerificadas: string = catalogo._meta.advertencia;
 
-export type PerfilId = 'gestor_flota' | 'patron_nave';
+export type PerfilId = 'gestor_flota' | 'patron_nave' | 'admin';
 
 export interface Perfil {
   id: PerfilId;
@@ -34,10 +34,18 @@ export interface Perfil {
   cargo: string;
 }
 
+/** Perfiles de "acceso rápido" del login (tarjetas, sin clave). */
 export const PERFILES_DEMO: Perfil[] = [
   { id: 'gestor_flota', nombre: 'Paula Cárcamo', cargo: 'Gestora de Flota' },
   { id: 'patron_nave', nombre: 'Iván Barría', cargo: 'Patrón de Nave' },
 ];
+
+/** Perfil del login por usuario y clave (ver Login.tsx). Se mantiene fuera de
+ * PERFILES_DEMO porque no aparece como tarjeta de acceso rápido. */
+export const PERFIL_ADMIN: Perfil = { id: 'admin', nombre: 'Administrador', cargo: 'Administrador del sistema' };
+
+/** Todos los perfiles posibles, para resolver el perfil activo (p. ej. en Header). */
+export const TODOS_LOS_PERFILES: Perfil[] = [...PERFILES_DEMO, PERFIL_ADMIN];
 
 export interface EstadoDemo {
   armadores: Armador[];

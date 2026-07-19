@@ -184,6 +184,27 @@ button {
   color: var(--pa-header-a);
 }
 
+/* Mismo componente que el toggle Online/Offline del header, pero sobre la
+   tarjeta blanca del login: los tintes translúcidos blanco-sobre-blanco del
+   original serían invisibles ahí, así que esta variante usa el fondo/borde
+   claros del resto de la interfaz. */
+.pa-toggle--claro {
+  background: var(--pa-fondo-de);
+  margin: var(--pa-espacio-3) 0 var(--pa-espacio-4);
+  width: 100%;
+}
+
+.pa-toggle--claro button {
+  flex: 1;
+  color: var(--pa-texto-suave);
+}
+
+.pa-toggle--claro button[aria-pressed='true'] {
+  background: var(--pa-superficie);
+  color: var(--pa-navy);
+  box-shadow: var(--pa-sombra-sm);
+}
+
 .pa-header__perfil {
   display: flex;
   align-items: center;
@@ -798,7 +819,71 @@ button {
 
 /* ── Login ─────────────────────────────────────────────────── */
 
+/* Manchas de color a la deriva, muy lentas y difusas, detrás de la portada.
+   position:fixed + z-index implícito (van primero en el DOM, sin z-index
+   propio) para quedar atrás de todo sin crear un contexto de apilamiento
+   que complique el resto de la página. Solo anima transform (nunca blur ni
+   posición vía top/left), y prefers-reduced-motion ya las inmoviliza por la
+   regla global del principio de este archivo. */
+.pa-fondo-animado {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.pa-fondo-animado span {
+  position: absolute;
+  width: 46vw;
+  height: 46vw;
+  min-width: 320px;
+  min-height: 320px;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.14;
+  animation: pa-deriva 34s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.pa-fondo-animado span:nth-child(1) {
+  top: -12%;
+  left: -10%;
+  background: var(--pa-navy);
+}
+
+.pa-fondo-animado span:nth-child(2) {
+  top: 26%;
+  right: -14%;
+  background: var(--pa-accion);
+  width: 38vw;
+  height: 38vw;
+  animation-duration: 41s;
+  animation-delay: -9s;
+}
+
+.pa-fondo-animado span:nth-child(3) {
+  bottom: -16%;
+  left: 22%;
+  background: var(--pa-acento-marca);
+  width: 32vw;
+  height: 32vw;
+  min-width: 260px;
+  min-height: 260px;
+  animation-duration: 37s;
+  animation-delay: -18s;
+}
+
+@keyframes pa-deriva {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(5%, 7%) scale(1.1);
+  }
+}
+
 .pa-login {
+  position: relative;
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -914,6 +999,15 @@ button {
   color: var(--pa-texto-suave);
   margin: var(--pa-espacio-5) 0 var(--pa-espacio-3);
   text-align: center;
+}
+
+.pa-login__error {
+  background: var(--pa-vencido-bg);
+  color: var(--pa-vencido);
+  border-radius: var(--pa-radio-input);
+  padding: var(--pa-espacio-3);
+  font-size: 0.85rem;
+  margin: 0 0 var(--pa-espacio-3);
 }
 
 .pa-acceso-rapido {
@@ -1035,16 +1129,64 @@ button {
   .pa-login {
     grid-template-columns: 1fr;
   }
+  /* En una sola columna, el formulario de acceso pasa primero: en el
+     celular es lo que la persona vino a usar, no la ficha de marketing. */
+  .pa-login__card {
+    order: -1;
+  }
   .pa-shell {
     flex-direction: column;
   }
   .pa-nav {
     width: 100%;
-    position: static;
+    position: relative;
     flex-direction: row;
     overflow-x: auto;
   }
+  /* Insinúa que el nav sigue más allá del borde, en vez de cortarlo en
+     seco (apple-design: "scroll edge effects, not hard dividers"). */
+  .pa-nav::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 28px;
+    background: linear-gradient(to right, transparent, var(--pa-superficie));
+    pointer-events: none;
+  }
   .pa-grid-2 {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  html {
+    overflow-x: hidden;
+  }
+  .pa-header {
+    padding: var(--pa-espacio-3) var(--pa-espacio-4);
+  }
+  .pa-header__der {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    row-gap: var(--pa-espacio-2);
+  }
+  .pa-header__cargo {
+    display: none;
+  }
+  .pa-shell {
+    padding: var(--pa-espacio-4) var(--pa-espacio-4) var(--pa-espacio-6);
+  }
+  .pa-login {
+    padding: var(--pa-espacio-5) var(--pa-espacio-4);
+    gap: var(--pa-espacio-5);
+  }
+  .pa-login__features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--pa-espacio-2);
+  }
+  .pa-feature-card {
+    padding: var(--pa-espacio-3);
   }
 }

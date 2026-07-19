@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEstadoDemo } from '../EstadoContext';
-import { PERFILES_DEMO } from '../../data/store';
+import { TODOS_LOS_PERFILES } from '../../data/store';
 
 export function Header() {
   const { estado, cerrarSesion } = useEstadoDemo();
   const [online, setOnline] = useState(true);
-  const perfil = PERFILES_DEMO.find((p) => p.id === estado.perfilActivoId);
+  const perfil = TODOS_LOS_PERFILES.find((p) => p.id === estado.perfilActivoId);
 
   return (
     <header className="pa-header">
@@ -39,7 +39,9 @@ export function Header() {
             <span>
               {perfil.nombre}
               <br />
-              <span style={{ opacity: 0.85, fontSize: '0.75rem' }}>{perfil.cargo}</span>
+              <span className="pa-header__cargo" style={{ opacity: 0.85, fontSize: '0.75rem' }}>
+                {perfil.cargo}
+              </span>
             </span>
             <button className="pa-btn-salir" onClick={cerrarSesion}>
               Salir

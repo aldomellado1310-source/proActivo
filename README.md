@@ -107,6 +107,32 @@ insumo puntual. La cola de vencimientos cruzando toda la flota sin importar la n
 viviendo en el Panel ("Próximos vencimientos"); estas dos vistas son el detalle completo
 organizado por nave.
 
+### Responsivo
+
+Breakpoints en `src/styles/base.css`: 900px colapsa a una columna (nav horizontal con
+scroll, tarjeta de login primero — `order: -1` — antes que el bloque de marketing) y 640px
+ajusta el header (oculta el cargo del perfil, deja que el bloque de la derecha se envuelva
+en dos líneas en vez de comprimirse) y reduce paddings para que el contenido quepa sin
+scroll horizontal. El nav con scroll horizontal tiene un degradado en el borde derecho
+(`.pa-nav::after`) que insinúa que hay más ítems, en vez de cortar en seco.
+
+### Login: accesos rápidos o usuario y clave
+
+El login tiene dos modos (`.pa-toggle--claro`, la misma variante de pill-toggle del
+header pero adaptada a fondo claro): las tarjetas de acceso rápido de siempre, o un
+formulario de usuario y clave. Este último es una demo sin backend — el único acceso es
+`admin` / `admin`, definido en `src/data/store.ts` (`PERFIL_ADMIN`, fuera de
+`PERFILES_DEMO` porque no es una tarjeta de acceso rápido). Cualquier lugar que resuelva
+el perfil activo por id debe usar `TODOS_LOS_PERFILES`, no `PERFILES_DEMO`, o el perfil
+admin queda sin nombre/cargo (pasó en `Header.tsx` y `Dashboard.tsx`).
+
+Detrás del contenido del login hay tres manchas de color a la deriva, muy difusas y
+lentas (`.pa-fondo-animado`, `@keyframes pa-deriva`), solo ahí: es la única pantalla que
+se ve una vez por sesión, así que es donde el criterio de frecuencia de Emil Kowalski
+permite algo de delight en el fondo sin contradecir el resto de la app (que evita motion
+en lo que se usa seguido). Solo anima `transform`; respeta `prefers-reduced-motion` por
+la regla global del principio del archivo.
+
 ### Skills de diseño instaladas
 
 El repo trae skills de agente instaladas con [`skills`](https://github.com/vercel-labs/skills)

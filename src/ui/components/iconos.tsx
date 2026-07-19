@@ -147,3 +147,13 @@ export function IconoInfo({ size = 18 }: { size?: number }) {
     </svg>
   );
 }
+
+export function IconoCandado({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="5" y="11" width="14" height="9.5" rx="2" stroke="currentColor" strokeWidth="1.7" />
+      <path d="M8 11V7.5a4 4 0 0 1 8 0V11" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="12" cy="15.5" r="1.4" fill="currentColor" />
+    </svg>
+  );
+}
