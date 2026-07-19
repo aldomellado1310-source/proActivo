@@ -73,7 +73,7 @@ p {
 }
 
 a {
-  color: var(--pa-accion);
+  color: var(--pa-enlace);
 }
 
 button {
@@ -255,11 +255,18 @@ button {
 
 .pa-nav a:hover {
   background: var(--pa-conforme-bg);
-  transform: translateX(2px);
 }
 
 .pa-nav a:hover svg {
   opacity: 1;
+}
+
+/* El desplazamiento lateral es decorativo; se aísla del tap táctil (que
+   dispara :hover sin puntero fino) para que no quede "pegado" tras un toque. */
+@media (hover: hover) and (pointer: fine) {
+  .pa-nav a:hover {
+    transform: translateX(2px);
+  }
 }
 
 .pa-nav a.activo {
@@ -457,7 +464,7 @@ button {
 }
 .pa-badge--criticidad-alta {
   background: #fbead9;
-  color: #a15b28;
+  color: #965525;
 }
 .pa-badge--criticidad-media {
   background: #eaf1fb;
@@ -511,6 +518,17 @@ button {
 
 .pa-table tbody tr {
   transition: background-color 0.15s ease;
+}
+
+/* Quiebre visual por grupo (p. ej. nave) en listas largas y planas: un tinte
+   muy sutil basta para que el ojo detecte dónde cambia el grupo sin añadir
+   bordes ni reestructurar la tabla. */
+.pa-table tbody tr.pa-table__grupo-par {
+  background-color: rgba(27, 58, 107, 0.08);
+}
+
+.pa-table tbody tr.pa-table__grupo-par:hover {
+  background: var(--pa-fondo-de);
 }
 
 /* ── Botones / formularios ────────────────────────────────── */
@@ -792,8 +810,13 @@ button {
 .pa-acceso-rapido:hover {
   border-color: var(--pa-accion-suave);
   background: var(--pa-fondo-de);
-  transform: translateX(3px);
   box-shadow: var(--pa-sombra-sm);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pa-acceso-rapido:hover {
+    transform: translateX(3px);
+  }
 }
 
 .pa-acceso-rapido__avatar {

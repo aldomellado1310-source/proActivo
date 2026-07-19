@@ -15,8 +15,12 @@
   --pa-navy: #1b3a6b;
   --pa-accion: #2e9bd6;
   --pa-accion-suave: #6fbbe8;
+  /* Enlace: más oscuro que --pa-accion para cumplir 4.5:1 en texto (AA) sobre
+     fondo blanco/claro. --pa-accion se mantiene para elementos grandes
+     (íconos, botones, degradados) donde el contraste ya es suficiente. */
+  --pa-enlace: #186a94;
   --pa-texto: #33475b;
-  --pa-texto-suave: #6b8098;
+  --pa-texto-suave: #587189;
 
   /* Acento de marca — ámbar del documento normativo de origen. Uso exclusivo en
      elementos estructurales/de marca (regla del header, borde de tarjetas de
@@ -31,16 +35,17 @@
   --pa-textura-contorno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'%3E%3Cg fill='none' stroke='%231b3a6b' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M-10 20 Q 65 -8 140 20 T 310 20'/%3E%3Cpath d='M-10 62 Q 65 34 140 62 T 310 62'/%3E%3Cpath d='M-10 104 Q 65 76 140 104 T 310 104'/%3E%3Cpath d='M-10 146 Q 65 118 140 146 T 310 146'/%3E%3C/g%3E%3C/svg%3E");
   --pa-textura-grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.106 0 0 0 0 0.227 0 0 0 0 0.42 0 0 0 0.028 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
-  /* Estados de cumplimiento */
-  --pa-conforme: #3e8c6e;
+  /* Estados de cumplimiento — colores de texto ajustados para 4.5:1 mínimo
+     (AA) sobre su propio fondo de badge; ver .pa-badge en base.css. */
+  --pa-conforme: #35775e;
   --pa-conforme-bg: #e4f3ec;
-  --pa-por-vencer: #c87941;
+  --pa-por-vencer: #965b31;
   --pa-por-vencer-bg: #fbead9;
-  --pa-vencido: #c0453e;
+  --pa-vencido: #ad3e38;
   --pa-vencido-bg: #fbe4e2;
-  --pa-indeterminado: #8a97a3;
+  --pa-indeterminado: #616a72;
   --pa-indeterminado-bg: #eceff1;
-  --pa-faltante: #c0453e;
+  --pa-faltante: #ad3e38;
   --pa-faltante-bg: #fbe4e2;
 
   /* Radios / espaciado */

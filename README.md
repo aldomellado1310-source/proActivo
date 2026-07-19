@@ -64,6 +64,21 @@ los stat-tiles / tarjetas de features del login (no clickeables) no tienen hover
 entrada escalonada del login y el fade del modal de evidencia sí se mantienen, por ser momentos
 puntuales. Todo respeta `prefers-reduced-motion`.
 
+Los desplazamientos de hover puramente decorativos (nav lateral, accesos rápidos del login)
+están detrás de `@media (hover: hover) and (pointer: fine)`: en touch, tocar dispara `:hover`
+sin que haya un puntero fino detrás, así que sin ese filtro el efecto queda "pegado" tras el tap.
+
+### Skills de diseño instaladas
+
+El repo trae skills de agente instaladas con [`skills`](https://github.com/vercel-labs/skills)
+(`.agents/skills/`, symlink en `.claude/skills/`) y [`taste-skill`](https://github.com/taste-skill/taste-skill)
+(`skills/taste/`, symlinked bajo los nombres `taste-*`): `emil-design-eng`, `apple-design`,
+`animation-vocabulary`, `improve-animations`, `review-animations`, `find-animation-opportunities`,
+`impeccable`, `taste-default`, `taste-soft-calm`, `taste-redesign` y el resto del set de
+`taste-skill`. Se usaron para la auditoría de contraste y de motion de esta vuelta de pulido
+(colores de estado, badges de criticidad y el enlace `<a>` global no cumplían 4.5:1 AA sobre su
+fondo — ver `--pa-enlace` y los tokens de estado en `src/styles/tokens.css`).
+
 ## Cómo correr
 
 ```bash

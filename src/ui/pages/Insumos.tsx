@@ -38,6 +38,20 @@ export function Insumos() {
     return true;
   });
 
+  // Agrupación visual por nave: la tabla lista ~20 insumos por nave, así que
+  // sin un quiebre visual entre grupos es difícil ubicar dónde termina una
+  // nave y empieza la siguiente en una lista larga.
+  let grupoActual = -1;
+  let naveGrupoAnterior: string | null = null;
+
+  const filasConGrupo = filtradas.map((fila) => {
+    if (fila.nave.id !== naveGrupoAnterior) {
+      grupoActual += 1;
+      naveGrupoAnterior = fila.nave.id;
+    }
+    return { ...fila, grupoPar: grupoActual % 2 === 0 };
+  });
+
   return (
     <>
       <div>
@@ -76,8 +90,11 @@ export function Insumos() {
                 </tr>
               </thead>
               <tbody>
-                {filtradas.map(({ nave, insumo, evaluado }) => (
-                  <tr key={`${nave.id}-${insumo.id}`} className="clickable">
+                {filasConGrupo.map(({ nave, insumo, evaluado, grupoPar }) => (
+                  <tr
+                    key={`${nave.id}-${insumo.id}`}
+                    className={`clickable${grupoPar ? ' pa-table__grupo-par' : ''}`}
+                  >
                     <td>
                       <Link to={`/flota/${nave.id}?tab=insumos`}>{nave.nombre}</Link>
                     </td>
