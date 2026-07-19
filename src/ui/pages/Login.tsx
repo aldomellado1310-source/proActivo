@@ -51,7 +51,7 @@ export function Login() {
 
         <div className="pa-login__card">
           <h2 style={{ marginBottom: 4 }}>Bienvenido de vuelta</h2>
-          <p className="pa-texto-suave">Ingresá a la demo de ProActivo</p>
+          <p className="pa-texto-suave">Ingresa a la demo de ProActivo</p>
 
           <p className="pa-login__accesos-titulo">ACCESOS RÁPIDOS PARA LA DEMO</p>
           {PERFILES_DEMO.map((perfil) => (
@@ -71,7 +71,7 @@ export function Login() {
           ))}
           <p className="pa-texto-suave" style={{ marginTop: 16 }}>
             Demo sin autenticación real: al elegir un perfil se guarda localmente y se abre el
-            panel. Usá "Restablecer demo" en cualquier momento para volver a los datos semilla.
+            panel. Usa "Restablecer demo" en cualquier momento para volver a los datos semilla.
           </p>
         </div>
       </div>
