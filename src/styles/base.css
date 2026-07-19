@@ -96,7 +96,9 @@ button {
 }
 
 .pa-header {
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 20;
   background-color: var(--pa-navy);
   background-image: radial-gradient(560px circle at 88% -30%, rgba(255, 255, 255, 0.16), transparent 60%),
     var(--pa-degradado-header);
@@ -109,6 +111,14 @@ button {
   flex-wrap: wrap;
   box-shadow: var(--pa-sombra-sm);
   border-bottom: 3px solid var(--pa-acento-marca);
+  transition: box-shadow 0.25s ease;
+}
+
+/* Solo aparece cuando Header recibe colapsaAlDesplazar (portada): una
+   sombra algo más marcada refuerza que el header quedó "flotando" sobre el
+   contenido que sigue scrolleando debajo. */
+.pa-header--compacto {
+  box-shadow: var(--pa-sombra);
 }
 
 .pa-header__izq {
@@ -134,6 +144,35 @@ button {
   height: 28px;
   width: auto;
   display: block;
+  transform-origin: left center;
+  transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pa-header__marca .pa-logotipo {
+  transition: opacity 0.24s ease, transform 0.24s ease;
+}
+
+/* El logo de marca se ve poco (una vez al cargar, quizás al volver al
+   panel), así que un guiño de hover aquí no compite con la regla de "nada
+   de motion en lo frecuente" del resto de la interfaz. */
+@media (hover: hover) and (pointer: fine) {
+  .pa-header__marca:hover .pa-header__icono {
+    transform: scale(1.08) rotate(-4deg);
+  }
+}
+
+/* Solo en el login (Header colapsaAlDesplazar): al bajar el scroll el logo
+   se desvanece para dejar el header como una barra angosta y despejar más
+   lugar visible para el menú de acceso. Solo transform/opacity — el alto
+   del header no cambia, así que no hay salto de layout. */
+.pa-header--compacto .pa-header__icono {
+  opacity: 0;
+  transform: scale(0.5) translateX(-8px);
+}
+
+.pa-header--compacto .pa-header__marca .pa-logotipo {
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .pa-badge-demo {
@@ -260,7 +299,10 @@ button {
   padding: var(--pa-espacio-3);
   box-shadow: var(--pa-sombra-sm);
   position: sticky;
-  top: var(--pa-espacio-5);
+  /* El header ahora es sticky (top:0) y ocupa ~60px reales; sin sumarlos
+     aquí, el nav quedaría "stuck" debajo del header en vez de justo bajo
+     él. */
+  top: calc(60px + var(--pa-espacio-5));
 }
 
 .pa-nav a {

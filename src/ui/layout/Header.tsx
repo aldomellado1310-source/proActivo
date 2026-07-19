@@ -1,15 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEstadoDemo } from '../EstadoContext';
 import { TODOS_LOS_PERFILES } from '../../data/store';
 
-export function Header() {
+/**
+ * `colapsaAlDesplazar`: solo lo usa Login.tsx. El header es sticky en toda la
+ * app, pero el logo únicamente se desvanece al bajar en el scroll largo del
+ * login (marketing + tarjeta de acceso) — en las vistas de trabajo el logo
+ * se queda quieto, es un ancla de "dónde estoy" que no debería competir con
+ * el contenido por atención.
+ */
+export function Header({ colapsaAlDesplazar = false }: { colapsaAlDesplazar?: boolean }) {
   const { estado, cerrarSesion } = useEstadoDemo();
   const [online, setOnline] = useState(true);
+  const [colapsado, setColapsado] = useState(false);
   const perfil = TODOS_LOS_PERFILES.find((p) => p.id === estado.perfilActivoId);
 
+  useEffect(() => {
+    if (!colapsaAlDesplazar) return;
+    function alDesplazar() {
+      setColapsado(window.scrollY > 32);
+    }
+    window.addEventListener('scroll', alDesplazar, { passive: true });
+    return () => window.removeEventListener('scroll', alDesplazar);
+  }, [colapsaAlDesplazar]);
+
   return (
-    <header className="pa-header">
+    <header className={`pa-header${colapsado ? ' pa-header--compacto' : ''}`}>
       <div className="pa-header__izq">
         <Link to={perfil ? '/dashboard' : '/'} className="pa-header__marca">
           <img src={`${import.meta.env.BASE_URL}navix-icono.png`} alt="" className="pa-header__icono" />
