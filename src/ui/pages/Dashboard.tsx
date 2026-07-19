@@ -4,7 +4,7 @@ import { Card, StatTile, EmptyState } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
-import { PERFILES_DEMO } from '../../data/store';
+import { TODOS_LOS_PERFILES } from '../../data/store';
 
 const LIMITE_REGLAS_PENDIENTES = 5;
 
@@ -12,7 +12,7 @@ export function Dashboard() {
   const { estado, reglas } = useEstadoDemo();
   const evaluaciones = useEvaluaciones();
   const [verTodasPendientes, setVerTodasPendientes] = useState(false);
-  const perfil = PERFILES_DEMO.find((p) => p.id === estado.perfilActivoId);
+  const perfil = TODOS_LOS_PERFILES.find((p) => p.id === estado.perfilActivoId);
 
   const naves = estado.naves;
   const resultados = naves.map((n) => ({ nave: n, resultado: evaluaciones[n.id] }));
