@@ -80,7 +80,7 @@ export function Certificados() {
                     <td>
                       <CriticidadBadge criticidad={doc.criticidad} />
                     </td>
-                    <td>{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
+                    <td className="pa-mono">{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
                     <td>
                       <EstadoBadge estado={doc.estado} requiereConfirmacionManual={doc.requiereConfirmacionManual} />
                     </td>

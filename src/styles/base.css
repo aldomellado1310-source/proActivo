@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap');
+
 *,
 *::before,
 *::after {
@@ -14,7 +16,12 @@ body {
   margin: 0;
   font-family: var(--pa-fuente);
   color: var(--pa-texto);
-  background: linear-gradient(160deg, var(--pa-fondo-de) 0%, var(--pa-fondo-a) 55%, var(--pa-fondo-a) 100%);
+  background-color: var(--pa-fondo-a);
+  background-image: var(--pa-textura-contorno),
+    linear-gradient(160deg, var(--pa-fondo-de) 0%, var(--pa-fondo-a) 55%, var(--pa-fondo-a) 100%);
+  background-size: 300px 160px, cover;
+  background-repeat: repeat, no-repeat;
+  background-attachment: fixed, fixed;
   min-height: 100vh;
 }
 
@@ -25,6 +32,31 @@ h4 {
   color: var(--pa-navy);
   margin: 0 0 var(--pa-espacio-2);
   font-weight: 700;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--pa-fuente-display);
+  text-wrap: balance;
+  letter-spacing: -0.01em;
+}
+
+.pa-mono {
+  font-family: var(--pa-fuente-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 p {
@@ -49,7 +81,10 @@ button {
 }
 
 .pa-header {
-  background: linear-gradient(90deg, var(--pa-header-de), var(--pa-header-a));
+  position: relative;
+  background-color: var(--pa-navy);
+  background-image: radial-gradient(560px circle at 88% -30%, rgba(255, 255, 255, 0.16), transparent 60%),
+    var(--pa-degradado-header);
   color: #ffffff;
   padding: var(--pa-espacio-3) var(--pa-espacio-6);
   display: flex;
@@ -58,6 +93,7 @@ button {
   gap: var(--pa-espacio-4);
   flex-wrap: wrap;
   box-shadow: var(--pa-sombra-sm);
+  border-bottom: 3px solid var(--pa-acento-marca);
 }
 
 .pa-header__izq {
@@ -176,7 +212,10 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--pa-espacio-1);
-  background: var(--pa-superficie);
+  background-color: var(--pa-superficie);
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
   border: 1px solid var(--pa-borde);
   border-radius: var(--pa-radio-card);
   padding: var(--pa-espacio-3);
@@ -190,20 +229,39 @@ button {
   align-items: center;
   gap: var(--pa-espacio-2);
   padding: 10px 12px;
+  padding-left: 9px;
+  border-left: 3px solid transparent;
   border-radius: 10px;
   color: var(--pa-texto);
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.pa-nav a svg {
+  flex-shrink: 0;
+  opacity: 0.75;
+  transition: opacity 0.15s ease;
 }
 
 .pa-nav a:hover {
   background: var(--pa-conforme-bg);
+  transform: translateX(2px);
+}
+
+.pa-nav a:hover svg {
+  opacity: 1;
 }
 
 .pa-nav a.activo {
   background: var(--pa-navy);
   color: #ffffff;
+  border-left-color: var(--pa-acento-marca);
+}
+
+.pa-nav a.activo svg {
+  opacity: 1;
 }
 
 .pa-nav .pa-nav__reset {
@@ -220,10 +278,31 @@ button {
   gap: var(--pa-espacio-5);
 }
 
+@keyframes pa-entrada {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pa-route-transition {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pa-espacio-5);
+  animation: pa-entrada 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 /* ── Tarjetas ──────────────────────────────────────────────── */
 
 .pa-card {
-  background: var(--pa-superficie);
+  background-color: var(--pa-superficie);
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
   border: 1px solid var(--pa-borde);
   border-radius: var(--pa-radio-card);
   box-shadow: var(--pa-sombra-sm);
@@ -252,16 +331,51 @@ button {
 }
 
 .pa-stat-tile {
-  background: var(--pa-superficie);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--pa-superficie);
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
   border: 1px solid var(--pa-borde);
   border-radius: var(--pa-radio-card);
   padding: var(--pa-espacio-4) var(--pa-espacio-5);
   box-shadow: var(--pa-sombra-sm);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.pa-stat-tile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--pa-navy), var(--pa-accion));
+}
+
+.pa-stat-tile--alerta::before {
+  background: linear-gradient(90deg, #a3332d, var(--pa-vencido));
+}
+
+.pa-stat-tile--ambar::before {
+  background: linear-gradient(90deg, #a15b28, var(--pa-por-vencer));
+}
+
+.pa-stat-tile--gris::before {
+  background: linear-gradient(90deg, #5c6b78, var(--pa-indeterminado));
+}
+
+.pa-stat-tile:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pa-sombra);
 }
 
 .pa-stat-tile__valor {
+  font-family: var(--pa-fuente-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--pa-navy);
   line-height: 1.1;
 }
@@ -296,6 +410,7 @@ button {
   font-weight: 700;
   white-space: nowrap;
   border: 1px solid transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .pa-badge::before {
@@ -384,10 +499,15 @@ button {
 
 .pa-table tr.clickable {
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
 .pa-table tr.clickable:hover {
   background: var(--pa-fondo-de);
+}
+
+.pa-table tbody tr {
+  transition: background-color 0.15s ease;
 }
 
 /* ── Botones / formularios ────────────────────────────────── */
@@ -403,7 +523,7 @@ button {
   font-size: 0.9rem;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: transform 0.05s ease, filter 0.15s ease;
+  transition: transform 0.05s ease, filter 0.15s ease, box-shadow 0.18s ease, background-color 0.15s ease;
 }
 
 .pa-btn:active {
@@ -411,13 +531,14 @@ button {
 }
 
 .pa-btn--primario {
-  background: linear-gradient(90deg, var(--pa-accion), var(--pa-header-a));
+  background: linear-gradient(100deg, var(--pa-navy), var(--pa-accion) 70%, var(--pa-accion-suave));
   color: #ffffff;
   box-shadow: 0 6px 16px rgba(46, 155, 214, 0.35);
 }
 
 .pa-btn--primario:hover {
-  filter: brightness(1.05);
+  filter: brightness(1.06);
+  box-shadow: 0 8px 20px rgba(46, 155, 214, 0.42);
 }
 
 .pa-btn--secundario {
@@ -428,6 +549,7 @@ button {
 
 .pa-btn--secundario:hover {
   background: var(--pa-fondo-de);
+  border-color: var(--pa-accion-suave);
 }
 
 .pa-btn--peligro {
@@ -492,6 +614,11 @@ button {
   cursor: pointer;
   border-bottom: 2px solid transparent;
   margin-bottom: -1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.pa-tabs button:hover {
+  color: var(--pa-navy);
 }
 
 .pa-tabs button.activo {
@@ -539,6 +666,13 @@ button {
   display: flex;
   align-items: center;
   gap: var(--pa-espacio-3);
+  opacity: 0;
+  animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+}
+
+.pa-login__intro {
+  opacity: 0;
+  animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
 }
 
 .pa-login__marca-texto h1 {
@@ -559,11 +693,36 @@ button {
 }
 
 .pa-feature-card {
-  background: #ffffff;
+  background-color: #ffffff;
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
   border: 1px solid var(--pa-borde);
   border-radius: var(--pa-radio-card);
   padding: var(--pa-espacio-4);
   text-align: center;
+  opacity: 0;
+  animation: pa-entrada 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.pa-feature-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--pa-sombra-sm);
+  border-color: var(--pa-accion-suave);
+}
+
+.pa-login__features .pa-feature-card:nth-child(1) {
+  animation-delay: 0.18s;
+}
+.pa-login__features .pa-feature-card:nth-child(2) {
+  animation-delay: 0.25s;
+}
+.pa-login__features .pa-feature-card:nth-child(3) {
+  animation-delay: 0.32s;
+}
+.pa-login__features .pa-feature-card:nth-child(4) {
+  animation-delay: 0.39s;
 }
 
 .pa-feature-card svg {
@@ -583,10 +742,27 @@ button {
 }
 
 .pa-login__card {
-  background: #ffffff;
+  position: relative;
+  overflow: hidden;
+  background-color: #ffffff;
+  background-image: var(--pa-textura-grano), var(--pa-degradado-card);
+  background-size: 140px 140px, cover;
+  background-repeat: repeat, no-repeat;
   border-radius: 20px;
-  box-shadow: var(--pa-sombra);
+  box-shadow: var(--pa-sombra-lg);
   padding: var(--pa-espacio-6);
+  opacity: 0;
+  animation: pa-entrada 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+}
+
+.pa-login__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--pa-degradado-acento);
 }
 
 .pa-login__accesos-titulo {
@@ -610,12 +786,14 @@ button {
   cursor: pointer;
   text-align: left;
   margin-bottom: var(--pa-espacio-2);
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .pa-acceso-rapido:hover {
   border-color: var(--pa-accion-suave);
   background: var(--pa-fondo-de);
+  transform: translateX(3px);
+  box-shadow: var(--pa-sombra-sm);
 }
 
 .pa-acceso-rapido__avatar {
@@ -665,6 +843,36 @@ button {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--pa-espacio-4);
+}
+
+/* ── Modal ─────────────────────────────────────────────────── */
+
+@keyframes pa-modal-fondo {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pa-modal-caja {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.pa-modal-fondo {
+  animation: pa-modal-fondo 0.18s ease both;
+}
+
+.pa-modal-caja {
+  animation: pa-modal-caja 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @media (max-width: 900px) {

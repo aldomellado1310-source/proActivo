@@ -61,7 +61,7 @@ export function Reglas() {
                   <tr key={regla.id}>
                     <td>
                       <strong>{regla.documentoExigido}</strong>
-                      <div className="pa-texto-suave">
+                      <div className="pa-texto-suave pa-mono">
                         {regla.tipoPlazo === 'fijo' && regla.vigenciaMeses
                           ? `Vigencia: ${regla.vigenciaMeses} meses`
                           : regla.tipoPlazo === 'permanente'

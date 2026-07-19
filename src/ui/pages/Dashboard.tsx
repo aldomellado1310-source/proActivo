@@ -94,7 +94,7 @@ export function Dashboard() {
                       <Link to={`/flota/${nave.id}?tab=certificados`}>{nave.nombre}</Link>
                     </td>
                     <td>{doc.documentoExigido}</td>
-                    <td>{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
+                    <td className="pa-mono">{doc.diasParaVencer !== undefined ? `${doc.diasParaVencer} días` : '—'}</td>
                     <td>
                       <EstadoBadge estado={doc.estado} />
                     </td>
@@ -127,7 +127,7 @@ export function Dashboard() {
                       <Link to={`/flota/${nave.id}?tab=insumos`}>{nave.nombre}</Link>
                     </td>
                     <td>{insumo.descripcion}</td>
-                    <td>
+                    <td className="pa-mono">
                       {insumo.diasParaVencer !== undefined
                         ? `${insumo.diasParaVencer} días`
                         : insumo.deficitCantidad !== undefined

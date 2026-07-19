@@ -34,7 +34,7 @@ export function Login() {
               <p>Auditoría de cumplimiento marítimo — DIRECTEMAR · Aysén</p>
             </div>
           </div>
-          <p className="pa-texto-suave">
+          <p className="pa-texto-suave pa-login__intro">
             Registro de flota, certificados, insumos y preparación de revista de cargo en un solo
             lugar, con el motor de reglas normativas como dato editable — no como código.
           </p>

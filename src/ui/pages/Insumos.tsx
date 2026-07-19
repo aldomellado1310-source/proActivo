@@ -83,7 +83,7 @@ export function Insumos() {
                     </td>
                     <td>{insumo.descripcion}</td>
                     <td>{ETIQUETAS_CATEGORIA[insumo.categoria]}</td>
-                    <td>
+                    <td className="pa-mono">
                       {evaluado.diasParaVencer !== undefined
                         ? `${evaluado.diasParaVencer} días`
                         : evaluado.deficitCantidad !== undefined

@@ -6,15 +6,30 @@
   --pa-borde: #dce9f2;
   --pa-sombra: 0 8px 24px rgba(27, 58, 107, 0.08);
   --pa-sombra-sm: 0 2px 8px rgba(27, 58, 107, 0.06);
+  --pa-sombra-lg: 0 20px 48px rgba(27, 58, 107, 0.16);
 
   /* Header / marca */
   --pa-header-de: #2e9bd6;
   --pa-header-a: #2380b8;
+  --pa-degradado-header: linear-gradient(115deg, #1b3a6b 0%, #2380b8 45%, #2e9bd6 100%);
   --pa-navy: #1b3a6b;
   --pa-accion: #2e9bd6;
   --pa-accion-suave: #6fbbe8;
   --pa-texto: #33475b;
   --pa-texto-suave: #6b8098;
+
+  /* Acento de marca — ámbar del documento normativo de origen. Uso exclusivo en
+     elementos estructurales/de marca (regla del header, borde de tarjetas de
+     acceso, indicador de navegación activa); nunca como color de estado. */
+  --pa-acento-marca: #c2793f;
+  --pa-degradado-acento: linear-gradient(90deg, #c2793f, #dba05f);
+
+  /* Degradado de superficie para tarjetas — sutil, no plano */
+  --pa-degradado-card: linear-gradient(165deg, #ffffff 0%, #f7fbfd 100%);
+
+  /* Texturas: líneas de sonda náutica (fondo) y grano fino (tarjetas) */
+  --pa-textura-contorno: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='160' viewBox='0 0 300 160'%3E%3Cg fill='none' stroke='%231b3a6b' stroke-opacity='0.05' stroke-width='1'%3E%3Cpath d='M-10 20 Q 65 -8 140 20 T 310 20'/%3E%3Cpath d='M-10 62 Q 65 34 140 62 T 310 62'/%3E%3Cpath d='M-10 104 Q 65 76 140 104 T 310 104'/%3E%3Cpath d='M-10 146 Q 65 118 140 146 T 310 146'/%3E%3C/g%3E%3C/svg%3E");
+  --pa-textura-grano: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.106 0 0 0 0 0.227 0 0 0 0 0.42 0 0 0 0.028 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 
   /* Estados de cumplimiento */
   --pa-conforme: #3e8c6e;
@@ -40,7 +55,9 @@
   --pa-espacio-6: 32px;
   --pa-espacio-7: 48px;
 
-  --pa-fuente: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --pa-fuente: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --pa-fuente-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --pa-fuente-mono: 'DM Mono', 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
 }
 
 :root[data-tema='oscuro'] {

@@ -23,6 +23,7 @@ export function ModalFoto({ titulo, onCerrar, onGuardar }: ModalFotoProps) {
       role="dialog"
       aria-modal="true"
       aria-label={titulo}
+      className="pa-modal-fondo"
       style={{
         position: 'fixed',
         inset: 0,
@@ -35,7 +36,11 @@ export function ModalFoto({ titulo, onCerrar, onGuardar }: ModalFotoProps) {
       }}
       onClick={onCerrar}
     >
-      <div className="pa-card" style={{ maxWidth: 420, width: '100%' }} onClick={(e) => e.stopPropagation()}>
+      <div
+        className="pa-card pa-modal-caja"
+        style={{ maxWidth: 420, width: '100%' }}
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="pa-card__titulo">
           <h3>{titulo}</h3>
         </div>

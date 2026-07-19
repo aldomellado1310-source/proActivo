@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Nav } from './Nav';
+import { RouteTransition } from './RouteTransition';
 import { useEstadoDemo } from '../EstadoContext';
 
 /** Envuelve las páginas autenticadas: header + nav lateral. Redirige a /login si no hay perfil activo. */
@@ -17,7 +18,9 @@ export function Layout() {
       <div className="pa-shell">
         <Nav />
         <main className="pa-main">
-          <Outlet />
+          <RouteTransition>
+            <Outlet />
+          </RouteTransition>
         </main>
       </div>
     </div>

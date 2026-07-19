@@ -72,7 +72,7 @@ export function NaveDetalle() {
           </p>
           <h1 style={{ marginBottom: 4 }}>{nave.nombre}</h1>
           <p className="pa-texto-suave">
-            {nave.matricula} · {armador?.razonSocial ?? 'Armador sin registrar'}
+            <span className="pa-mono">{nave.matricula}</span> · {armador?.razonSocial ?? 'Armador sin registrar'}
           </p>
         </div>
         <div className="pa-flex">
@@ -91,7 +91,9 @@ export function NaveDetalle() {
             </p>
             <p>
               <strong>TRG / AB:</strong>{' '}
-              {nave.trg !== undefined ? `${nave.trg} TRG` : nave.arqueoBruto !== undefined ? `${nave.arqueoBruto} AB` : 'Sin dato'}
+              <span className="pa-mono">
+                {nave.trg !== undefined ? `${nave.trg} TRG` : nave.arqueoBruto !== undefined ? `${nave.arqueoBruto} AB` : 'Sin dato'}
+              </span>
             </p>
             <p>
               <strong>Eslora total:</strong> {nave.esloraTotal} m
@@ -185,12 +187,12 @@ export function NaveDetalle() {
                     <tr key={doc.reglaId}>
                       <td>
                         {doc.documentoExigido}
-                        {cert?.folio ? <span className="pa-texto-suave"> · {cert.folio}</span> : null}
+                        {cert?.folio ? <span className="pa-texto-suave pa-mono"> · {cert.folio}</span> : null}
                       </td>
                       <td>
                         <CriticidadBadge criticidad={doc.criticidad} />
                       </td>
-                      <td>
+                      <td className="pa-mono">
                         {cert?.fechaVencimiento
                           ? cert.fechaVencimiento
                           : regla?.tipoPlazo === 'permanente'
@@ -259,7 +261,7 @@ export function NaveDetalle() {
                       <td>{i.descripcion}</td>
                       <td>{insumo.categoria.replace(/_/g, ' ')}</td>
                       <td>{ETIQUETAS_TIPO_CONTROL[insumo.tipoControl]}</td>
-                      <td>
+                      <td className="pa-mono">
                         {insumo.tipoControl === 'stock'
                           ? `${insumo.cantidad} / ${insumo.minimoExigido} ${insumo.unidad ?? ''}`
                           : insumo.tipoControl === 'vencimiento'

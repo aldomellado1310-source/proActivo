@@ -46,10 +46,10 @@ export function Flota() {
                         <strong>{nave.nombre}</strong>
                       </Link>
                     </td>
-                    <td>{nave.matricula}</td>
+                    <td className="pa-mono">{nave.matricula}</td>
                     <td>{armador?.razonSocial ?? '—'}</td>
                     <td>{ETIQUETAS_CATEGORIA[nave.categoria]}</td>
-                    <td>{nave.trg !== undefined ? `${nave.trg} TRG` : nave.arqueoBruto !== undefined ? `${nave.arqueoBruto} AB` : '—'}</td>
+                    <td className="pa-mono">{nave.trg !== undefined ? `${nave.trg} TRG` : nave.arqueoBruto !== undefined ? `${nave.arqueoBruto} AB` : '—'}</td>
                     <td>
                       <EstadoBadge estado={resultado.estadoGlobal} />
                     </td>

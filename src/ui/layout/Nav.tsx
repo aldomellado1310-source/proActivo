@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import { useEstadoDemo } from '../EstadoContext';
+import { IconoPanel, IconoFlota, IconoDocumento, IconoInsumo, IconoReglas } from '../components/iconos';
 
 const ITEMS = [
-  { to: '/dashboard', etiqueta: 'Panel', icono: '📊' },
-  { to: '/flota', etiqueta: 'Flota', icono: '🚢' },
-  { to: '/certificados', etiqueta: 'Certificados', icono: '📄' },
-  { to: '/insumos', etiqueta: 'Insumos', icono: '🧰' },
-  { to: '/reglas', etiqueta: 'Reglas', icono: '📚' },
+  { to: '/dashboard', etiqueta: 'Panel', icono: <IconoPanel /> },
+  { to: '/flota', etiqueta: 'Flota', icono: <IconoFlota /> },
+  { to: '/certificados', etiqueta: 'Certificados', icono: <IconoDocumento /> },
+  { to: '/insumos', etiqueta: 'Insumos', icono: <IconoInsumo /> },
+  { to: '/reglas', etiqueta: 'Reglas', icono: <IconoReglas /> },
 ];
 
 export function Nav() {
@@ -20,7 +21,7 @@ export function Nav() {
           to={item.to}
           className={({ isActive }) => (isActive ? 'activo' : undefined)}
         >
-          <span aria-hidden="true">{item.icono}</span> {item.etiqueta}
+          {item.icono} {item.etiqueta}
         </NavLink>
       ))}
       <div className="pa-nav__reset">
