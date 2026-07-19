@@ -1,10 +1,13 @@
 # Navix
 
 Software de gestión marítima: demo interactiva de auditoría de cumplimiento para
-DIRECTEMAR — Región de Aysén. Registro de flota, clasificación de naves por TRG/AB,
+DIRECTEMAR — Región de Aysén. Responde una sola pregunta con certeza: ¿puede esta nave
+zarpar hoy sin exponerse a una observación, una multa o una detención? No es una
+herramienta de monitoreo operativo de la nave — es una herramienta de conformidad:
+documental, de gestión y física. Registro de flota, clasificación de naves por TRG/AB,
 certificados con alertas de vencimiento, control de insumos y preparación de revista de
-cargo. Conecta datos, personas y territorio para navegar con inteligencia en los fiordos
-de Aysén.
+cargo. Ver [`/acerca-de`](src/ui/pages/Acerca.tsx) en la app para el detalle de producto
+completo.
 
 Es una demo **con datos mock** (sin backend): el motor de evaluación de reglas normativas
 sí es real y corre en el navegador sobre datos de ejemplo, con persistencia local en
@@ -159,7 +162,7 @@ src/
 └── ui/
     ├── layout/             # Header, Nav, Layout
     ├── components/         # Card, Badge, ModalFoto, FormularioCertificado, iconos
-    └── pages/              # Login, Dashboard, Flota, NaveDetalle, Certificados, Insumos, Reglas
+    └── pages/              # Login, Dashboard, Flota, NaveDetalle, Certificados, Insumos, Reglas, Acerca
 ```
 
 ## Documento de referencia

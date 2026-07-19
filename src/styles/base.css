@@ -289,6 +289,19 @@ button {
   opacity: 1;
 }
 
+/* Enlace informativo, no operativo: separado de las vistas de datos por su
+   propio borde, con tipografía más liviana para que no compita con ellas. */
+.pa-nav .pa-nav__secundario {
+  margin-top: var(--pa-espacio-2);
+  border-top: 1px solid var(--pa-borde);
+  padding-top: var(--pa-espacio-2);
+}
+
+.pa-nav .pa-nav__secundario a {
+  font-size: 0.85rem;
+  color: var(--pa-texto-suave);
+}
+
 .pa-nav .pa-nav__reset {
   margin-top: var(--pa-espacio-3);
   border-top: 1px solid var(--pa-borde);

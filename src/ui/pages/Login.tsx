@@ -1,14 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Header } from '../layout/Header';
-import { IconoAncla, IconoWifi, IconoCamara, IconoTrazabilidad } from '../components/iconos';
+import { IconoAncla, IconoWifi, IconoCamara, IconoHistorial } from '../components/iconos';
 import { useEstadoDemo } from '../EstadoContext';
 import { PERFILES_DEMO, type PerfilId } from '../../data/store';
 
 const FEATURES = [
   { icono: <IconoAncla />, titulo: 'Multi-nave', subtitulo: 'Toda la flota' },
-  { icono: <IconoWifi />, titulo: 'Offline', subtitulo: 'Fiordos sin señal' },
+  { icono: <IconoWifi />, titulo: 'Sin conexión', subtitulo: 'Funciona sin señal' },
   { icono: <IconoCamara />, titulo: 'Evidencia fotográfica', subtitulo: 'Insumos y hallazgos' },
-  { icono: <IconoTrazabilidad />, titulo: 'Trazabilidad', subtitulo: 'Reglas como datos' },
+  { icono: <IconoHistorial />, titulo: 'Historial normativo', subtitulo: 'Cada regla, con su versión' },
 ];
 
 export function Login() {
@@ -30,10 +30,10 @@ export function Login() {
           </h1>
           <p className="pa-texto-suave pa-login__subtitulo">DIRECTEMAR · Región de Aysén</p>
           <p className="pa-texto-suave pa-login__intro">
-            Conectamos datos, personas y territorio para navegar con inteligencia en los fiordos
-            de Aysén: registro de flota, certificados, insumos y preparación de revista de cargo
-            en un solo lugar, con el motor de reglas normativas como dato editable — no como
-            código.
+            Responde una sola pregunta con certeza: ¿puede esta nave zarpar hoy sin exponerse a
+            una observación, una multa o una detención? Certificados, insumos a bordo y
+            preparación de revista de cargo en un solo lugar, con el motor de reglas normativas
+            como dato editable — no como código.
           </p>
           <div className="pa-login__features">
             {FEATURES.map((f) => (

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { useEstadoDemo } from '../EstadoContext';
-import { IconoPanel, IconoFlota, IconoDocumento, IconoInsumo, IconoReglas } from '../components/iconos';
+import { IconoPanel, IconoFlota, IconoDocumento, IconoInsumo, IconoReglas, IconoInfo } from '../components/iconos';
 
 const ITEMS = [
   { to: '/dashboard', etiqueta: 'Panel', icono: <IconoPanel /> },
@@ -24,6 +24,11 @@ export function Nav() {
           {item.icono} {item.etiqueta}
         </NavLink>
       ))}
+      <div className="pa-nav__secundario">
+        <NavLink to="/acerca-de" className={({ isActive }) => (isActive ? 'activo' : undefined)}>
+          <IconoInfo /> Acerca de Navix
+        </NavLink>
+      </div>
       <div className="pa-nav__reset">
         <button
           className="pa-btn pa-btn--secundario"
