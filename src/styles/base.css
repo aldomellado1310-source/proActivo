@@ -421,15 +421,18 @@ button {
 
 /* Ficha de nave: el nombre es el ancla de "qué nave estoy viendo" mientras
    se recorre Certificados/Insumos/Revista de cargo — sin esto se pierde de
-   vista en cuanto se baja lo suficiente. Mismo offset que .pa-nav para que
-   ambos queden alineados cuando los dos están fijos (desktop). El fondo
-   opaco evita que el contenido que sigue scrolleando se vea "a través". */
+   vista en cuanto se baja lo suficiente. A diferencia de .pa-nav (que no
+   tiene nada scrolleando en su propio gap), acá el offset va pegado al
+   header (sin sumar --pa-espacio-5): ese hueco quedaba sin fondo opaco y
+   el contenido que sigue subiendo se veía "a través" antes de que este
+   bloque lo cubriera. El espacio se recupera como padding-top, que sí es
+   parte del fondo opaco.  */
 .pa-nave-titulo {
   position: sticky;
-  top: calc(var(--pa-header-alto) + var(--pa-espacio-5));
+  top: var(--pa-header-alto);
   z-index: 10;
   background: var(--pa-fondo-a);
-  padding-bottom: var(--pa-espacio-3);
+  padding: var(--pa-espacio-4) 0 var(--pa-espacio-3);
 }
 
 @keyframes pa-entrada {
