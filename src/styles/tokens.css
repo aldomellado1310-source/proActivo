@@ -57,6 +57,11 @@
   --pa-faltante-bg: #fbe4e2;
 
   /* Radios / espaciado */
+  /* Fallback antes de que Header mida su alto real (ver Header.tsx,
+     ResizeObserver) — varía según ancho y largo del nombre/cargo del
+     perfil, así que .pa-nav y .pa-nave-titulo nunca deben asumir un valor
+     fijo aquí, solo usarlo como valor inicial de un frame. */
+  --pa-header-alto: 60px;
   --pa-radio-card: 16px;
   --pa-radio-pill: 999px;
   --pa-radio-input: 10px;

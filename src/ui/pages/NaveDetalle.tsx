@@ -65,7 +65,7 @@ export function NaveDetalle() {
 
   return (
     <>
-      <div className="pa-flex" style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
+      <div className="pa-flex pa-nave-titulo" style={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
         <div>
           <p className="pa-texto-suave" style={{ marginBottom: 4 }}>
             <Link to="/flota">Flota</Link> / {nave.nombre}
