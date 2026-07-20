@@ -653,6 +653,38 @@ button {
   vertical-align: middle;
 }
 
+/* Fila de filtros de texto por columna, justo bajo los encabezados. Solo
+   las columnas con texto libre reciben un input; badges, fechas o cifras
+   no lo necesitan y dejan la celda vacía. */
+.pa-fila-filtros th {
+  padding: 0 12px 8px;
+  border-bottom: 1px solid var(--pa-borde);
+}
+
+.pa-input-filtro {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--pa-borde);
+  background: transparent;
+  padding: 4px 2px;
+  font-size: 0.82rem;
+  font-weight: 400;
+  font-family: inherit;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--pa-texto);
+  transition: border-color 0.15s ease;
+}
+
+.pa-input-filtro::placeholder {
+  color: var(--pa-texto-suave);
+}
+
+.pa-input-filtro:focus {
+  outline: none;
+  border-bottom-color: var(--pa-accion);
+}
+
 .pa-table tr:last-child td {
   border-bottom: none;
 }

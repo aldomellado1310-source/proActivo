@@ -4,6 +4,7 @@ import { EmptyState } from '../components/Card';
 import { EstadoBadge, CriticidadBadge } from '../components/Badge';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
+import { coincide } from '../filtro';
 import type { EstadoCumplimiento } from '../../types/schema';
 
 type Filtro = 'todos' | EstadoCumplimiento;
@@ -14,6 +15,7 @@ export function Certificados() {
   const { estado } = useEstadoDemo();
   const evaluaciones = useEvaluaciones();
   const [filtro, setFiltro] = useState<Filtro>('todos');
+  const [filtroDocumento, setFiltroDocumento] = useState('');
 
   const filas = useMemo(() => {
     const todas = estado.naves.flatMap((nave) => {
@@ -23,7 +25,9 @@ export function Certificados() {
     return todas.sort((a, b) => (a.doc.diasParaVencer ?? Infinity) - (b.doc.diasParaVencer ?? Infinity));
   }, [estado.naves, evaluaciones]);
 
-  const filtradas = filtro === 'todos' ? filas : filas.filter((f) => f.doc.estado === filtro);
+  const filtradas = filas
+    .filter((f) => filtro === 'todos' || f.doc.estado === filtro)
+    .filter((f) => coincide(f.doc.documentoExigido, filtroDocumento));
 
   // Ventanas agrupadas por nave: dentro de cada una, los documentos siguen
   // ordenados por fecha de vencimiento (más urgente primero) porque el orden
@@ -100,6 +104,20 @@ export function Certificados() {
                         <th>Criticidad</th>
                         <th>Vence en</th>
                         <th>Estado</th>
+                      </tr>
+                      <tr className="pa-fila-filtros">
+                        <th>
+                          <input
+                            className="pa-input-filtro"
+                            placeholder="Filtrar…"
+                            value={filtroDocumento}
+                            onChange={(e) => setFiltroDocumento(e.target.value)}
+                            aria-label="Filtrar por documento"
+                          />
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>

@@ -4,6 +4,7 @@ import { EmptyState } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
+import { coincide } from '../filtro';
 import type { CategoriaInsumo } from '../../types/schema';
 
 const ETIQUETAS_CATEGORIA: Record<CategoriaInsumo, string> = {
@@ -23,6 +24,7 @@ export function Insumos() {
   const evaluaciones = useEvaluaciones();
   const [soloAlertas, setSoloAlertas] = useState(false);
   const [categoria, setCategoria] = useState<CategoriaInsumo | 'todas'>('todas');
+  const [filtroInsumo, setFiltroInsumo] = useState('');
 
   const filas = useMemo(() => {
     return estado.naves.flatMap((nave) => {
@@ -37,6 +39,7 @@ export function Insumos() {
   const filtradas = filas.filter((f) => {
     if (categoria !== 'todas' && f.insumo.categoria !== categoria) return false;
     if (soloAlertas && !ESTADOS_ALERTA.includes(f.evaluado.estado)) return false;
+    if (!coincide(f.insumo.descripcion, filtroInsumo)) return false;
     return true;
   });
 
@@ -105,6 +108,20 @@ export function Insumos() {
                         <th>Categoría</th>
                         <th>Detalle</th>
                         <th>Estado</th>
+                      </tr>
+                      <tr className="pa-fila-filtros">
+                        <th>
+                          <input
+                            className="pa-input-filtro"
+                            placeholder="Filtrar…"
+                            value={filtroInsumo}
+                            onChange={(e) => setFiltroInsumo(e.target.value)}
+                            aria-label="Filtrar por insumo"
+                          />
+                        </th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
