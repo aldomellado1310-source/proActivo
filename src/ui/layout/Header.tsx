@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEstadoDemo } from '../EstadoContext';
 import { TODOS_LOS_PERFILES } from '../../data/store';
@@ -15,6 +15,7 @@ export function Header({ colapsaAlDesplazar = false }: { colapsaAlDesplazar?: bo
   const [online, setOnline] = useState(true);
   const [colapsado, setColapsado] = useState(false);
   const perfil = TODOS_LOS_PERFILES.find((p) => p.id === estado.perfilActivoId);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     if (!colapsaAlDesplazar) return;
@@ -25,8 +26,26 @@ export function Header({ colapsaAlDesplazar = false }: { colapsaAlDesplazar?: bo
     return () => window.removeEventListener('scroll', alDesplazar);
   }, [colapsaAlDesplazar]);
 
+  // El header envuelve a varias alturas según el ancho y el largo del
+  // nombre/cargo del perfil (ver capturas: 174px a 390px, 104px a 900px+).
+  // Elementos que se fijan bajo el header (.pa-nav, .pa-nave-titulo) leen
+  // esta variable en vez de asumir un alto fijo — de lo contrario quedan
+  // parcialmente tapados por el header en los anchos donde envuelve más.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+    const observer = new ResizeObserver(([entry]) => {
+      // getBoundingClientRect (no contentRect: excluye el borde de 3px del
+      // header) para que el offset no deje ese margen de más bajo el header.
+      const alto = entry.target.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--pa-header-alto', `${Math.round(alto)}px`);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <header className={`pa-header${colapsado ? ' pa-header--compacto' : ''}`}>
+    <header ref={headerRef} className={`pa-header${colapsado ? ' pa-header--compacto' : ''}`}>
       <div className="pa-header__izq">
         <Link to={perfil ? '/dashboard' : '/'} className="pa-header__marca">
           <img src={`${import.meta.env.BASE_URL}navix-icono.png`} alt="" className="pa-header__icono" />

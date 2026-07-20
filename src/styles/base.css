@@ -146,10 +146,38 @@ button {
   display: block;
   transform-origin: left center;
   transition: opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1), transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  /* Entrada al cargar la página: Header solo se monta una vez por carga
+     real (persiste entre navegaciones internas del router), así que esto
+     no se repite en cada cambio de vista — respeta el mismo criterio de
+     frecuencia que el resto del motion de la app. */
+  animation: pa-logo-entrada 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .pa-header__marca .pa-logotipo {
   transition: opacity 0.24s ease, transform 0.24s ease;
+  animation: pa-logo-entrada-texto 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
+}
+
+@keyframes pa-logo-entrada {
+  from {
+    opacity: 0;
+    transform: scale(0.7) translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes pa-logo-entrada-texto {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* El logo de marca se ve poco (una vez al cargar, quizás al volver al
@@ -299,10 +327,10 @@ button {
   padding: var(--pa-espacio-3);
   box-shadow: var(--pa-sombra-sm);
   position: sticky;
-  /* El header ahora es sticky (top:0) y ocupa ~60px reales; sin sumarlos
-     aquí, el nav quedaría "stuck" debajo del header en vez de justo bajo
-     él. */
-  top: calc(60px + var(--pa-espacio-5));
+  /* El header es sticky (top:0) y su alto real varía (ver --pa-header-alto,
+     Header.tsx); sin sumarlo aquí, el nav quedaría "stuck" debajo del
+     header en vez de justo bajo él. */
+  top: calc(var(--pa-header-alto) + var(--pa-espacio-5));
 }
 
 .pa-nav a {
@@ -389,6 +417,19 @@ button {
   display: flex;
   flex-direction: column;
   gap: var(--pa-espacio-4);
+}
+
+/* Ficha de nave: el nombre es el ancla de "qué nave estoy viendo" mientras
+   se recorre Certificados/Insumos/Revista de cargo — sin esto se pierde de
+   vista en cuanto se baja lo suficiente. Mismo offset que .pa-nav para que
+   ambos queden alineados cuando los dos están fijos (desktop). El fondo
+   opaco evita que el contenido que sigue scrolleando se vea "a través". */
+.pa-nave-titulo {
+  position: sticky;
+  top: calc(var(--pa-header-alto) + var(--pa-espacio-5));
+  z-index: 10;
+  background: var(--pa-fondo-a);
+  padding-bottom: var(--pa-espacio-3);
 }
 
 @keyframes pa-entrada {
