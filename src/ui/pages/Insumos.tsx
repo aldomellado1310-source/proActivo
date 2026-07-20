@@ -6,17 +6,8 @@ import { EtiquetasFiltro } from '../components/EtiquetasFiltro';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
 import { coincide, valoresUnicos } from '../filtro';
+import { ETIQUETAS_CATEGORIA_INSUMO as ETIQUETAS_CATEGORIA } from '../etiquetas';
 import type { CategoriaInsumo } from '../../types/schema';
-
-const ETIQUETAS_CATEGORIA: Record<CategoriaInsumo, string> = {
-  salvamento: 'Salvamento',
-  contra_incendio: 'Contra incendio',
-  nautico_comunicaciones: 'Náutico / comunicaciones',
-  sanitario: 'Sanitario',
-  operacional: 'Operacional',
-  faena_amarre: 'Faena y amarre',
-  marpol: 'MARPOL',
-};
 
 const ESTADOS_ALERTA = ['vencido', 'por_vencer', 'faltante'];
 

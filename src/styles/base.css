@@ -687,34 +687,17 @@ button {
 
 /* Etiquetas con los valores únicos de la columna, bajo el input de texto:
    complementan el filtro libre con un atajo de un clic para valores que ya
-   se repiten en los datos (armador, categoría, tipo de control...).
-   flex-wrap: nowrap + scroll horizontal en vez de wrap vertical: columnas
-   con muchos valores únicos (p. ej. la descripción de un insumo, ~24
-   distintos en la flota) no deben inflar el alto del encabezado de la
-   tabla — se recorren deslizando en una sola fila en vez de eso. */
+   se repiten en los datos (armador, categoría, tipo de control...). Solo
+   aparecen con pocos valores distintos (EtiquetasFiltro.tsx, MAXIMO_VALORES);
+   con muchos, el input de texto de al lado ya es la herramienta correcta —
+   así que un wrap simple alcanza, sin necesitar un scroll horizontal hecho
+   a mano para lo que dejó de ser "un vistazo rápido".  */
 .pa-etiquetas-filtro {
-  position: relative;
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 4px;
   margin-top: 6px;
   max-width: 220px;
-  overflow-x: auto;
-  padding-bottom: 3px;
-}
-
-/* Insinúa que hay más etiquetas fuera de vista, en vez de cortarlas en
-   seco (mismo criterio que .pa-nav::after en el nav móvil). Si la fila no
-   alcanza a desbordar, esto no se nota: no hay nada detrás que tapar. */
-.pa-etiquetas-filtro::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 3px;
-  width: 16px;
-  background: linear-gradient(to right, transparent, var(--pa-superficie));
-  pointer-events: none;
 }
 
 .pa-etiqueta-filtro {

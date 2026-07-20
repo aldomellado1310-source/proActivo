@@ -10,6 +10,7 @@ import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
 import { reglasAplicables } from '../../motor/evaluacion';
 import { coincide, valoresUnicos } from '../filtro';
+import { ETIQUETAS_CATEGORIA_INSUMO } from '../etiquetas';
 import type { Certificado, EvidenciaInsumo } from '../../types/schema';
 
 const ETIQUETAS_CATEGORIA: Record<string, string> = {
@@ -76,14 +77,14 @@ export function NaveDetalle() {
     const insumo = insumosNave.find((ins) => ins.id === i.insumoId);
     return (
       coincide(i.descripcion, filtroInsumo) &&
-      coincide(insumo?.categoria.replace(/_/g, ' ') ?? '', filtroCategoriaInsumo) &&
+      coincide(insumo ? ETIQUETAS_CATEGORIA_INSUMO[insumo.categoria] : '', filtroCategoriaInsumo) &&
       coincide(insumo ? ETIQUETAS_TIPO_CONTROL[insumo.tipoControl] : '', filtroControlInsumo)
     );
   });
 
   const valoresDocumento = valoresUnicos(resultado.documentos.map((d) => d.documentoExigido));
   const valoresInsumo = valoresUnicos(resultado.insumos.map((i) => i.descripcion));
-  const valoresCategoriaInsumo = valoresUnicos(insumosNave.map((ins) => ins.categoria.replace(/_/g, ' ')));
+  const valoresCategoriaInsumo = valoresUnicos(insumosNave.map((ins) => ETIQUETAS_CATEGORIA_INSUMO[ins.categoria]));
   const valoresControlInsumo = valoresUnicos(insumosNave.map((ins) => ETIQUETAS_TIPO_CONTROL[ins.tipoControl]));
 
   return (
@@ -357,7 +358,7 @@ export function NaveDetalle() {
                   return (
                     <tr key={i.insumoId}>
                       <td>{i.descripcion}</td>
-                      <td>{insumo.categoria.replace(/_/g, ' ')}</td>
+                      <td>{ETIQUETAS_CATEGORIA_INSUMO[insumo.categoria]}</td>
                       <td>{ETIQUETAS_TIPO_CONTROL[insumo.tipoControl]}</td>
                       <td className="pa-mono">
                         {insumo.tipoControl === 'stock'
