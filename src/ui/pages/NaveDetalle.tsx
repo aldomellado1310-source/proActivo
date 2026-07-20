@@ -5,10 +5,12 @@ import { EstadoBadge, CriticidadBadge } from '../components/Badge';
 import { FormularioCertificado } from '../components/FormularioCertificado';
 import { FormularioInsumo } from '../components/FormularioInsumo';
 import { ModalFoto } from '../components/ModalFoto';
+import { EtiquetasFiltro } from '../components/EtiquetasFiltro';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
 import { reglasAplicables } from '../../motor/evaluacion';
-import { coincide } from '../filtro';
+import { coincide, valoresUnicos } from '../filtro';
+import { ETIQUETAS_CATEGORIA_INSUMO } from '../etiquetas';
 import type { Certificado, EvidenciaInsumo } from '../../types/schema';
 
 const ETIQUETAS_CATEGORIA: Record<string, string> = {
@@ -75,10 +77,15 @@ export function NaveDetalle() {
     const insumo = insumosNave.find((ins) => ins.id === i.insumoId);
     return (
       coincide(i.descripcion, filtroInsumo) &&
-      coincide(insumo?.categoria.replace(/_/g, ' ') ?? '', filtroCategoriaInsumo) &&
+      coincide(insumo ? ETIQUETAS_CATEGORIA_INSUMO[insumo.categoria] : '', filtroCategoriaInsumo) &&
       coincide(insumo ? ETIQUETAS_TIPO_CONTROL[insumo.tipoControl] : '', filtroControlInsumo)
     );
   });
+
+  const valoresDocumento = valoresUnicos(resultado.documentos.map((d) => d.documentoExigido));
+  const valoresInsumo = valoresUnicos(resultado.insumos.map((i) => i.descripcion));
+  const valoresCategoriaInsumo = valoresUnicos(insumosNave.map((ins) => ETIQUETAS_CATEGORIA_INSUMO[ins.categoria]));
+  const valoresControlInsumo = valoresUnicos(insumosNave.map((ins) => ETIQUETAS_TIPO_CONTROL[ins.tipoControl]));
 
   return (
     <>
@@ -204,6 +211,7 @@ export function NaveDetalle() {
                       onChange={(e) => setFiltroDocumento(e.target.value)}
                       aria-label="Filtrar por documento"
                     />
+                    <EtiquetasFiltro valores={valoresDocumento} activo={filtroDocumento} onSeleccionar={setFiltroDocumento} />
                   </th>
                   <th></th>
                   <th></th>
@@ -301,6 +309,7 @@ export function NaveDetalle() {
                       onChange={(e) => setFiltroInsumo(e.target.value)}
                       aria-label="Filtrar por insumo"
                     />
+                    <EtiquetasFiltro valores={valoresInsumo} activo={filtroInsumo} onSeleccionar={setFiltroInsumo} />
                   </th>
                   <th>
                     <input
@@ -310,6 +319,11 @@ export function NaveDetalle() {
                       onChange={(e) => setFiltroCategoriaInsumo(e.target.value)}
                       aria-label="Filtrar por categoría"
                     />
+                    <EtiquetasFiltro
+                      valores={valoresCategoriaInsumo}
+                      activo={filtroCategoriaInsumo}
+                      onSeleccionar={setFiltroCategoriaInsumo}
+                    />
                   </th>
                   <th>
                     <input
@@ -318,6 +332,11 @@ export function NaveDetalle() {
                       value={filtroControlInsumo}
                       onChange={(e) => setFiltroControlInsumo(e.target.value)}
                       aria-label="Filtrar por control"
+                    />
+                    <EtiquetasFiltro
+                      valores={valoresControlInsumo}
+                      activo={filtroControlInsumo}
+                      onSeleccionar={setFiltroControlInsumo}
                     />
                   </th>
                   <th></th>
@@ -339,7 +358,7 @@ export function NaveDetalle() {
                   return (
                     <tr key={i.insumoId}>
                       <td>{i.descripcion}</td>
-                      <td>{insumo.categoria.replace(/_/g, ' ')}</td>
+                      <td>{ETIQUETAS_CATEGORIA_INSUMO[insumo.categoria]}</td>
                       <td>{ETIQUETAS_TIPO_CONTROL[insumo.tipoControl]}</td>
                       <td className="pa-mono">
                         {insumo.tipoControl === 'stock'

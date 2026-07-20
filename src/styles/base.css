@@ -685,6 +685,49 @@ button {
   border-bottom-color: var(--pa-accion);
 }
 
+/* Etiquetas con los valores únicos de la columna, bajo el input de texto:
+   complementan el filtro libre con un atajo de un clic para valores que ya
+   se repiten en los datos (armador, categoría, tipo de control...). Solo
+   aparecen con pocos valores distintos (EtiquetasFiltro.tsx, MAXIMO_VALORES);
+   con muchos, el input de texto de al lado ya es la herramienta correcta —
+   así que un wrap simple alcanza, sin necesitar un scroll horizontal hecho
+   a mano para lo que dejó de ser "un vistazo rápido".  */
+.pa-etiquetas-filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+  max-width: 220px;
+}
+
+.pa-etiqueta-filtro {
+  border: 1px solid var(--pa-borde);
+  background: var(--pa-superficie);
+  color: var(--pa-texto-suave);
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: none;
+  padding: 2px 8px;
+  border-radius: var(--pa-radio-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pa-etiqueta-filtro:hover {
+    border-color: var(--pa-accion-suave);
+    color: var(--pa-texto);
+  }
+}
+
+.pa-etiqueta-filtro--activa,
+.pa-etiqueta-filtro--activa:hover {
+  background: var(--pa-navy);
+  border-color: var(--pa-navy);
+  color: #ffffff;
+}
+
 .pa-table tr:last-child td {
   border-bottom: none;
 }

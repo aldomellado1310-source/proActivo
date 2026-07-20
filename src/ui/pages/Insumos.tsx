@@ -2,20 +2,12 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EmptyState } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
+import { EtiquetasFiltro } from '../components/EtiquetasFiltro';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
-import { coincide } from '../filtro';
+import { coincide, valoresUnicos } from '../filtro';
+import { ETIQUETAS_CATEGORIA_INSUMO as ETIQUETAS_CATEGORIA } from '../etiquetas';
 import type { CategoriaInsumo } from '../../types/schema';
-
-const ETIQUETAS_CATEGORIA: Record<CategoriaInsumo, string> = {
-  salvamento: 'Salvamento',
-  contra_incendio: 'Contra incendio',
-  nautico_comunicaciones: 'Náutico / comunicaciones',
-  sanitario: 'Sanitario',
-  operacional: 'Operacional',
-  faena_amarre: 'Faena y amarre',
-  marpol: 'MARPOL',
-};
 
 const ESTADOS_ALERTA = ['vencido', 'por_vencer', 'faltante'];
 
@@ -42,6 +34,8 @@ export function Insumos() {
     if (!coincide(f.insumo.descripcion, filtroInsumo)) return false;
     return true;
   });
+
+  const valoresInsumo = valoresUnicos(filas.map((f) => f.insumo.descripcion));
 
   // Ventanas agrupadas por nave en vez de una tabla plana de ~120 filas: cada
   // nave es su propia sección plegable, así el panel no obliga a un scroll
@@ -118,6 +112,7 @@ export function Insumos() {
                             onChange={(e) => setFiltroInsumo(e.target.value)}
                             aria-label="Filtrar por insumo"
                           />
+                          <EtiquetasFiltro valores={valoresInsumo} activo={filtroInsumo} onSeleccionar={setFiltroInsumo} />
                         </th>
                         <th></th>
                         <th></th>
