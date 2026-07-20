@@ -3,10 +3,12 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { Card, EmptyState } from '../components/Card';
 import { EstadoBadge, CriticidadBadge } from '../components/Badge';
 import { FormularioCertificado } from '../components/FormularioCertificado';
+import { FormularioInsumo } from '../components/FormularioInsumo';
 import { ModalFoto } from '../components/ModalFoto';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
 import { reglasAplicables } from '../../motor/evaluacion';
+import { coincide } from '../filtro';
 import type { Certificado, EvidenciaInsumo } from '../../types/schema';
 
 const ETIQUETAS_CATEGORIA: Record<string, string> = {
@@ -32,6 +34,11 @@ export function NaveDetalle() {
 
   const [formularioAbierto, setFormularioAbierto] = useState<string | 'nuevo' | null>(null);
   const [modalInsumoId, setModalInsumoId] = useState<string | null>(null);
+  const [formularioInsumoAbierto, setFormularioInsumoAbierto] = useState<string | null>(null);
+  const [filtroDocumento, setFiltroDocumento] = useState('');
+  const [filtroInsumo, setFiltroInsumo] = useState('');
+  const [filtroCategoriaInsumo, setFiltroCategoriaInsumo] = useState('');
+  const [filtroControlInsumo, setFiltroControlInsumo] = useState('');
 
   const nave = estado.naves.find((n) => n.id === naveId);
 
@@ -62,6 +69,16 @@ export function NaveDetalle() {
       .filter((c) => c.reglaId === reglaId)
       .sort((a, b) => new Date(b.fechaEmision).getTime() - new Date(a.fechaEmision).getTime())[0];
   }
+
+  const documentosFiltrados = resultado.documentos.filter((doc) => coincide(doc.documentoExigido, filtroDocumento));
+  const insumosFiltrados = resultado.insumos.filter((i) => {
+    const insumo = insumosNave.find((ins) => ins.id === i.insumoId);
+    return (
+      coincide(i.descripcion, filtroInsumo) &&
+      coincide(insumo?.categoria.replace(/_/g, ' ') ?? '', filtroCategoriaInsumo) &&
+      coincide(insumo ? ETIQUETAS_TIPO_CONTROL[insumo.tipoControl] : '', filtroControlInsumo)
+    );
+  });
 
   return (
     <>
@@ -178,9 +195,31 @@ export function NaveDetalle() {
                   <th>Estado</th>
                   <th></th>
                 </tr>
+                <tr className="pa-fila-filtros">
+                  <th>
+                    <input
+                      className="pa-input-filtro"
+                      placeholder="Filtrar…"
+                      value={filtroDocumento}
+                      onChange={(e) => setFiltroDocumento(e.target.value)}
+                      aria-label="Filtrar por documento"
+                    />
+                  </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
               </thead>
               <tbody>
-                {resultado.documentos.map((doc) => {
+                {documentosFiltrados.length === 0 ? (
+                  <tr>
+                    <td colSpan={5}>
+                      <EmptyState>Ningún documento coincide con el filtro.</EmptyState>
+                    </td>
+                  </tr>
+                ) : null}
+                {documentosFiltrados.map((doc) => {
                   const cert = certificadoDe(doc.reglaId);
                   const regla = reglas.find((r) => r.id === doc.reglaId);
                   return (
@@ -251,10 +290,51 @@ export function NaveDetalle() {
                   <th>Detalle</th>
                   <th>Estado</th>
                   <th>Evidencia</th>
+                  <th>Actualizar</th>
+                </tr>
+                <tr className="pa-fila-filtros">
+                  <th>
+                    <input
+                      className="pa-input-filtro"
+                      placeholder="Filtrar…"
+                      value={filtroInsumo}
+                      onChange={(e) => setFiltroInsumo(e.target.value)}
+                      aria-label="Filtrar por insumo"
+                    />
+                  </th>
+                  <th>
+                    <input
+                      className="pa-input-filtro"
+                      placeholder="Filtrar…"
+                      value={filtroCategoriaInsumo}
+                      onChange={(e) => setFiltroCategoriaInsumo(e.target.value)}
+                      aria-label="Filtrar por categoría"
+                    />
+                  </th>
+                  <th>
+                    <input
+                      className="pa-input-filtro"
+                      placeholder="Filtrar…"
+                      value={filtroControlInsumo}
+                      onChange={(e) => setFiltroControlInsumo(e.target.value)}
+                      aria-label="Filtrar por control"
+                    />
+                  </th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                {resultado.insumos.map((i) => {
+                {insumosFiltrados.length === 0 ? (
+                  <tr>
+                    <td colSpan={7}>
+                      <EmptyState>Ningún insumo coincide con el filtro.</EmptyState>
+                    </td>
+                  </tr>
+                ) : null}
+                {insumosFiltrados.map((i) => {
                   const insumo = insumosNave.find((ins) => ins.id === i.insumoId)!;
                   return (
                     <tr key={i.insumoId}>
@@ -281,6 +361,29 @@ export function NaveDetalle() {
                         >
                           {insumo.evidencias?.length ? `${insumo.evidencias.length} foto(s)` : 'Cargar foto'}
                         </button>
+                      </td>
+                      <td>
+                        {insumo.tipoControl !== 'inspeccion' && (
+                          <button
+                            className="pa-btn pa-btn--secundario"
+                            style={{ fontSize: '0.78rem', padding: '6px 12px' }}
+                            onClick={() => setFormularioInsumoAbierto(insumo.id)}
+                          >
+                            Actualizar
+                          </button>
+                        )}
+                        {formularioInsumoAbierto === insumo.id && (
+                          <div style={{ marginTop: 8 }}>
+                            <FormularioInsumo
+                              insumo={insumo}
+                              onGuardar={(actualizado) => {
+                                guardarIns(actualizado);
+                                setFormularioInsumoAbierto(null);
+                              }}
+                              onCancelar={() => setFormularioInsumoAbierto(null)}
+                            />
+                          </div>
+                        )}
                       </td>
                     </tr>
                   );
