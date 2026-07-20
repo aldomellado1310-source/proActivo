@@ -1232,6 +1232,11 @@ button {
   .pa-nav {
     width: 100%;
     position: relative;
+    /* La regla base fija top (offset del sticky de desktop). position:
+       relative + ese top desplaza el nav visualmente sin reservarle
+       espacio, así que queda flotando sobre el contenido siguiente
+       (el título de la página) en vez de empujarlo hacia abajo. */
+    top: auto;
     flex-direction: row;
     overflow-x: auto;
   }
