@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react';
 import { Card, EmptyState } from '../components/Card';
 import { CriticidadBadge, VerificacionBadge } from '../components/Badge';
+import { EtiquetasFiltro } from '../components/EtiquetasFiltro';
 import { useEstadoDemo } from '../EstadoContext';
 import { advertenciaReglasNoVerificadas } from '../../data/store';
-import { coincide } from '../filtro';
+import { coincide, valoresUnicos } from '../filtro';
 import type { ReglaNormativa } from '../../types/schema';
 
 const ETIQUETAS_CATEGORIA_DOC: Record<ReglaNormativa['categoriaDocumento'], string> = {
@@ -42,6 +43,9 @@ export function Reglas() {
   }));
   const hayFiltroActivo = Boolean(filtroDocumento || filtroDescripcion || filtroOrganismo);
   const sinResultados = hayFiltroActivo && categoriasFiltradas.every(({ reglas }) => reglas.length === 0);
+
+  const valoresDocumento = valoresUnicos(reglas.map((r) => r.documentoExigido));
+  const valoresOrganismo = valoresUnicos(reglas.map((r) => r.organismoEmisor));
 
   return (
     <>
@@ -87,6 +91,11 @@ export function Reglas() {
                         onChange={(e) => setFiltroDocumento(e.target.value)}
                         aria-label="Filtrar por documento exigido"
                       />
+                      <EtiquetasFiltro
+                        valores={valoresDocumento}
+                        activo={filtroDocumento}
+                        onSeleccionar={setFiltroDocumento}
+                      />
                     </th>
                     <th>
                       <input
@@ -96,6 +105,7 @@ export function Reglas() {
                         onChange={(e) => setFiltroDescripcion(e.target.value)}
                         aria-label="Filtrar por descripción"
                       />
+                      {/* Sin etiquetas: es prosa libre, casi nunca se repite entre reglas. */}
                     </th>
                     <th>
                       <input
@@ -104,6 +114,11 @@ export function Reglas() {
                         value={filtroOrganismo}
                         onChange={(e) => setFiltroOrganismo(e.target.value)}
                         aria-label="Filtrar por organismo emisor"
+                      />
+                      <EtiquetasFiltro
+                        valores={valoresOrganismo}
+                        activo={filtroOrganismo}
+                        onSeleccionar={setFiltroOrganismo}
                       />
                     </th>
                     <th></th>

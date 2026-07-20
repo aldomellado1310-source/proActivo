@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card, EmptyState } from '../components/Card';
 import { EstadoBadge } from '../components/Badge';
+import { EtiquetasFiltro } from '../components/EtiquetasFiltro';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
-import { coincide } from '../filtro';
+import { coincide, valoresUnicos } from '../filtro';
 
 const ETIQUETAS_CATEGORIA: Record<string, string> = {
   nave_menor: 'Nave menor',
@@ -28,6 +29,12 @@ export function Flota() {
       coincide(armador?.razonSocial ?? '', filtroArmador)
     );
   });
+
+  const valoresNave = valoresUnicos(estado.naves.map((n) => n.nombre));
+  const valoresMatricula = valoresUnicos(estado.naves.map((n) => n.matricula));
+  const valoresArmador = valoresUnicos(
+    estado.naves.map((n) => estado.armadores.find((a) => a.id === n.armadorId)?.razonSocial)
+  );
 
   return (
     <>
@@ -58,6 +65,7 @@ export function Flota() {
                     onChange={(e) => setFiltroNave(e.target.value)}
                     aria-label="Filtrar por nave"
                   />
+                  <EtiquetasFiltro valores={valoresNave} activo={filtroNave} onSeleccionar={setFiltroNave} />
                 </th>
                 <th>
                   <input
@@ -67,6 +75,7 @@ export function Flota() {
                     onChange={(e) => setFiltroMatricula(e.target.value)}
                     aria-label="Filtrar por matrícula"
                   />
+                  <EtiquetasFiltro valores={valoresMatricula} activo={filtroMatricula} onSeleccionar={setFiltroMatricula} />
                 </th>
                 <th>
                   <input
@@ -76,6 +85,7 @@ export function Flota() {
                     onChange={(e) => setFiltroArmador(e.target.value)}
                     aria-label="Filtrar por armador"
                   />
+                  <EtiquetasFiltro valores={valoresArmador} activo={filtroArmador} onSeleccionar={setFiltroArmador} />
                 </th>
                 <th></th>
                 <th></th>

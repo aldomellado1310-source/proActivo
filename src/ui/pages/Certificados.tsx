@@ -2,9 +2,10 @@ import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EmptyState } from '../components/Card';
 import { EstadoBadge, CriticidadBadge } from '../components/Badge';
+import { EtiquetasFiltro } from '../components/EtiquetasFiltro';
 import { useEstadoDemo } from '../EstadoContext';
 import { useEvaluaciones } from '../useEvaluaciones';
-import { coincide } from '../filtro';
+import { coincide, valoresUnicos } from '../filtro';
 import type { EstadoCumplimiento } from '../../types/schema';
 
 type Filtro = 'todos' | EstadoCumplimiento;
@@ -28,6 +29,8 @@ export function Certificados() {
   const filtradas = filas
     .filter((f) => filtro === 'todos' || f.doc.estado === filtro)
     .filter((f) => coincide(f.doc.documentoExigido, filtroDocumento));
+
+  const valoresDocumento = valoresUnicos(filas.map((f) => f.doc.documentoExigido));
 
   // Ventanas agrupadas por nave: dentro de cada una, los documentos siguen
   // ordenados por fecha de vencimiento (más urgente primero) porque el orden
@@ -113,6 +116,11 @@ export function Certificados() {
                             value={filtroDocumento}
                             onChange={(e) => setFiltroDocumento(e.target.value)}
                             aria-label="Filtrar por documento"
+                          />
+                          <EtiquetasFiltro
+                            valores={valoresDocumento}
+                            activo={filtroDocumento}
+                            onSeleccionar={setFiltroDocumento}
                           />
                         </th>
                         <th></th>
